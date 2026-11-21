@@ -1,0 +1,62 @@
+{
+  "benchmark": "longmemeval-retrieval",
+  "total_questions": 500,
+  "empty_retrievals": 0,
+  "overall": {
+    "recall@1": 2.0,
+    "recall@3": 7.0,
+    "recall@5": 12.0,
+    "recall@10": 23.4,
+    "answer_in_content@5": 1.6
+  },
+  "per_type": {
+    "knowledge-update": {
+      "count": 78,
+      "recall@1": 5.1,
+      "recall@3": 10.3,
+      "recall@5": 12.8,
+      "recall@10": 29.5,
+      "answer_in_content@5": 3.8
+    },
+    "multi-session": {
+      "count": 133,
+      "recall@1": 1.5,
+      "recall@3": 8.3,
+      "recall@5": 15.8,
+      "recall@10": 27.1,
+      "answer_in_content@5": 0.8
+    },
+    "single-session-assistant": {
+      "count": 56,
+      "recall@1": 0.0,
+      "recall@3": 10.7,
+      "recall@5": 14.3,
+      "recall@10": 23.2,
+      "answer_in_content@5": 1.8
+    },
+    "single-session-preference": {
+      "count": 30,
+      "recall@1": 0.0,
+      "recall@3": 0.0,
+      "recall@5": 6.7,
+      "recall@10": 10.0,
+      "answer_in_content@5": 0.0
+    },
+    "single-session-user": {
+      "count": 70,
+      "recall@1": 2.9,
+      "recall@3": 2.9,
+      "recall@5": 4.3,
+      "recall@10": 12.9,
+      "answer_in_content@5": 0.0
+    },
+    "temporal-reasoning": {
+      "count": 133,
+      "recall@1": 1.5,
+      "recall@3": 6.0,
+      "recall@5": 12.0,
+      "recall@10": 24.8,
+      "answer_in_content@5": 2.3
+    }
+  }
+}

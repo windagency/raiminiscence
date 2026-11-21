@@ -1,0 +1,14 @@
+{
+  "name": "raiminiscence",
+  "build": { "dockerfile": "Dockerfile" },
+  "workspaceFolder": "/workspaces/raiminiscence",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/raiminiscence,type=bind",
+  "remoteUser": "node",
+  "postCreateCommand": "pnpm install && pnpm build",
+  "mounts": ["source=raiminiscence-node-modules,target=/workspaces/raiminiscence/node_modules,type=volume"],
+  "customizations": {
+    "vscode": {
+      "extensions": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "vitest.explorer", "EditorConfig.EditorConfig"]
+    }
+  }
+}

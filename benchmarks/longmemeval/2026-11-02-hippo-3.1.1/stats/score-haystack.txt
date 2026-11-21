@@ -1,0 +1,25 @@
+# hippo's score_haystack.py (v3.1.1), unchanged, on hippo-memory 3.1.1 and the 2026-10-31 rAIminiscence runs
+
+A-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  85.4 strict  85.4 all  29.2 | R@3 loose  94.6 strict  94.6 all  76.8 | R@5 loose  96.8 strict  96.8 all  82.6 | R@10 loose  98.0 strict  98.0 all  89.8
+  no _abs (n=470): R@1 loose  86.2 strict  86.2 all  30.4 | R@3 loose  94.7 strict  94.7 all  77.4 | R@5 loose  97.0 strict  97.0 all  83.6 | R@10 loose  97.9 strict  97.9 all  90.2
+
+B-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  87.6 strict  87.6 all  29.6 | R@3 loose  95.2 strict  95.2 all  75.8 | R@5 loose  97.4 strict  97.4 all  82.6 | R@10 loose  99.2 strict  99.2 all  90.0
+  no _abs (n=470): R@1 loose  87.9 strict  87.9 all  30.6 | R@3 loose  95.5 strict  95.5 all  77.0 | R@5 loose  97.4 strict  97.4 all  83.2 | R@10 loose  99.1 strict  99.1 all  90.6
+
+OD-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  89.8 strict  89.8 all  31.0 | R@3 loose  96.2 strict  96.2 all  79.4 | R@5 loose  98.4 strict  98.4 all  86.4 | R@10 loose  99.2 strict  99.2 all  94.0
+  no _abs (n=470): R@1 loose  90.2 strict  90.2 all  32.3 | R@3 loose  96.6 strict  96.6 all  80.6 | R@5 loose  98.5 strict  98.5 all  87.2 | R@10 loose  99.1 strict  99.1 all  94.3
+
+ED-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  86.4 strict  86.4 all  28.4 | R@3 loose  95.0 strict  95.0 all  77.0 | R@5 loose  97.0 strict  97.0 all  84.4 | R@10 loose  98.8 strict  98.8 all  91.0
+  no _abs (n=470): R@1 loose  86.4 strict  86.4 all  29.4 | R@3 loose  95.1 strict  95.1 all  77.9 | R@5 loose  97.0 strict  97.0 all  84.9 | R@10 loose  98.7 strict  98.7 all  91.5
+
+F-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  89.8 strict  89.8 all  31.0 | R@3 loose  96.2 strict  96.2 all  79.4 | R@5 loose  98.4 strict  98.4 all  86.4 | R@10 loose  99.2 strict  99.2 all  94.0
+  no _abs (n=470): R@1 loose  90.2 strict  90.2 all  32.3 | R@3 loose  96.6 strict  96.6 all  80.6 | R@5 loose  98.5 strict  98.5 all  87.2 | R@10 loose  99.1 strict  99.1 all  94.3
+
+EF-lifted.jsonl: 500 rows, 0 retrieved ids outside their own haystack
+  all 500 (n=500): R@1 loose  86.4 strict  86.4 all  28.4 | R@3 loose  95.0 strict  95.0 all  77.0 | R@5 loose  97.0 strict  97.0 all  84.4 | R@10 loose  98.8 strict  98.8 all  91.0
+  no _abs (n=470): R@1 loose  86.4 strict  86.4 all  29.4 | R@3 loose  95.1 strict  95.1 all  77.9 | R@5 loose  97.0 strict  97.0 all  84.9 | R@10 loose  98.7 strict  98.7 all  91.5

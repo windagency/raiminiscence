@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [{ "command": "npx raiminiscence-hooks-shim" }],
+    "stop": [{ "command": "npx raiminiscence-hooks-shim" }]
+  }
+}

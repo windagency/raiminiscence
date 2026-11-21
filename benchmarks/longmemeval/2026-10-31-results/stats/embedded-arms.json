@@ -1,0 +1,251 @@
+{
+  "n": 500,
+  "chance_r5": 0.189,
+  "bootstrap": "pairedBootstrap (src/eval-stats.ts), 10000 resamples, seed 1, 95% percentile interval",
+  "runs": {
+    "B-lifted": {
+      "r5": {
+        "estimate": 0.974,
+        "low": 0.96,
+        "high": 0.986,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.0
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122282.0,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.652,
+      "recall_seconds_p90": 0.738
+    },
+    "A-lifted": {
+      "r5": {
+        "estimate": 0.968,
+        "low": 0.952,
+        "high": 0.982,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 96.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 95.5
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122282.0,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.183,
+      "recall_seconds_p90": 0.199
+    },
+    "ER-lifted": {
+      "r5": {
+        "estimate": 0.872,
+        "low": 0.842,
+        "high": 0.9,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 97.4
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 89.5
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 56.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 80.0
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 84.2
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.7885,
+      "recall_seconds_p90": 0.904
+    },
+    "EF-lifted": {
+      "r5": {
+        "estimate": 0.97,
+        "low": 0.954,
+        "high": 0.984,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.7
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 80.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 96.2
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.805,
+      "recall_seconds_p90": 0.919
+    },
+    "F-lifted": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.368,
+      "recall_seconds_p90": 0.425
+    }
+  },
+  "pairs": {
+    "EF-lifted - B-lifted": {
+      "estimate": -0.004,
+      "low": -0.016,
+      "high": 0.006,
+      "iterations": 10000,
+      "hit_only_first": 3,
+      "hit_only_second": 5
+    },
+    "EF-lifted - A-lifted": {
+      "estimate": 0.002,
+      "low": -0.012,
+      "high": 0.016,
+      "iterations": 10000,
+      "hit_only_first": 6,
+      "hit_only_second": 5
+    },
+    "EF-lifted - ER-lifted": {
+      "estimate": 0.098,
+      "low": 0.072,
+      "high": 0.126,
+      "iterations": 10000,
+      "hit_only_first": 51,
+      "hit_only_second": 2
+    },
+    "EF-lifted - F-lifted": {
+      "estimate": -0.014,
+      "low": -0.026,
+      "high": -0.004,
+      "iterations": 10000,
+      "hit_only_first": 1,
+      "hit_only_second": 8
+    }
+  }
+}

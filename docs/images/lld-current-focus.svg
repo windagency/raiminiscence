@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 873 413" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>currentFocus sequence: engine.overview() reads checkpoint Memories, keeps active ones sorted newest first, takes the first as project focus and the first matching the writer identity as own focus</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">currentFocus picks Checkpoints by recency, not Strength: the newest overall and the newest by this writer</text>
+
+  <line x1="102" y1="81" x2="102" y2="379" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="30" y="48" width="143" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="102" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">engine.overview()</text>
+  <line x1="292" y1="81" x2="292" y2="379" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="244" y="48" width="94" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="292" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">storage.ts</text>
+  <line x1="482" y1="81" x2="482" y2="379" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="386" y="48" width="192" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="482" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">writerIdentityProvider()</text>
+
+  <text x="196" y="107" font-size="11" fill="var(--text-secondary)" text-anchor="middle">readAllMemories(root, [&quot;checkpoint&quot;])</text>
+  <line x1="102" y1="117" x2="288" y2="117" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M102,143 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="144" y="154" font-size="11" fill="var(--text-secondary)">filter isActive, sort by createdAt desc (recency, not</text>
+  <text x="144" y="168" font-size="11" fill="var(--text-secondary)">Strength)</text>
+  <text x="292" y="193" font-size="11" fill="var(--text-secondary)" text-anchor="middle">() → { gitName, gitEmail, sessionId }</text>
+  <line x1="102" y1="203" x2="478" y2="203" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M102,229 h34 v22 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="144" y="240" font-size="11" fill="var(--text-secondary)">project = checkpoints[0] ?? null</text>
+  <path d="M102,273 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="144" y="284" font-size="11" fill="var(--text-secondary)">own = checkpoints.find(matchesWriter(identity)) ??</text>
+  <text x="144" y="298" font-size="11" fill="var(--text-secondary)">null</text>
+  <path d="M102,323 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="144" y="334" font-size="11" fill="var(--text-secondary)">currentFocus: { own, project } (each an</text>
+  <text x="144" y="348" font-size="11" fill="var(--text-secondary)">OverviewResultItem | null)</text>
+
+  <text x="20" y="401" font-size="11.5" fill="var(--text-muted)">Sequence: Checkpoint &amp; currentFocus (v13)</text>
+</svg>

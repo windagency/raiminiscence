@@ -1,0 +1,132 @@
+{
+  "_comment": "Invalidation correctness scenarios, hand-authored ground truth. Each scenario names memories that SHOULD be invalidated (targetMemories) by the given trigger, and 'bystander' memories that share a substring/token/topic with the trigger but MUST NOT be invalidated. Mirrors hippo-memory's own 'BYSTANDER LOCK' regression-test class (see benchmarks/README.md). Scenarios 1-4 exercise rAIminiscence's v9 Commit Invalidation (a memory with no relatedFiles, staled when its body mentions the outgoing target of a qualifying commit-subject shape: migrate/switch/move/convert/transition/upgrade ... from X to Y, replace X with Y, deprecate X, remove/drop X). Scenario 5 exercises rAIminiscence's v2 file-based invalidation instead (a memory anchored via relatedFiles, staled when git shows one of those files changed after the memory's createdAt). For hippo-memory, every scenario is driven via its own single invalidation primitive, `hippo invalidate \"<pattern>\"` (content-overlap matching) — see benchmarks/README.md's mapping-compromise note on why scenario 5's file-anchoring semantics can't be reproduced faithfully in hippo-memory.",
+  "scenarios": [
+    {
+      "id": "webpack-to-vite",
+      "mechanism": "commit-message",
+      "description": "A commit moving the build off webpack should invalidate memories describing webpack usage, without touching unrelated memories that merely share the 'web' prefix.",
+      "commitSubject": "migrate build from webpack to vite",
+      "extractedTarget": "webpack",
+      "hippoPattern": "webpack",
+      "targetMemories": [
+        { "id": "inv-m01", "kind": "episodic", "content": "The build uses webpack for bundling." },
+        { "id": "inv-m02", "kind": "semantic", "content": "webpack.config.js defines multiple entry points for the app." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b01", "kind": "episodic", "content": "We host a webinar every month for new engineering hires." },
+        { "id": "inv-b02", "kind": "semantic", "content": "Add web accessibility linting (eslint-plugin-jsx-a11y) to the CI pipeline." }
+      ]
+    },
+    {
+      "id": "jest-to-vitest",
+      "mechanism": "commit-message",
+      "description": "A commit replacing Jest with Vitest should invalidate the Jest-runner memory, without catching an unrelated word that merely contains 'jest' as a substring.",
+      "commitSubject": "replace jest with vitest",
+      "extractedTarget": "jest",
+      "hippoPattern": "jest",
+      "targetMemories": [
+        { "id": "inv-m03", "kind": "episodic", "content": "Unit tests are written with jest and run via `npm test`." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b03", "kind": "episodic", "content": "The team celebrated at an end-of-quarter party with jesters and games." }
+      ]
+    },
+    {
+      "id": "deprecate-legacyauth",
+      "mechanism": "commit-message",
+      "description": "Deprecating legacyAuth should invalidate the memory describing it, without catching a longer word that contains it as a non-word-boundary substring (naive substring matching's classic failure mode).",
+      "commitSubject": "deprecate legacyAuth",
+      "extractedTarget": "legacyAuth",
+      "hippoPattern": "legacyAuth",
+      "targetMemories": [
+        { "id": "inv-m04", "kind": "episodic", "content": "legacyAuth handles session tokens for old client versions." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b04", "kind": "episodic", "content": "The legacyAuthentication docs are on the wiki archive." }
+      ]
+    },
+    {
+      "id": "remove-moment",
+      "mechanism": "commit-message",
+      "description": "KNOWN-LIMITATION scenario, included for honesty rather than to flatter either system: removing the 'moment' date library collides with the ordinary English word 'moment'. A word-boundary-aware (or naive substring) matcher cannot tell these apart from the commit subject alone, so the bystander here is expected to fail on both systems unless one does semantic/topic disambiguation.",
+      "commitSubject": "remove moment",
+      "extractedTarget": "moment",
+      "hippoPattern": "moment",
+      "targetMemories": [
+        { "id": "inv-m05", "kind": "episodic", "content": "We depend on moment for dates." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b05", "kind": "episodic", "content": "That was a defining moment for the product's roadmap." }
+      ]
+    },
+    {
+      "id": "redux-to-zustand",
+      "mechanism": "commit-message",
+      "description": "A commit switching state management from Redux to Zustand should invalidate the Redux memory, without catching a compound-word tool name that contains 'Redux' as a non-word-boundary substring (same word-boundary class of test as deprecate-legacyAuth, different verb: 'switch ... from X to Y').",
+      "commitSubject": "switch state management from Redux to Zustand",
+      "extractedTarget": "Redux",
+      "hippoPattern": "Redux",
+      "targetMemories": [
+        { "id": "inv-m07", "kind": "semantic", "content": "Global UI state is managed with Redux, using slices under src/store/." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b07", "kind": "episodic", "content": "The ReduxDevTools browser extension is still installed for debugging other, unrelated projects." }
+      ]
+    },
+    {
+      "id": "class-components-to-hooks",
+      "mechanism": "commit-message",
+      "description": "A commit converting a widget library from class components to hooks should invalidate memories describing the class-components usage, without catching a memory that mentions the same two words in reversed order ('component classes'), which is not the same phrase the word-boundary matcher looks for.",
+      "commitSubject": "convert legacy widgets from class components to hooks",
+      "extractedTarget": "class components",
+      "hippoPattern": "class components",
+      "targetMemories": [
+        { "id": "inv-m08", "kind": "episodic", "content": "The legacy widget library still uses class components with lifecycle methods." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b08", "kind": "semantic", "content": "Component classes are organized under src/components/, one directory per feature area." }
+      ]
+    },
+    {
+      "id": "node-18-to-22",
+      "mechanism": "commit-message",
+      "description": "A commit upgrading the runtime version should invalidate the memory pinning the old version, exercising the 'upgrade ... from X to Y' shape with a multi-word, numeric target (not yet covered by the other commit-message scenarios above).",
+      "commitSubject": "upgrade the runtime from Node 18 to Node 22",
+      "extractedTarget": "Node 18",
+      "hippoPattern": "Node 18",
+      "targetMemories": [
+        { "id": "inv-m09", "kind": "episodic", "content": "The runtime is currently pinned to Node 18 in the Dockerfile and CI config." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b09", "kind": "episodic", "content": "An onboarding doc links to a 2019 blog post about why the team originally chose Node over Deno; it does not mention any specific version." }
+      ]
+    },
+    {
+      "id": "drop-react-admin",
+      "mechanism": "commit-message",
+      "description": "A commit dropping React should invalidate the memory describing that usage, exercising the 'drop' verb of the remove/drop shape (the existing remove-moment scenario only exercises 'remove'), with a word-boundary bystander sharing 'React' as a non-word-boundary substring. The commit subject is deliberately just 'drop React', not 'drop React from the admin panel' — the remove/drop shape's regex (`/\\b(?:remove|drop)\\s+(.+?)\\s*$/i`) has no 'from'-stripping like the migrate/switch/... shape does, so anything after the target would be captured as part of it too, and the target would then never match the memory body.",
+      "commitSubject": "drop React",
+      "extractedTarget": "React",
+      "hippoPattern": "React",
+      "targetMemories": [
+        { "id": "inv-m10", "kind": "semantic", "content": "The admin panel is built with React, using function components and hooks." }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b10", "kind": "episodic", "content": "ReactiveX-style Observables power the analytics pipeline, unrelated to the UI framework." }
+      ]
+    },
+    {
+      "id": "webpack-config-file-changed",
+      "mechanism": "file-based",
+      "description": "rAIminiscence-specific v2 mechanism: a memory anchored to a relatedFiles path is staled when git shows that exact file changed after the memory's createdAt, independent of the memory's textual content. The bystander here is anchored to a *different* file that was not touched.",
+      "changedFile": "webpack.config.js",
+      "hippoPattern": "webpack.config.js",
+      "targetMemories": [
+        { "id": "inv-m06", "kind": "semantic", "content": "webpack.config.js splits vendor and app code into separate bundles for production.", "relatedFiles": ["webpack.config.js"] }
+      ],
+      "bystanderMemories": [
+        { "id": "inv-b06", "kind": "episodic", "content": "src/index.ts bootstraps the React app and mounts the router.", "relatedFiles": ["src/index.ts"] }
+      ]
+    }
+  ]
+}

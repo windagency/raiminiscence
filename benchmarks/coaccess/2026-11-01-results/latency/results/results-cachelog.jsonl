@@ -1,0 +1,8 @@
+{"build":"fullbody","mode":"scoring","medianMs":15.8,"minMs":14.4,"maxMs":21.6,"storeSize":1500}
+{"build":"fullbody","mode":"e2e","medianMs":29,"minMs":27,"maxMs":35.2,"storeSize":1500}
+{"build":"cachelog","mode":"scoring","medianMs":15,"minMs":14,"maxMs":20.6,"storeSize":1500}
+{"build":"cachelog","mode":"e2e","medianMs":29.1,"minMs":27,"maxMs":37.1,"storeSize":1500}
+{"build":"fullbody","mode":"scoring","medianMs":64.3,"minMs":63.2,"maxMs":74,"storeSize":15000}
+{"build":"fullbody","mode":"e2e","medianMs":86.9,"minMs":78.9,"maxMs":192.3,"storeSize":15000}
+{"build":"cachelog","mode":"scoring","medianMs":57.4,"minMs":56.5,"maxMs":64.8,"storeSize":15000}
+{"build":"cachelog","mode":"e2e","medianMs":78.3,"minMs":72.8,"maxMs":199,"storeSize":15000}

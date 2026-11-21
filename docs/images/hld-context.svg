@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>System context: the developer installs, configures and inspects rAIminiscence; the AI coding agent calls its tools over MCP; rAIminiscence reads and writes the project filesystem, optionally embeds through Ollama, and optionally fetches and pushes a git remote for Shared Memory</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">The only required external system is the project filesystem; Ollama and a git remote are both opt-in</text>
+
+  <rect x="300" y="270" width="600" height="130" rx="14" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="314" y="290" font-size="12" font-weight="700" fill="var(--text-muted)">rAIminiscence [Software System]</text>
+  <path d="M270,140 C270,210 470,210 470,302" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M930,140 C930,210 730,210 730,302" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,380 C420,450 210,450 210,518" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M600,380 L600,518" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M780,380 C780,450 990,450 990,518" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <rect x="100" y="56" width="340" height="84" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="270" y="88" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Developer</text>
+  <text x="270" y="104" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Person]</text>
+  <text x="270" y="118" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">Works on a project across sessions</text>
+  <rect x="760" y="56" width="340" height="84" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="930" y="88" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">AI Coding Agent</text>
+  <text x="930" y="104" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Person / Software System]</text>
+  <text x="930" y="118" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">Claude Code, Cursor, or Codex CLI</text>
+  <rect x="360" y="304" width="480" height="76" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="600" y="331" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">rAIminiscence</text>
+  <text x="600" y="347" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">Local, zero-infrastructure persistent</text>
+  <text x="600" y="363" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">memory for AI coding agents</text>
+  <text x="250" y="178" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">installs, configures, optionally inspects</text>
+  <text x="250" y="192" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">memory files or runs raiminiscence-inspect</text>
+  <text x="250" y="205" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">(v15) directly</text>
+  <text x="950" y="178" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">remember / recall / overview / forget /</text>
+  <text x="950" y="192" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">feedback / conflict / consolidate /</text>
+  <text x="950" y="205" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">inspect (v15) via MCP</text>
+  <rect x="30" y="520" width="360" height="110" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25" stroke-dasharray="5 4"/>
+  <text x="210" y="550" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Ollama</text>
+  <text x="210" y="567" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[External Software System, optional]</text>
+  <text x="210" y="581" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">Opt-in alternate embedding provider</text>
+  <text x="210" y="595" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">(nomic-embed-text), selected by explicit</text>
+  <text x="210" y="609" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">config; degrades to lexical fallback</text>
+  <rect x="420" y="520" width="360" height="110" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="600" y="550" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Project filesystem</text>
+  <text x="600" y="567" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[External System]</text>
+  <text x="600" y="581" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">.raiminiscence/memory/, gitignored by default,</text>
+  <text x="600" y="595" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">or a git worktree once Shared Memory</text>
+  <text x="600" y="609" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">(v11) opts in</text>
+  <rect x="810" y="520" width="360" height="110" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25" stroke-dasharray="5 4"/>
+  <text x="990" y="557" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Git remote</text>
+  <text x="990" y="574" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[External System, optional]</text>
+  <text x="990" y="588" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">origin&#x27;s raiminiscence-memory branch,</text>
+  <text x="990" y="602" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">v11 Shared Memory only</text>
+  <text x="290" y="425" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">embed(text), best-effort,</text>
+  <text x="290" y="439" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">opt-in via config (v17)</text>
+  <text x="612" y="455" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">read/write Markdown + YAML</text>
+  <text x="1000" y="450" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">fetch/push,</text>
+  <text x="1000" y="464" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">v11 opt-in only</text>
+
+  <text x="20" y="688" font-size="11.5" fill="var(--text-muted)">System context (C4 level 1)</text>
+</svg>

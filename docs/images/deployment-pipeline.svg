@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1420 600" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Deployment pipeline: a PR into main, release/** or int runs ci.yml, dependency-review.yml, pr-title.yml and, into main, allowed-merge-source.yml; a merge into main or release/** runs publish.yml, which re-runs the checks, writes an SBOM and runs semantic-release, producing four staged npm packages approved with 2FA, a GitHub Release with the SBOM, and a version-bump commit and tag; a merge into int produces no release</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">Only a merge into main or release/** can release, and only after semantic-release finds a releasable commit</text>
+
+  <path d="M250,142 C290,142 290,65 328,65" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M250,142 C290,142 290,117 328,117" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M250,142 C290,142 290,169 328,169" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M250,142 C290,142 290,221 328,221" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M250,372 L288,372" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M480,372 L518,372" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M740,372 L778,372" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M910,372 L948,372" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1120,372 C1145,372 1145,294 1168,294" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1120,372 C1145,372 1145,372 1168,372" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1120,372 C1145,372 1145,450 1168,450" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M250,528 L288,528" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="20" y="110" width="230" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="135" y="139" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">PR into main,</text>
+  <text x="135" y="155" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">release/**, or int</text>
+  <rect x="330" y="44" width="470" height="42" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="565" y="69" font-size="12" font-weight="700" fill="var(--text-primary)" text-anchor="middle">ci.yml: verify, node-compat, audit, lint-commits, gitleaks, tdd-order*</text>
+  <rect x="330" y="96" width="470" height="42" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="565" y="121" font-size="12" font-weight="700" fill="var(--text-primary)" text-anchor="middle">dependency-review.yml</text>
+  <rect x="330" y="148" width="470" height="42" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="565" y="173" font-size="12" font-weight="700" fill="var(--text-primary)" text-anchor="middle">pr-title.yml: Validate PR title</text>
+  <rect x="330" y="200" width="470" height="42" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="565" y="225" font-size="12" font-weight="700" fill="var(--text-primary)" text-anchor="middle">allowed-merge-source.yml**</text>
+  <rect x="20" y="340" width="230" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="135" y="369" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Merge into main</text>
+  <text x="135" y="385" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">or release/**</text>
+  <rect x="290" y="340" width="190" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="385" y="369" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">publish.yml</text>
+  <text x="385" y="385" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">npm environment</text>
+  <rect x="520" y="340" width="220" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="630" y="361" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Re-run checks</text>
+  <text x="630" y="377" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">lint, licences, back-links,</text>
+  <text x="630" y="393" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">build, typecheck, tests</text>
+  <rect x="780" y="340" width="130" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="845" y="369" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">SBOM</text>
+  <text x="845" y="385" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">syft</text>
+  <rect x="950" y="340" width="170" height="64" rx="10" fill="var(--highlight-fill)" stroke="var(--highlight-stroke)" stroke-width="1.5"/>
+  <text x="1035" y="369" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">semantic-release</text>
+  <text x="1035" y="385" font-size="11.5" fill="var(--text-highlight)" text-anchor="middle">commit-analyzer verdict</text>
+  <rect x="1170" y="262" width="230" height="64" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1285" y="291" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">4 staged npm packages</text>
+  <text x="1285" y="307" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">approved with 2FA</text>
+  <rect x="1170" y="340" width="230" height="64" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1285" y="369" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">GitHub Release</text>
+  <text x="1285" y="385" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">with the SBOM</text>
+  <rect x="1170" y="418" width="230" height="64" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1285" y="447" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Version-bump commit</text>
+  <text x="1285" y="463" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">and v tag</text>
+  <rect x="20" y="500" width="230" height="56" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="135" y="532" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Merge into int</text>
+  <rect x="290" y="500" width="190" height="56" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="385" y="532" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">No release</text>
+
+  <text x="20" y="588" font-size="11.5" fill="var(--text-muted)">Deployment pipeline</text>
+</svg>

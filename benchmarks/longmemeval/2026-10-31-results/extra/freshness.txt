@@ -1,0 +1,34 @@
+knowledge-update questions: 78
+update ranked above stale value
+  B-lifted        56.4
+  A-lifted        59.0   vs B-lifted: +2.6 [-6.4, +11.5]
+  R-lifted        44.9   vs B-lifted: -11.5 [-24.4, +1.3]
+  F-lifted        50.0   vs B-lifted: -6.4 [-16.7, +2.6]
+  OD-lifted       50.0   vs B-lifted: -6.4 [-16.7, +2.6]
+  ER-lifted       51.3   vs B-lifted: -5.1 [-19.2, +10.3]
+  EF-lifted       57.7   vs B-lifted: +1.3 [-10.3, +12.8]
+  ED-lifted       57.7   vs B-lifted: +1.3 [-10.3, +12.8]
+  B-slept-lifted  55.1   vs B-lifted: -1.3 [-3.8, +0.0]
+  F-slept-lifted  50.0   vs B-lifted: -6.4 [-16.7, +2.6]
+update ranked first
+  B-lifted        55.1
+  A-lifted        59.0   vs B-lifted: +3.8 [-6.4, +14.1]
+  R-lifted        35.9   vs B-lifted: -19.2 [-30.8, -7.7]
+  F-lifted        47.4   vs B-lifted: -7.7 [-17.9, +2.6]
+  OD-lifted       47.4   vs B-lifted: -7.7 [-17.9, +2.6]
+  ER-lifted       37.2   vs B-lifted: -17.9 [-32.1, -2.6]
+  EF-lifted       52.6   vs B-lifted: -2.6 [-14.1, +9.0]
+  ED-lifted       52.6   vs B-lifted: -2.6 [-14.1, +9.0]
+  B-slept-lifted  53.8   vs B-lifted: -1.3 [-3.8, +0.0]
+  F-slept-lifted  46.2   vs B-lifted: -9.0 [-19.2, +1.3]
+stale value ranked first
+  B-lifted        41.0
+  A-lifted        34.6   vs B-lifted: -6.4 [-16.7, +3.8]
+  R-lifted        44.9   vs B-lifted: +3.8 [-7.7, +15.4]
+  F-lifted        46.2   vs B-lifted: +5.1 [-3.8, +14.1]
+  OD-lifted       46.2   vs B-lifted: +5.1 [-3.8, +14.1]
+  ER-lifted       41.0   vs B-lifted: +0.0 [-15.4, +15.4]
+  EF-lifted       41.0   vs B-lifted: +0.0 [-11.5, +11.5]
+  ED-lifted       41.0   vs B-lifted: +0.0 [-11.5, +11.5]
+  B-slept-lifted  42.3   vs B-lifted: +1.3 [+0.0, +3.8]
+  F-slept-lifted  42.3   vs B-lifted: +1.3 [-7.7, +10.3]

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1342 210" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Consolidation pipeline: re-embedding, clustering, promotion, promotion audit, commit invalidation, pruning, then invalidation, in that fixed order over the whole store</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">consolidate runs the same seven steps in a fixed order over the whole store</text>
+
+  <path d="M182,112 L208,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M372,112 L398,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M562,112 L588,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M752,112 L778,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M942,112 L968,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1132,112 L1158,112" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="20" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="101" y="101" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">1. Re-embedding</text>
+  <text x="101" y="117" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">heal mismatched</text>
+  <text x="101" y="133" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">vectors</text>
+  <rect x="210" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="291" y="87" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">2. Clustering</text>
+  <text x="291" y="103" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">group similar</text>
+  <text x="291" y="118" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">episodic memories</text>
+  <text x="291" y="133" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">skips contradicts /</text>
+  <text x="291" y="147" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">net-negative feedback</text>
+  <rect x="400" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="481" y="101" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">3. Promotion</text>
+  <text x="481" y="117" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">cluster to new</text>
+  <text x="481" y="133" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">semantic memory</text>
+  <rect x="590" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="671" y="93" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">4. Promotion Audit</text>
+  <text x="671" y="109" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">re-check promoted</text>
+  <text x="671" y="125" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">memories against</text>
+  <text x="671" y="140" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">current conflict state</text>
+  <rect x="780" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="861" y="92" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">5. Commit</text>
+  <text x="861" y="110" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Invalidation</text>
+  <text x="861" y="126" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">stale on matching</text>
+  <text x="861" y="142" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">commit subject</text>
+  <rect x="970" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1051" y="101" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">6. Pruning</text>
+  <text x="1051" y="117" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">delete anything</text>
+  <text x="1051" y="133" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">below 0.05 strength</text>
+  <rect x="1160" y="56" width="162" height="112" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1241" y="101" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">7. Invalidation</text>
+  <text x="1241" y="117" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">stale on related-file</text>
+  <text x="1241" y="133" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">git changes</text>
+
+  <text x="20" y="198" font-size="11.5" fill="var(--text-muted)">Consolidation pipeline</text>
+</svg>

@@ -1,0 +1,32 @@
+version: 2
+updates:
+  # PRs target int, not main: main only accepts merges from int or hotfix-* (allowed-merge-source.yml).
+  - package-ecosystem: npm
+    directories:
+      - /
+      - /packages/*
+    target-branch: int
+    ignore:
+      # @semantic-release/release-notes-generator 14 ships conventional-changelog-writer 8; this preset needs
+      # writer 9 from v10 on and breaks release notes. Lift once the generator moves to writer 9.
+      - dependency-name: conventional-changelog-conventionalcommits
+        versions: [">=10.0.0"]
+      # Types track the engines floor (Node 22), not the newest Node: a newer major describes APIs that
+      # Node 22 lacks. Patch/minor updates still come through.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: build
+      include: scope
+
+  # Every action is pinned to a commit SHA; this is what keeps those pins current.
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: int
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+      include: scope

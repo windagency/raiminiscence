@@ -1,0 +1,60 @@
+{
+  "name": "raiminiscence-cli",
+  "version": "0.1.0",
+  "description": "raiminiscence-inspect: explains why an rAIminiscence memory ranks where it does, from a terminal. Read-only.",
+  "keywords": [
+    "mcp",
+    "memory",
+    "agent-memory",
+    "cli",
+    "inspect",
+    "claude-code",
+    "ai-agents"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "raiminiscence-inspect": "./dist/inspect-cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "raiminiscence-argv": "workspace:*",
+    "raiminiscence-mcp": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windagency/raiminiscence.git",
+    "directory": "packages/raiminiscence-cli"
+  },
+  "homepage": "https://github.com/windagency/raiminiscence/tree/main/packages/raiminiscence-cli#readme",
+  "bugs": {
+    "url": "https://github.com/windagency/raiminiscence/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "imports": {
+    "#src/*": {
+      "source": "./src/*",
+      "default": "./dist/*"
+    }
+  }
+}

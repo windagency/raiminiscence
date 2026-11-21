@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.raiminiscence/
+*.tsbuildinfo
+benchmarks/longmemeval/data/
+coverage/
+.scratch/
+.DS_Store
+.vscode/
+release-tarball/
+sbom.cdx.json
+# Internal one-time setup checklist, not for the public repository.
+SETUP_CHECKLIST.md

@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1466 1064" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>SessionStart hook sequence: the shim resolves the storage root, asks primer.ts for an overview-based primer with a 2 second budget, asks shared-memory-sync.ts to set up and pull Shared Memory when enabled, and writes the combined additionalContext or an empty object</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">Every SessionStart step degrades to an empty string; the primer gets 2 seconds and never throws</text>
+
+  <line x1="108" y1="96" x2="108" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="30" y="48" width="157" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="108" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Claude Code /Cursor</text>
+  <text x="108" y="84" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">/Codex CLI</text>
+  <line x1="314" y1="96" x2="314" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="211" y="48" width="206" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="314" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">shim.ts</text>
+  <text x="314" y="84" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">(raiminiscence-hooks-shim)</text>
+  <line x1="504" y1="96" x2="504" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="460" y="48" width="87" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="504" y="76" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">primer.ts</text>
+  <line x1="694" y1="96" x2="694" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="630" y="48" width="129" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="694" y="76" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">project-root.ts</text>
+  <line x1="884" y1="96" x2="884" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="812" y="48" width="143" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="884" y="76" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">engine.overview()</text>
+  <line x1="1074" y1="96" x2="1074" y2="1030" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="988" y="48" width="171" height="48" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1074" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">shared-memory-sync.ts</text>
+  <text x="1074" y="84" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">(v11)</text>
+
+  <rect x="12" y="602" width="1166" height="340" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="730" width="1150" height="132" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="12" y="324" width="1166" height="224" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="211" y="122" font-size="11" fill="var(--text-secondary)" text-anchor="middle">spawns process, pipes hook JSON on stdin ({ cwd,</text>
+  <text x="211" y="136" font-size="11" fill="var(--text-secondary)" text-anchor="middle">... })</text>
+  <line x1="108" y1="146" x2="311" y2="146" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M314,172 h34 v22 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="356" y="183" font-size="11" fill="var(--text-secondary)">parseCwd(stdin) → cwd</text>
+  <text x="504" y="216" font-size="11" fill="var(--text-secondary)" text-anchor="middle">resolveStorageRoot(cwd)</text>
+  <line x1="314" y1="226" x2="691" y2="226" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="409" y="252" font-size="11" fill="var(--text-secondary)" text-anchor="middle">primerText({ storageRoot })</text>
+  <line x1="314" y1="262" x2="501" y2="262" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="694" y="288" font-size="11" fill="var(--text-secondary)" text-anchor="middle">overview({ storageRoot }) — direct call, no MCP</text>
+  <line x1="504" y1="298" x2="881" y2="298" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="694" y="358" font-size="11" fill="var(--text-secondary)" text-anchor="middle">{ results, currentFocus } (v13: currentFocus added)</text>
+  <line x1="884" y1="368" x2="507" y2="368" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="409" y="394" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;[kind, confidence] summary&quot; lines, joined by</text>
+  <text x="409" y="408" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;\n&quot;,</text>
+  <text x="409" y="422" font-size="11" fill="var(--text-secondary)" text-anchor="middle">plus &quot;[currentFocus:own] ...&quot; /</text>
+  <text x="409" y="436" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;[currentFocus:project] ...&quot; lines (v13, when</text>
+  <text x="409" y="450" font-size="11" fill="var(--text-secondary)" text-anchor="middle">present)</text>
+  <line x1="504" y1="460" x2="317" y2="460" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="409" y="516" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;&quot; (silently — never throws)</text>
+  <line x1="504" y1="526" x2="317" y2="526" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <rect x="12" y="324" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="20" y="337" font-size="11" font-weight="700" fill="var(--text-on-fill)">alt</text>
+  <text x="54" y="337" font-size="11" font-style="italic" fill="var(--text-muted)">[resolves within 2s]</text>
+  <line x1="12" y1="486" x2="1178" y2="486" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="500" font-size="11" font-style="italic" fill="var(--text-muted)">[times out or throws]</text>
+  <text x="694" y="566" font-size="11" fill="var(--text-secondary)" text-anchor="middle">sharedMemorySessionStartNote({ storageRoot, cwd }) (v11)</text>
+  <line x1="314" y1="576" x2="1071" y2="576" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1074,636 h34 v22 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="1116" y="647" font-size="11" fill="var(--text-secondary)">ensureSharedMemoryWorktree(storageRoot) — idempotent</text>
+  <path d="M1074,680 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="1116" y="691" font-size="11" fill="var(--text-secondary)">pullSharedMemory(storageRoot) — fetch + merge,</text>
+  <text x="1116" y="705" font-size="11" fill="var(--text-secondary)">explicit</text>
+  <text x="694" y="764" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;[Shared Memory] Auto-resolved a merge conflict in: ...&quot;</text>
+  <line x1="1074" y1="774" x2="317" y2="774" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="694" y="830" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;&quot; (silently)</text>
+  <line x1="1074" y1="840" x2="317" y2="840" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <rect x="20" y="730" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="743" font-size="11" font-weight="700" fill="var(--text-on-fill)">alt</text>
+  <text x="62" y="743" font-size="11" font-style="italic" fill="var(--text-muted)">[merge driver had to resolve something]</text>
+  <line x1="20" y1="800" x2="1170" y2="800" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="28" y="814" font-size="11" font-style="italic" fill="var(--text-muted)">[fast-forward or nothing to reconcile, or setup/pull failed]</text>
+  <text x="694" y="910" font-size="11" fill="var(--text-secondary)" text-anchor="middle">&quot;&quot; (no-op, setup/pull never called)</text>
+  <line x1="1074" y1="920" x2="317" y2="920" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <rect x="12" y="602" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="20" y="615" font-size="11" font-weight="700" fill="var(--text-on-fill)">alt</text>
+  <text x="54" y="615" font-size="11" font-style="italic" fill="var(--text-muted)">[sharedMemory: true in config]</text>
+  <line x1="12" y1="880" x2="1178" y2="880" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="894" font-size="11" font-style="italic" fill="var(--text-muted)">[sharedMemory not enabled]</text>
+  <text x="211" y="960" font-size="11" fill="var(--text-secondary)" text-anchor="middle">stdout:</text>
+  <text x="211" y="974" font-size="11" fill="var(--text-secondary)" text-anchor="middle">{&quot;hookSpecificOutput&quot;:{&quot;additionalContext&quot;:&quot;&lt;primer&gt;\n&lt;shared-memory-note&gt;&quot;}}</text>
+  <text x="211" y="988" font-size="11" fill="var(--text-secondary)" text-anchor="middle">or {}</text>
+  <line x1="314" y1="998" x2="112" y2="998" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <text x="20" y="1052" font-size="11.5" fill="var(--text-muted)">Sequence: SessionStart hook flow</text>
+</svg>

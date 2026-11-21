@@ -1,0 +1,22 @@
+{
+  "benchmark": "longmemeval-retrieval",
+  "total_questions": 20,
+  "empty_retrievals": 0,
+  "overall": {
+    "recall@1": 70.0,
+    "recall@3": 90.0,
+    "recall@5": 90.0,
+    "recall@10": 100.0,
+    "answer_in_content@5": 0.0
+  },
+  "per_type": {
+    "single-session-user": {
+      "count": 20,
+      "recall@1": 70.0,
+      "recall@3": 90.0,
+      "recall@5": 90.0,
+      "recall@10": 100.0,
+      "answer_in_content@5": 0.0
+    }
+  }
+}

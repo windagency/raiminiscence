@@ -1,0 +1,113 @@
+{
+  "note": "Wall-clock on one Apple-silicon laptop, one worker per rAI arm, Ollama in Docker on CPU. hippo-memory A builds with BM25 only; B adds `hippo embed` per store.",
+  "write": {
+    "hippo-memory A": {
+      "stores": 500,
+      "remember_seconds_per_session_median": 0.127,
+      "build_hours_total": 0.91
+    },
+    "hippo-memory B embed seconds per store median": 8.42,
+    "rAIminiscence Ollama": {
+      "stores": 500,
+      "remember_seconds_per_session_median": 1.532,
+      "build_hours_total": 10.28
+    },
+    "rAIminiscence Embedded": {
+      "stores": 500,
+      "remember_seconds_per_session_median": 2.113,
+      "build_hours_total": 14.92
+    }
+  },
+  "recall": {
+    "B-lifted": {
+      "recall_seconds_median": 0.652,
+      "recall_seconds_p90": 0.738,
+      "returned_median": 47.0,
+      "returned_tokens_median": 122282.0
+    },
+    "A-lifted": {
+      "recall_seconds_median": 0.183,
+      "recall_seconds_p90": 0.199,
+      "returned_median": 47.0,
+      "returned_tokens_median": 122282.0
+    },
+    "R-lifted": {
+      "recall_seconds_median": 0.35,
+      "recall_seconds_p90": 0.409,
+      "returned_median": 48.0,
+      "returned_tokens_median": 3349.0
+    },
+    "F-lifted": {
+      "recall_seconds_median": 0.368,
+      "recall_seconds_p90": 0.425,
+      "returned_median": 48.0,
+      "returned_tokens_median": 3349.0
+    },
+    "B-slept-lifted": {
+      "recall_seconds_median": 0.727,
+      "recall_seconds_p90": 0.892,
+      "returned_median": 47.0,
+      "returned_tokens_median": 122236.5
+    },
+    "F-slept-lifted": {
+      "recall_seconds_median": 0.3735,
+      "recall_seconds_p90": 0.441,
+      "returned_median": 48.0,
+      "returned_tokens_median": 3408.0
+    },
+    "F-default": {
+      "recall_seconds_median": 0.154,
+      "recall_seconds_p90": 0.17,
+      "returned_median": 10.0,
+      "returned_tokens_median": 710.0
+    },
+    "B-default": {
+      "recall_seconds_median": 0.62,
+      "recall_seconds_p90": 0.699,
+      "returned_median": 2.0,
+      "returned_tokens_median": 3922.5
+    },
+    "A-default": {
+      "recall_seconds_median": 0.173,
+      "recall_seconds_p90": 0.188,
+      "returned_median": 2.0,
+      "returned_tokens_median": 3926.5
+    },
+    "ER-lifted": {
+      "recall_seconds_median": 0.7885,
+      "recall_seconds_p90": 0.904,
+      "returned_median": 48.0,
+      "returned_tokens_median": 3349.0
+    },
+    "EF-lifted": {
+      "recall_seconds_median": 0.805,
+      "recall_seconds_p90": 0.919,
+      "returned_median": 48.0,
+      "returned_tokens_median": 3349.0
+    },
+    "OD-lifted": {
+      "recall_seconds_median": 0.3535,
+      "recall_seconds_p90": 0.403,
+      "returned_median": 48.0,
+      "returned_tokens_median": 122594.0
+    },
+    "ED-lifted": {
+      "recall_seconds_median": 0.794,
+      "recall_seconds_p90": 0.843,
+      "returned_median": 48.0,
+      "returned_tokens_median": 122594.0
+    },
+    "OD-default": {
+      "recall_seconds_median": 0.154,
+      "recall_seconds_p90": 0.164,
+      "returned_median": 10.0,
+      "returned_tokens_median": 29655.5
+    },
+    "ED-default": {
+      "recall_seconds_median": 0.573,
+      "recall_seconds_p90": 0.586,
+      "returned_median": 10.0,
+      "returned_tokens_median": 28129.5
+    }
+  }
+}

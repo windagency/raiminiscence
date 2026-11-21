@@ -1,0 +1,172 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1670 1731" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>consolidate sequence: for each scope, consolidate.ts re-embeds mismatched Memories, clusters and promotes episodic Memories, runs the promotion audit, commit invalidation, pruning and file invalidation, each mutating step only when not a dry run, then flushes Shared Memory</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">Every write, delete and push inside a Consolidation pass is gated on dryRun; each scope runs independently</text>
+
+  <line x1="60" y1="81" x2="60" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="30" y="48" width="59" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="60" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Agent</text>
+  <line x1="250" y1="81" x2="250" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="206" y="48" width="87" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="250" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">server.ts</text>
+  <line x1="440" y1="81" x2="440" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="378" y="48" width="122" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="440" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">consolidate.ts</text>
+  <line x1="630" y1="81" x2="630" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="582" y="48" width="94" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="630" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">storage.ts</text>
+  <line x1="820" y1="81" x2="820" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="755" y="48" width="129" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="820" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">packed-index.ts</text>
+  <line x1="1010" y1="81" x2="1010" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="942" y="48" width="136" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1010" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">conflict-edge.ts</text>
+  <line x1="1200" y1="81" x2="1200" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="1124" y="48" width="150" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1200" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">promotion-audit.ts</text>
+  <line x1="1390" y1="81" x2="1390" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="1300" y="48" width="178" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1390" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">commit-invalidation.ts</text>
+  <line x1="1580" y1="81" x2="1580" y2="1697" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="1518" y="48" width="122" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1580" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">reembedding.ts</text>
+
+  <rect x="12" y="193" width="1646" height="1310" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="1409" width="1630" height="80" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="1311" width="1630" height="80" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="1127" width="1630" height="116" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="979" width="1630" height="80" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="831" width="1630" height="80" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="633" width="1630" height="130" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <rect x="20" y="299" width="1630" height="66" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="154" y="107" font-size="11" fill="var(--text-secondary)" text-anchor="middle">consolidate(scope?, dryRun?)</text>
+  <line x1="60" y1="117" x2="246" y2="117" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="344" y="143" font-size="11" fill="var(--text-secondary)" text-anchor="middle">consolidate({ scope, dryRun, storageRoot,</text>
+  <text x="344" y="157" font-size="11" fill="var(--text-secondary)" text-anchor="middle">embeddingProvider })</text>
+  <line x1="250" y1="167" x2="436" y2="167" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="630" y="227" font-size="11" fill="var(--text-secondary)" text-anchor="middle">getCachedEmbeddings(root), getCachedRecords(root)</text>
+  <line x1="440" y1="237" x2="816" y2="237" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="1010" y="263" font-size="11" fill="var(--text-secondary)" text-anchor="middle">mismatchedEmbeddings() — active Memories whose stored identity doesn&#x27;t match embeddingProvider.identity (v17)</text>
+  <line x1="440" y1="273" x2="1576" y2="273" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="1010" y="333" font-size="11" fill="var(--text-secondary)" text-anchor="middle">reembedMismatched() — recompute + upsertVector() per mismatched Memory; re-read the (now-invalidated) embeddings cache</text>
+  <line x1="440" y1="343" x2="1576" y2="343" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="299" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="312" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="312" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <text x="534" y="383" font-size="11" fill="var(--text-secondary)" text-anchor="middle">readAllMemories(root, [&quot;semantic&quot;]) →</text>
+  <text x="534" y="397" font-size="11" fill="var(--text-secondary)" text-anchor="middle">alreadyPromotedIds</text>
+  <line x1="440" y1="407" x2="626" y2="407" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="433" font-size="11" fill="var(--text-secondary)" text-anchor="middle">readAllMemories(root, [&quot;episodic&quot;]) minus</text>
+  <text x="534" y="447" font-size="11" fill="var(--text-secondary)" text-anchor="middle">already-promoted, minus stale/retracted</text>
+  <line x1="440" y1="457" x2="626" y2="457" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M440,483 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="482" y="494" font-size="11" fill="var(--text-secondary)">filter out any Memory with negativeFeedbackCount &gt;</text>
+  <text x="482" y="508" font-size="11" fill="var(--text-secondary)">positiveFeedbackCount (v7)</text>
+  <text x="724" y="533" font-size="11" fill="var(--text-secondary)" text-anchor="middle">readConflictIndex(root) (v6)</text>
+  <line x1="440" y1="543" x2="1006" y2="543" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M440,569 h34 v42 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="482" y="580" font-size="11" fill="var(--text-secondary)">clusterEpisodicMemories() — cosine similarity ≥ 0.82,</text>
+  <text x="482" y="594" font-size="11" fill="var(--text-secondary)">minus any candidate with a &quot;contradicts&quot; verdict</text>
+  <text x="482" y="608" font-size="11" fill="var(--text-secondary)">against the seed (v6)</text>
+  <text x="534" y="667" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory() new Semantic Memory per cluster</text>
+  <text x="534" y="681" font-size="11" fill="var(--text-secondary)" text-anchor="middle">(Promotion)</text>
+  <line x1="440" y1="691" x2="626" y2="691" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="717" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory() bump consolidationSurvivalCount on</text>
+  <text x="534" y="731" font-size="11" fill="var(--text-secondary)" text-anchor="middle">survivors</text>
+  <line x1="440" y1="741" x2="626" y2="741" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="633" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="646" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="646" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <text x="820" y="781" font-size="11" fill="var(--text-secondary)" text-anchor="middle">eligibleForPromotionAudit(root, conflictIndex) — every active Semantic Memory&#x27;s promotedFrom, all-pairs contradicts +</text>
+  <text x="820" y="795" font-size="11" fill="var(--text-secondary)" text-anchor="middle">net-negative checks (v8)</text>
+  <line x1="440" y1="805" x2="1196" y2="805" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="865" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory() with confidence: &quot;stale&quot;, staleAt,</text>
+  <text x="534" y="879" font-size="11" fill="var(--text-secondary)" text-anchor="middle">staleReason set, per flagged Semantic Memory</text>
+  <line x1="440" y1="889" x2="626" y2="889" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="831" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="844" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="844" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <text x="914" y="929" font-size="11" fill="var(--text-secondary)" text-anchor="middle">eligibleForCommitInvalidation(root, commitSubjects) — every active Memory with no relatedFiles, whose body mentions the outgoing target extracted from</text>
+  <text x="914" y="943" font-size="11" fill="var(--text-secondary)" text-anchor="middle">a qualifying commit subject dated after createdAt (v9)</text>
+  <line x1="440" y1="953" x2="1386" y2="953" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="1013" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory() with confidence: &quot;stale&quot;, staleAt,</text>
+  <text x="534" y="1027" font-size="11" fill="var(--text-secondary)" text-anchor="middle">staleReason set, per flagged Memory</text>
+  <line x1="440" y1="1037" x2="626" y2="1037" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="979" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="992" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="992" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <text x="534" y="1077" font-size="11" fill="var(--text-secondary)" text-anchor="middle">eligibleForPruning() — Strength &lt; 0.05, any</text>
+  <text x="534" y="1091" font-size="11" fill="var(--text-secondary)" text-anchor="middle">Kind/Tier</text>
+  <line x1="440" y1="1101" x2="626" y2="1101" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="1161" font-size="11" fill="var(--text-secondary)" text-anchor="middle">deleteMemory() per eligible Memory</text>
+  <line x1="440" y1="1171" x2="626" y2="1171" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="630" y="1197" font-size="11" fill="var(--text-secondary)" text-anchor="middle">removeVector(), removeConflictEdgesForId() (v5)</text>
+  <text x="630" y="1211" font-size="11" fill="var(--text-secondary)" text-anchor="middle">per eligible Memory</text>
+  <line x1="440" y1="1221" x2="816" y2="1221" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="1127" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="1140" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="1140" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <path d="M440,1261 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="482" y="1272" font-size="11" fill="var(--text-secondary)">eligibleForInvalidation() — a related git-tracked</text>
+  <text x="482" y="1286" font-size="11" fill="var(--text-secondary)">file changed after createdAt</text>
+  <text x="534" y="1345" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory() with confidence: &quot;stale&quot;, staleAt,</text>
+  <text x="534" y="1359" font-size="11" fill="var(--text-secondary)" text-anchor="middle">staleReason set</text>
+  <line x1="440" y1="1369" x2="626" y2="1369" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="1311" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="1324" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="1324" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <path d="M440,1443 h34 v28 h-30" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="482" y="1454" font-size="11" fill="var(--text-secondary)">flushSharedMemory(root) (v11) — no-op unless root is</text>
+  <text x="482" y="1468" font-size="11" fill="var(--text-secondary)">a Shared Memory worktree</text>
+  <rect x="20" y="1409" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="28" y="1422" font-size="11" font-weight="700" fill="var(--text-on-fill)">opt</text>
+  <text x="62" y="1422" font-size="11" font-style="italic" fill="var(--text-muted)">[not dryRun]</text>
+  <rect x="12" y="193" width="41" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="20" y="206" font-size="11" font-weight="700" fill="var(--text-on-fill)">loop</text>
+  <text x="61" y="206" font-size="11" font-style="italic" fill="var(--text-muted)">[for each scope (&quot;both&quot; → project and global independently)]</text>
+  <text x="344" y="1521" font-size="11" fill="var(--text-secondary)" text-anchor="middle">{ counts: { clustersFound, memoriesPromoted,</text>
+  <text x="344" y="1535" font-size="11" fill="var(--text-secondary)" text-anchor="middle">memoriesPruned, contributorsBumped,</text>
+  <text x="344" y="1549" font-size="11" fill="var(--text-secondary)" text-anchor="middle">newSemanticIds, memoriesInvalidated,</text>
+  <text x="344" y="1563" font-size="11" fill="var(--text-secondary)" text-anchor="middle">blockedJoinAttempts (v6), feedbackExcludedCount</text>
+  <text x="344" y="1577" font-size="11" fill="var(--text-secondary)" text-anchor="middle">(v7), promotionAuditConflictCount (v8),</text>
+  <text x="344" y="1591" font-size="11" fill="var(--text-secondary)" text-anchor="middle">promotionAuditFeedbackCount (v8),</text>
+  <text x="344" y="1605" font-size="11" fill="var(--text-secondary)" text-anchor="middle">memoriesCommitInvalidated (v9),</text>
+  <text x="344" y="1619" font-size="11" fill="var(--text-secondary)" text-anchor="middle">memoriesReembedded (v17) } }</text>
+  <line x1="440" y1="1629" x2="252" y2="1629" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="154" y="1655" font-size="11" fill="var(--text-secondary)" text-anchor="middle">tool result</text>
+  <line x1="250" y1="1665" x2="62" y2="1665" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <text x="20" y="1719" font-size="11.5" fill="var(--text-muted)">Sequence: consolidate</text>
+</svg>

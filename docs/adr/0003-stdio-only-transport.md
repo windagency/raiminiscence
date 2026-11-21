@@ -1,0 +1,5 @@
+# MCP transport is stdio-only; hosted/HTTP transport is out of scope
+
+[Back to 0040-the-hook-starts-a-warm-process-when-no-server-runs.md](0040-the-hook-starts-a-warm-process-when-no-server-runs.md) • [Back to docs/adr/README.md](README.md) • [Back to hld.md](../architecture/hld.md) • [Back to how-it-works.md](../how-it-works.md) • [Back to NEXT_STEPS.md](../../NEXT_STEPS.md)
+
+The server speaks MCP over stdio only: a local subprocess spawned by the calling client, with no networking or auth story. This matches the project's zero-infrastructure, local-first design and is the transport Claude Code, Cursor, and Codex CLI all support as their common case. A hosted/shared HTTP or SSE server is a different trust and deployment model entirely, and is explicitly out of scope for this project rather than a deferred v2 feature. (Team-shared memory itself was later delivered — see [ADR-0017](0017-v11-shared-memory-via-git-worktree.md) — entirely over git, without touching this transport decision; the earlier wording here wrongly implied team-shared memory would require a hosted transport.)

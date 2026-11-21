@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Codemap Diagram</title>
+<style>
+  :root {
+    --bg: #f6f6f8;
+    --surface: #ffffff;
+    --text: #1c1c1f;
+    --text-muted: #68686f;
+    --border: #dfdfe4;
+    --pack-package: #eef0f5;
+    --pack-file: #e2e5ee;
+    --kind-function: #4c78a8;
+    --kind-class: #f58518;
+    --kind-interface: #54a24b;
+    --kind-typealias: #b279a2;
+    --kind-const: #e45756;
+    --exported-ring: #b8860b;
+    --accent: #4c78a8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17171b;
+      --surface: #1f1f24;
+      --text: #ecebf0;
+      --text-muted: #9d9da6;
+      --border: #34343c;
+      --pack-package: #26262e;
+      --pack-file: #2f2f39;
+      --exported-ring: #e8c34a;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 20px 16px;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  header h1 { margin: 0 0 2px; font-size: 20px; }
+  header .meta { color: var(--text-muted); font-size: 13px; }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+  }
+  #search {
+    flex: 1 1 220px;
+    min-width: 0;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0.45;
+  }
+  .chip.active { opacity: 1; }
+  .chip .dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .chip .count { color: var(--text-muted); }
+  .toggle { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; white-space: nowrap; }
+  .breadcrumb { flex: 1 1 100%; font-size: 12px; color: var(--text-muted); }
+  .breadcrumb button {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font: inherit;
+    padding: 0;
+  }
+  .breadcrumb button:hover { text-decoration: underline; }
+  .main { display: flex; flex-wrap: wrap; gap: 16px; }
+  .diagram-wrap {
+    position: relative;
+    flex: 1 1 480px;
+    min-width: 0;
+    max-width: 860px;
+    aspect-ratio: 1 / 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  #diagram { width: 100%; height: 100%; display: block; }
+  .node { pointer-events: all; cursor: pointer; stroke-width: 1; transition: opacity 120ms; }
+  .node.container-root { fill: none; stroke: none; }
+  .node.container-package { fill: var(--pack-package); stroke: var(--border); }
+  .node.container-file { fill: var(--pack-file); stroke: var(--border); }
+  .node.kind-function { fill: var(--kind-function); stroke: var(--border); }
+  .node.kind-class { fill: var(--kind-class); stroke: var(--border); }
+  .node.kind-interface { fill: var(--kind-interface); stroke: var(--border); }
+  .node.kind-typeAlias { fill: var(--kind-typealias); stroke: var(--border); }
+  .node.kind-const { fill: var(--kind-const); stroke: var(--border); }
+  .node.exported { stroke: var(--exported-ring); stroke-width: 2; }
+  .node.dimmed { opacity: 0.1; }
+  .node.related { stroke: var(--accent); stroke-width: 2; }
+  .node-label { fill: var(--text); pointer-events: none; text-anchor: middle; font-size: 9px; }
+  .edge { fill: none; stroke: var(--accent); stroke-opacity: 0.25; stroke-width: 1.1px; pointer-events: none; }
+  .edge.active { stroke-opacity: 0.95; stroke-width: 2px; }
+  .edge.dimmed { stroke-opacity: 0.03; }
+  .arrowhead { fill: var(--accent); opacity: 0.7; }
+  .tooltip {
+    position: absolute;
+    max-width: 320px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 5;
+  }
+  .tooltip .sig { display: block; margin-top: 4px; font-family: ui-monospace, Menlo, monospace; white-space: pre-wrap; word-break: break-word; }
+  .tooltip .doc { display: block; margin-top: 4px; color: var(--text-muted); }
+  aside.detail {
+    flex: 1 1 260px;
+    max-width: 100%;
+    max-height: 860px;
+    overflow: auto;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  aside.detail .hint { color: var(--text-muted); margin: 0; }
+  aside.detail h2 { margin: 0 0 4px; font-size: 15px; word-break: break-word; }
+  aside.detail .path { color: var(--text-muted); font-size: 12px; margin: 0 0 10px; word-break: break-all; }
+  aside.detail .badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  aside.detail .badge { font-size: 11px; padding: 2px 7px; border-radius: 999px; border: 1px solid var(--border); }
+  aside.detail pre {
+    margin: 0 0 10px;
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    font-family: ui-monospace, Menlo, monospace;
+    font-size: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  aside.detail .doc { font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Codemap</h1>
+  <div class="meta" id="meta"></div>
+</header>
+<div class="controls">
+  <input id="search" type="search" placeholder="Search symbols, files, signatures…" autocomplete="off" />
+  <div class="chips" id="kindChips"></div>
+  <label class="toggle"><input type="checkbox" id="exportedOnly" /> Exported only</label>
+  <label class="toggle"><input type="checkbox" id="showEdges" checked /> Import links</label>
+  <div class="breadcrumb" id="breadcrumb"></div>
+</div>
+<div class="main">
+  <div class="diagram-wrap">
+    <svg id="diagram" role="img" aria-label="Codemap circle-packing diagram with import links between files"></svg>
+    <div class="tooltip" id="tooltip" hidden></div>
+  </div>
+  <aside class="detail" id="detail">
+    <p class="hint">Click a package or file circle to zoom in. Click a symbol (innermost circle) to see its details here. Hover a file to highlight what it imports and what imports it.</p>
+  </aside>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+(function () {
+  "use strict";
+  var CODEMAP = __CODEMAP_DATA_JSON__;
+  var KIND_ORDER = ["function", "class", "interface", "typeAlias", "const"];
+
+  function buildHierarchy(data) {
+    var byPackage = new Map();
+    data.files.forEach(function (file) {
+      if (!byPackage.has(file.package)) byPackage.set(file.package, []);
+      byPackage.get(file.package).push(file);
+    });
+    var packages = [];
+    byPackage.forEach(function (pkgFiles, pkgName) {
+      var fileNodes = pkgFiles.map(function (file) {
+        var symbolNodes = file.symbols.map(function (s) {
+          return {
+            name: s.name,
+            type: "symbol",
+            kind: s.kind,
+            exported: !!s.exported,
+            line: s.line,
+            signature: s.signature,
+            doc: s.doc,
+            filePath: file.path,
+            value: 1,
+          };
+        });
+        return {
+          name: file.path.split("/").pop(),
+          type: "file",
+          filePath: file.path,
+          imports: file.imports || [],
+          children: symbolNodes,
+        };
+      });
+      packages.push({ name: pkgName, type: "package", children: fileNodes });
+    });
+    return { name: "repo", type: "root", children: packages };
+  }
+
+  function escapeText(node, text) {
+    node.textContent = text == null ? "" : String(text);
+  }
+
+  function init() {
+    var totalSymbols = 0;
+    var kindCounts = {};
+    KIND_ORDER.forEach(function (k) { kindCounts[k] = 0; });
+    CODEMAP.files.forEach(function (file) {
+      file.symbols.forEach(function (s) {
+        totalSymbols += 1;
+        kindCounts[s.kind] = (kindCounts[s.kind] || 0) + 1;
+      });
+    });
+    var packageCount = new Set(CODEMAP.files.map(function (f) { return f.package; })).size;
+    var edgeCount = CODEMAP.files.reduce(function (sum, f) { return sum + (f.imports ? f.imports.length : 0); }, 0);
+
+    var meta = document.getElementById("meta");
+    var generated = new Date(CODEMAP.generatedAt);
+    escapeText(
+      meta,
+      "Generated " + generated.toLocaleString() + " · " + packageCount + " packages · " +
+        CODEMAP.files.length + " files · " + totalSymbols + " symbols · " + edgeCount + " import links"
+    );
+
+    var activeKinds = new Set(KIND_ORDER);
+    var exportedOnly = false;
+    var query = "";
+
+    var chipsEl = document.getElementById("kindChips");
+    KIND_ORDER.forEach(function (kind) {
+      var chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "chip active";
+      chip.dataset.kind = kind;
+      var dot = document.createElement("span");
+      dot.className = "dot kind-" + kind;
+      dot.style.background = "var(--kind-" + kind.toLowerCase() + ")";
+      var label = document.createElement("span");
+      escapeText(label, kind);
+      var count = document.createElement("span");
+      count.className = "count";
+      escapeText(count, "(" + kindCounts[kind] + ")");
+      chip.appendChild(dot);
+      chip.appendChild(label);
+      chip.appendChild(count);
+      chip.addEventListener("click", function () {
+        if (activeKinds.has(kind)) {
+          activeKinds.delete(kind);
+          chip.classList.remove("active");
+        } else {
+          activeKinds.add(kind);
+          chip.classList.add("active");
+        }
+        applyFilters();
+      });
+      chipsEl.appendChild(chip);
+    });
+
+    document.getElementById("search").addEventListener("input", function (e) {
+      query = e.target.value.trim().toLowerCase();
+      applyFilters();
+    });
+    document.getElementById("exportedOnly").addEventListener("change", function (e) {
+      exportedOnly = e.target.checked;
+      applyFilters();
+    });
+
+    var width = 760;
+    var height = 760;
+    var svg = d3
+      .select("#diagram")
+      .attr("viewBox", [-width / 2, -height / 2, width, height].join(" "));
+
+    svg
+      .append("defs")
+      .append("marker")
+      .attr("id", "arrow")
+      .attr("viewBox", "0 0 10 10")
+      .attr("refX", 9)
+      .attr("refY", 5)
+      .attr("markerWidth", 5)
+      .attr("markerHeight", 5)
+      .attr("orient", "auto-start-reverse")
+      .append("path")
+      .attr("class", "arrowhead")
+      .attr("d", "M 0 0 L 10 5 L 0 10 z");
+
+    var root = d3
+      .hierarchy(buildHierarchy(CODEMAP))
+      .sum(function (d) { return d.value || 0; })
+      .sort(function (a, b) { return b.value - a.value; });
+
+    d3.pack().size([width, height]).padding(function (d) {
+      return d.depth === 0 ? 16 : d.depth === 1 ? 9 : 3;
+    })(root);
+
+    var fileNodeByPath = new Map();
+    root.descendants().forEach(function (d) {
+      if (d.data.type === "file") fileNodeByPath.set(d.data.filePath, d);
+    });
+    var edgesData = [];
+    CODEMAP.files.forEach(function (file) {
+      (file.imports || []).forEach(function (target) {
+        var sourceNode = fileNodeByPath.get(file.path);
+        var targetNode = fileNodeByPath.get(target);
+        if (sourceNode && targetNode) edgesData.push({ source: sourceNode, target: targetNode });
+      });
+    });
+
+    var nodeSel = svg
+      .append("g")
+      .selectAll("circle")
+      .data(root.descendants())
+      .join("circle")
+      .attr("class", function (d) {
+        var cls = "node ";
+        cls += d.data.type === "symbol" ? "kind-" + d.data.kind : "container-" + d.data.type;
+        if (d.data.type === "symbol" && d.data.exported) cls += " exported";
+        return cls;
+      })
+      .on("mouseover", function (event, d) {
+        if (d.data.type === "symbol") showTooltip(event, d.data);
+        if (d.data.type === "file") highlightFile(d);
+      })
+      .on("mousemove", function (event, d) {
+        if (d.data.type !== "symbol") return;
+        positionTooltip(event);
+      })
+      .on("mouseout", function (event, d) {
+        hideTooltip();
+        if (d.data.type === "file") clearHighlight();
+      })
+      .on("click", function (event, d) {
+        event.stopPropagation();
+        if (d.data.type === "symbol") {
+          showDetail(d.data);
+          return;
+        }
+        if (focus !== d) zoom(event, d);
+      });
+
+    var edgeGroup = svg.append("g").attr("class", "edges");
+    var edgeSel = edgeGroup
+      .selectAll("path")
+      .data(edgesData)
+      .join("path")
+      .attr("class", "edge")
+      .attr("marker-end", "url(#arrow)");
+
+    document.getElementById("showEdges").addEventListener("change", function (e) {
+      edgeGroup.style("display", e.target.checked ? null : "none");
+    });
+
+    function highlightFile(d) {
+      edgeSel.classed("active", function (e) { return e.source === d || e.target === d; });
+      edgeSel.classed("dimmed", function (e) { return e.source !== d && e.target !== d; });
+      nodeSel.classed("related", function (n) {
+        if (n === d) return false;
+        return edgesData.some(function (e) {
+          return (e.source === d && e.target === n) || (e.target === d && e.source === n);
+        });
+      });
+    }
+    function clearHighlight() {
+      nodeSel.classed("related", false);
+      edgeSel.classed("active", false);
+      applyFilters();
+    }
+
+    var labelSel = svg
+      .append("g")
+      .selectAll("text")
+      .data(root.descendants())
+      .join("text")
+      .attr("class", "node-label")
+      .style("fill-opacity", function (d) { return d.parent === root ? 1 : 0; })
+      .style("display", function (d) { return d.parent === root ? "inline" : "none"; })
+      .text(function (d) { return d.data.name; });
+
+    svg.on("click", function (event) { zoom(event, root); });
+
+    var focus = root;
+    var view;
+    zoomTo([focus.x, focus.y, focus.r * 2]);
+    updateBreadcrumb();
+
+    function zoomTo(v) {
+      var k = width / v[2];
+      view = v;
+      labelSel.attr("transform", function (d) {
+        return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+      });
+      nodeSel.attr("transform", function (d) {
+        return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+      });
+      nodeSel.attr("r", function (d) { return d.r * k; });
+      edgeSel.attr("d", function (d) {
+        var x1 = (d.source.x - v[0]) * k;
+        var y1 = (d.source.y - v[1]) * k;
+        var x2 = (d.target.x - v[0]) * k;
+        var y2 = (d.target.y - v[1]) * k;
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        var dr = Math.sqrt(dx * dx + dy * dy) * 1.4;
+        return "M" + x1 + "," + y1 + "A" + dr + "," + dr + " 0 0,1 " + x2 + "," + y2;
+      });
+    }
+
+    function zoom(event, d) {
+      focus = d;
+      var transition = svg
+        .transition()
+        .duration(600)
+        .tween("zoom", function () {
+          var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2]);
+          return function (t) { zoomTo(i(t)); };
+        });
+      labelSel
+        .filter(function (l) { return l.parent === focus || this.style.display === "inline"; })
+        .transition(transition)
+        .style("fill-opacity", function (l) { return l.parent === focus ? 1 : 0; })
+        .on("start", function (l) { if (l.parent === focus) this.style.display = "inline"; })
+        .on("end", function (l) { if (l.parent !== focus) this.style.display = "none"; });
+      updateBreadcrumb();
+    }
+
+    function updateBreadcrumb() {
+      var el = document.getElementById("breadcrumb");
+      el.innerHTML = "";
+      var chain = focus.ancestors().reverse();
+      chain.forEach(function (node, i) {
+        if (i > 0) el.appendChild(document.createTextNode(" › "));
+        if (i === chain.length - 1) {
+          var span = document.createElement("span");
+          escapeText(span, node.data.name);
+          el.appendChild(span);
+        } else {
+          var btn = document.createElement("button");
+          escapeText(btn, node.data.name);
+          btn.addEventListener("click", function () { zoom(null, node); });
+          el.appendChild(btn);
+        }
+      });
+    }
+
+    var tooltip = document.getElementById("tooltip");
+    function showTooltip(event, s) {
+      tooltip.innerHTML = "";
+      var title = document.createElement("strong");
+      escapeText(title, s.name + " · " + s.kind + (s.exported ? " · exported" : ""));
+      tooltip.appendChild(title);
+      var sig = document.createElement("span");
+      sig.className = "sig";
+      escapeText(sig, s.signature);
+      tooltip.appendChild(sig);
+      if (s.doc) {
+        var doc = document.createElement("span");
+        doc.className = "doc";
+        escapeText(doc, s.doc);
+        tooltip.appendChild(doc);
+      }
+      tooltip.hidden = false;
+      positionTooltip(event);
+    }
+    function positionTooltip(event) {
+      var wrap = document.querySelector(".diagram-wrap").getBoundingClientRect();
+      var x = event.clientX - wrap.left + 14;
+      var y = event.clientY - wrap.top + 14;
+      tooltip.style.left = Math.min(x, wrap.width - 300) + "px";
+      tooltip.style.top = Math.min(y, wrap.height - 80) + "px";
+    }
+    function hideTooltip() { tooltip.hidden = true; }
+
+    function showDetail(s) {
+      var detail = document.getElementById("detail");
+      detail.innerHTML = "";
+      var h2 = document.createElement("h2");
+      escapeText(h2, s.name);
+      var path = document.createElement("p");
+      path.className = "path";
+      escapeText(path, s.filePath + ":" + s.line);
+      var badges = document.createElement("div");
+      badges.className = "badges";
+      var kindBadge = document.createElement("span");
+      kindBadge.className = "badge";
+      escapeText(kindBadge, s.kind);
+      badges.appendChild(kindBadge);
+      if (s.exported) {
+        var expBadge = document.createElement("span");
+        expBadge.className = "badge";
+        escapeText(expBadge, "exported");
+        badges.appendChild(expBadge);
+      }
+      var pre = document.createElement("pre");
+      escapeText(pre, s.signature);
+      detail.appendChild(h2);
+      detail.appendChild(path);
+      detail.appendChild(badges);
+      detail.appendChild(pre);
+      if (s.doc) {
+        var doc = document.createElement("p");
+        doc.className = "doc";
+        escapeText(doc, s.doc);
+        detail.appendChild(doc);
+      }
+    }
+
+    function applyFilters() {
+      var hasFilter = query.length > 0 || exportedOnly || activeKinds.size < KIND_ORDER.length;
+      function leafMatches(d) {
+        if (d.data.type !== "symbol") return false;
+        if (exportedOnly && !d.data.exported) return false;
+        if (!activeKinds.has(d.data.kind)) return false;
+        if (query) {
+          var hay = (
+            d.data.name + " " + d.data.signature + " " + (d.data.doc || "") + " " + d.data.filePath
+          ).toLowerCase();
+          if (hay.indexOf(query) === -1) return false;
+        }
+        return true;
+      }
+      nodeSel.classed("dimmed", function (d) {
+        if (!hasFilter) return false;
+        if (d.data.type === "symbol") return !leafMatches(d);
+        return !d.leaves().some(leafMatches);
+      });
+      edgeSel.classed("dimmed", function (e) {
+        if (!hasFilter) return false;
+        return !e.source.leaves().some(leafMatches) && !e.target.leaves().some(leafMatches);
+      });
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+</script>
+</body>
+</html>

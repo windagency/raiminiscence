@@ -1,0 +1,332 @@
+{
+  "date": "2026-11-11",
+  "hippoVersion": "3.5.1",
+  "limit": null,
+  "pass": false,
+  "metrics": [
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "any-evidence R@1",
+      "raiminiscence": 0.864,
+      "hippo": 0.854,
+      "difference": 0.01,
+      "ci95": [
+        -0.016,
+        0.036
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "any-evidence R@3",
+      "raiminiscence": 0.95,
+      "hippo": 0.946,
+      "difference": 0.004,
+      "ci95": [
+        -0.014,
+        0.022
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "any-evidence R@5",
+      "raiminiscence": 0.97,
+      "hippo": 0.968,
+      "difference": 0.002,
+      "ci95": [
+        -0.01,
+        0.016
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "any-evidence R@10",
+      "raiminiscence": 0.988,
+      "hippo": 0.98,
+      "difference": 0.008,
+      "ci95": [
+        0.002,
+        0.016
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "answer_in_content@5",
+      "raiminiscence": 0.504,
+      "hippo": 0.498,
+      "difference": 0.006,
+      "ci95": [
+        -0.004,
+        0.016
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "all-evidence R@1",
+      "raiminiscence": 0.2936170212765957,
+      "hippo": 0.30425531914893617,
+      "difference": -0.010638297872340425,
+      "ci95": [
+        -0.02553191489361702,
+        0.00425531914893617
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "all-evidence R@5",
+      "raiminiscence": 0.8489361702127659,
+      "hippo": 0.8361702127659575,
+      "difference": 0.01276595744680851,
+      "ci95": [
+        -0.006382978723404255,
+        0.031914893617021274
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory A",
+      "metric": "all-evidence R@10",
+      "raiminiscence": 0.9148936170212766,
+      "hippo": 0.902127659574468,
+      "difference": 0.01276595744680851,
+      "ci95": [
+        -0.00425531914893617,
+        0.031914893617021274
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory A",
+      "metric": "R@1",
+      "raiminiscence": 0.3390971303055058,
+      "hippo": 0.31510621204112627,
+      "difference": 0.023990918264379418,
+      "ci95": [
+        0.011385805583585608,
+        0.0367305751765893
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory A",
+      "metric": "R@3",
+      "raiminiscence": 0.5220906438496329,
+      "hippo": 0.46914195654104857,
+      "difference": 0.05294868730858428,
+      "ci95": [
+        0.03974520686175579,
+        0.06642413298635085
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory A",
+      "metric": "R@5",
+      "raiminiscence": 0.5913201412933523,
+      "hippo": 0.5261447469548319,
+      "difference": 0.06517539433852038,
+      "ci95": [
+        0.05270770265724856,
+        0.0779836511055641
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "any-evidence R@1",
+      "raiminiscence": 0.864,
+      "hippo": 0.876,
+      "difference": -0.012,
+      "ci95": [
+        -0.036,
+        0.012
+      ],
+      "pass": false
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "any-evidence R@3",
+      "raiminiscence": 0.95,
+      "hippo": 0.952,
+      "difference": -0.002,
+      "ci95": [
+        -0.018,
+        0.016
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "any-evidence R@5",
+      "raiminiscence": 0.97,
+      "hippo": 0.974,
+      "difference": -0.004,
+      "ci95": [
+        -0.014,
+        0.006
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "any-evidence R@10",
+      "raiminiscence": 0.988,
+      "hippo": 0.992,
+      "difference": -0.004,
+      "ci95": [
+        -0.012,
+        0.004
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "answer_in_content@5",
+      "raiminiscence": 0.504,
+      "hippo": 0.504,
+      "difference": 0,
+      "ci95": [
+        -0.008,
+        0.008
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "all-evidence R@1",
+      "raiminiscence": 0.2936170212765957,
+      "hippo": 0.30638297872340425,
+      "difference": -0.01276595744680851,
+      "ci95": [
+        -0.029787234042553193,
+        0.00425531914893617
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "all-evidence R@5",
+      "raiminiscence": 0.8489361702127659,
+      "hippo": 0.8319148936170213,
+      "difference": 0.01702127659574468,
+      "ci95": [
+        -0.00425531914893617,
+        0.03829787234042553
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LongMemEval-S, whole haystack",
+      "reference": "hippo-memory B",
+      "metric": "all-evidence R@10",
+      "raiminiscence": 0.9148936170212766,
+      "hippo": 0.9063829787234042,
+      "difference": 0.00851063829787234,
+      "ci95": [
+        -0.010638297872340425,
+        0.027659574468085105
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory B",
+      "metric": "R@1",
+      "raiminiscence": 0.3390971303055058,
+      "hippo": 0.33444694530718755,
+      "difference": 0.004650184998318197,
+      "ci95": [
+        -0.006113353514968046,
+        0.015497813656239492
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory B",
+      "metric": "R@3",
+      "raiminiscence": 0.5220906438496329,
+      "hippo": 0.4945716171372076,
+      "difference": 0.027519026712425204,
+      "ci95": [
+        0.015338643025323145,
+        0.03960383425769267
+      ],
+      "pass": true
+    },
+    {
+      "suite": "LoCoMo, evidence",
+      "reference": "hippo-memory B",
+      "metric": "R@5",
+      "raiminiscence": 0.5913201412933523,
+      "hippo": 0.5653979527071881,
+      "difference": 0.025922188586164373,
+      "ci95": [
+        0.015447359569458453,
+        0.036797847292297355
+      ],
+      "pass": true
+    }
+  ],
+  "hooks": [
+    {
+      "storeSize": 10,
+      "raiminiscenceMs": 52.936916000000565,
+      "hippoMs": 127.78437500000018,
+      "pass": true
+    },
+    {
+      "storeSize": 50,
+      "raiminiscenceMs": 53.039082999999664,
+      "hippoMs": 128.05312500000218,
+      "pass": true
+    },
+    {
+      "storeSize": 150,
+      "raiminiscenceMs": 52.96454200000153,
+      "hippoMs": 126.77154199999495,
+      "pass": true
+    },
+    {
+      "storeSize": 300,
+      "raiminiscenceMs": 53.968167000013636,
+      "hippoMs": 127.27262500001234,
+      "pass": true
+    },
+    {
+      "storeSize": 750,
+      "raiminiscenceMs": 55.064958000031766,
+      "hippoMs": 126.61625000002095,
+      "pass": true
+    },
+    {
+      "storeSize": 1500,
+      "raiminiscenceMs": 57.538667000015266,
+      "hippoMs": 126.23854200006463,
+      "pass": true
+    }
+  ]
+}

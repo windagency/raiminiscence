@@ -1,0 +1,7 @@
+gitleaks git --pre-commit --staged
+pnpm exec lint-staged
+pnpm run backlinks:check
+pnpm run readme:check
+# typecheck resolves sibling packages through their built dist/ declarations.
+pnpm run build
+pnpm run typecheck

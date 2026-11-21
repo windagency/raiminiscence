@@ -1,0 +1,40 @@
+name: Bug report
+description: Something in rAIminiscence isn't working as expected.
+labels: ["needs-triage"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what actually happened.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Minimal steps, a tool call, or a command that reproduces the issue.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package and version
+      description: For example `raiminiscence-mcp@0.1.0`, or the commit SHA you're running.
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Node version, OS, MCP client (Claude Code, Cursor, Codex CLI) and its version, embedding provider.
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant output, ideally with `RAIMINISCENCE_LOG_LEVEL=debug`. Redact anything sensitive.
+      render: text
+    validations:
+      required: false

@@ -1,0 +1,65 @@
+{
+  "name": "raiminiscence-hooks",
+  "version": "0.1.0",
+  "description": "Hooks that bring rAIminiscence memories to your agent on their own: a primer at session start, and relevant memories on every turn in Claude Code and Codex CLI.",
+  "keywords": [
+    "mcp",
+    "memory",
+    "agent-memory",
+    "hooks",
+    "claude-code",
+    "cursor",
+    "codex",
+    "ai-agents",
+    "coding-agent"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "raiminiscence-hooks-shim": "./dist/shim.js",
+    "raiminiscence-hooks-install": "./dist/install-cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node -e \"const fs=require('fs');fs.mkdirSync('dist/templates',{recursive:true});fs.cpSync('src/templates','dist/templates',{recursive:true})\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "raiminiscence-argv": "workspace:*",
+    "raiminiscence-mcp": "workspace:*",
+    "smol-toml": "^1.9.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/windagency/raiminiscence.git",
+    "directory": "packages/raiminiscence-hooks"
+  },
+  "homepage": "https://github.com/windagency/raiminiscence/tree/main/packages/raiminiscence-hooks#readme",
+  "bugs": {
+    "url": "https://github.com/windagency/raiminiscence/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "imports": {
+    "#src/*": {
+      "source": "./src/*",
+      "default": "./dist/*"
+    }
+  }
+}

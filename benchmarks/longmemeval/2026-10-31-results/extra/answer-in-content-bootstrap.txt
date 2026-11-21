@@ -1,0 +1,11 @@
+answer in content @5
+  B-lifted        50.6
+  A-lifted        50.0   vs B-lifted: -0.6 [-1.6, +0.2]
+  R-lifted        13.6   vs B-lifted: -37.0 [-41.2, -32.8]
+  F-lifted        14.0   vs B-lifted: -36.6 [-41.0, -32.2]
+  OD-lifted       50.8   vs B-lifted: +0.2 [-0.8, +1.2]
+  ER-lifted       12.8   vs B-lifted: -37.8 [-42.0, -33.6]
+  EF-lifted       14.0   vs B-lifted: -36.6 [-41.0, -32.2]
+  ED-lifted       50.4   vs B-lifted: -0.2 [-0.8, +0.4]
+  B-slept-lifted  50.6   vs B-lifted: +0.0 [+0.0, +0.0]
+  F-slept-lifted  14.0   vs B-lifted: -36.6 [-41.0, -32.2]

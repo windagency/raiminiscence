@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 820" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Package boundaries: raiminiscence-hooks modules and the raiminiscence-cli run module import raiminiscence-mcp&#x27;s core or shared-memory exports; the shim and run import flag() from raiminiscence-argv; inside raiminiscence-mcp the MCP adapter calls the core, which calls the shared-memory subsystem</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">raiminiscence-hooks and raiminiscence-cli import raiminiscence-mcp only through its package name, never each other</text>
+
+  <rect x="20" y="50" width="420" height="480" rx="14" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="34" y="70" font-size="12" font-weight="700" fill="var(--text-muted)">raiminiscence-hooks</text>
+  <path d="M180,288 C200,288 200,120 218,120" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M180,288 C200,288 200,210 218,210" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M180,288 C200,288 200,300 218,300" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M180,288 C200,288 200,390 218,390" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="20" y="570" width="420" height="140" rx="14" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="34" y="590" font-size="12" font-weight="700" fill="var(--text-muted)">raiminiscence-cli (v15)</text>
+  <path d="M210,648 L248,648" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <rect x="860" y="50" width="420" height="480" rx="14" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="874" y="70" font-size="12" font-weight="700" fill="var(--text-muted)">raiminiscence-mcp</text>
+  <path d="M1070,154 L1070,208" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1070,400 L1070,438" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,120 C660,120 680,240 898,240" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,210 C660,210 680,280 898,280" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,300 C660,300 680,320 898,320" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,380 C660,380 680,385 898,385" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,402 C660,402 680,472 898,472" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,632 C700,632 700,370 898,370" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M420,660 L858,660" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M110,316 C110,560 30,760 520,760 L858,690" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="260" width="140" height="56" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="110" y="292" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/shim.ts</text>
+  <rect x="220" y="90" width="200" height="60" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="320" y="124" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/primer.ts</text>
+  <rect x="220" y="180" width="200" height="60" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="320" y="206" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/prompt-recall.ts</text>
+  <text x="320" y="222" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(v10)</text>
+  <rect x="220" y="270" width="200" height="60" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="320" y="296" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/checkpoint-nudge.ts</text>
+  <text x="320" y="312" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(v13)</text>
+  <rect x="220" y="360" width="200" height="60" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="320" y="386" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/shared-memory-sync.ts</text>
+  <text x="320" y="402" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(v11)</text>
+  <rect x="40" y="620" width="170" height="56" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="125" y="652" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/inspect-cli.ts</text>
+  <rect x="250" y="620" width="170" height="56" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="335" y="652" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/run.ts</text>
+  <rect x="900" y="90" width="340" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1070" y="119" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/server.ts</text>
+  <text x="1070" y="135" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(MCP adapter)</text>
+  <rect x="900" y="210" width="340" height="190" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1070" y="302" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/core/*</text>
+  <text x="1070" y="318" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(library)</text>
+  <rect x="900" y="440" width="340" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1070" y="469" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">src/core/shared-memory/*</text>
+  <text x="1070" y="485" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(v11)</text>
+  <rect x="860" y="640" width="260" height="64" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="990" y="669" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">raiminiscence-argv</text>
+  <text x="990" y="685" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">(flag() only)</text>
+  <text x="448" y="98" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27;</text>
+  <text x="448" y="112" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">(overview, resolveStorageRoot)</text>
+  <text x="448" y="202" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27; (recall)</text>
+  <text x="448" y="278" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27;</text>
+  <text x="448" y="292" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">(ensureGitignoreEntry only, v13)</text>
+  <text x="448" y="345" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27; (consolidate,</text>
+  <text x="448" y="359" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">settleOpportunisticConsolidation, resolveSharedMemory)</text>
+  <text x="448" y="440" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27; (ensureSharedMemoryWorktree,</text>
+  <text x="448" y="454" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">pullSharedMemory, settlePendingSharedMemoryPush)</text>
+  <text x="448" y="596" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">imports &#x27;raiminiscence-mcp&#x27; (inspectMemory,</text>
+  <text x="448" y="610" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">inspectQuery, browseMemories, resolveStorageRoot)</text>
+  <text x="448" y="680" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">run imports &#x27;raiminiscence-argv&#x27; (flag())</text>
+  <text x="560" y="780" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle">shim imports &#x27;raiminiscence-argv&#x27; (flag())</text>
+
+  <text x="20" y="808" font-size="11.5" fill="var(--text-muted)">Package boundaries</text>
+</svg>

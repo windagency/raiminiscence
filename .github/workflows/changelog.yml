@@ -1,0 +1,77 @@
+name: Changelog
+
+# Keeps CHANGELOG.md's Unreleased section on int in step with int's commits (ADR-0043). A push to int adds the
+# new feat/fix/breaking commits. A push to main, which is how a release commit lands, also copies main's
+# released sections onto int, so the back-merge of main into int merges cleanly.
+on:
+  push:
+    branches: [int, main]
+
+# Each run recomputes the whole section from scratch, so only the newest one matters.
+concurrency:
+  group: changelog
+  cancel-in-progress: true
+
+env:
+  HUSKY: 0
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # Deployment branches: int and main only. Holds the changelog App's key, so no other branch's workflow
+    # run can mint a token that bypasses the int ruleset.
+    environment: changelog
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: int
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: package.json
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm run changelog:sync
+
+      - id: diff
+        run: git diff --quiet -- CHANGELOG.md || echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # Not the release App: its key stays in publish.yml (.github/rulesets/README.md). This App is on the
+      # int ruleset's bypass list only.
+      - id: app-token
+        if: steps.diff.outputs.changed == 'true'
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ vars.CHANGELOG_APP_CLIENT_ID }}
+          private-key: ${{ secrets.CHANGELOG_APP_PRIVATE_KEY }}
+          permission-contents: write
+
+      # createCommitOnBranch, not git push: GitHub signs a commit an App makes through the API, and every
+      # ruleset requires signed commits. expectedHeadOid fails the run if int moved since checkout; that
+      # push started a newer run, which recomputes everything.
+      - if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          jq -n \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg head "$(git rev-parse HEAD)" \
+            --arg contents "$(base64 -w0 CHANGELOG.md)" \
+            '{
+              query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid } } }",
+              variables: { input: {
+                branch: { repositoryNameWithOwner: $repo, branchName: "int" },
+                expectedHeadOid: $head,
+                message: { headline: "docs(changelog): update Unreleased" },
+                fileChanges: { additions: [{ path: "CHANGELOG.md", contents: $contents }] }
+              } }
+            }' | gh api graphql --input -

@@ -1,0 +1,7 @@
+# Syft config for publish.yml's SBOM: the repository's own dependency manifests only.
+# benchmarks/hippo-memory-runner/ is a comparison harness for a third-party package, never shipped.
+exclude:
+  - ./node_modules/**
+  - ./packages/*/node_modules/**
+  - ./packages/*/dist/**
+  - ./benchmarks/hippo-memory-runner/**

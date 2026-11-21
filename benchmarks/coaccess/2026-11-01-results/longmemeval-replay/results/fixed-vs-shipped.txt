@@ -1,0 +1,17 @@
+questions scored: 324
+R@1
+  shipped-on    10.8
+  fixed-on      90.1   vs shipped-on: +79.3 [+74.7, +83.6]
+  shipped-off   90.7   vs shipped-on: +79.9 [+75.3, +84.3]
+all-evidence@5
+  shipped-on     0.6
+  fixed-on      80.6   vs shipped-on: +79.9 [+75.3, +84.6]
+  shipped-off   80.6   vs shipped-on: +79.9 [+75.3, +84.3]
+R@5
+  shipped-on    23.8
+  fixed-on      99.1   vs shipped-on: +75.3 [+70.7, +79.9]
+  shipped-off   99.1   vs shipped-on: +75.3 [+70.7, +79.9]
+R@10
+  shipped-on    45.4
+  fixed-on      99.4   vs shipped-on: +54.0 [+48.8, +59.3]
+  shipped-off   99.4   vs shipped-on: +54.0 [+48.8, +59.3]

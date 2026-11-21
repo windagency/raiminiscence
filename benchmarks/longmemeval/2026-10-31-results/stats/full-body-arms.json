@@ -1,0 +1,343 @@
+{
+  "n": 500,
+  "chance_r5": 0.189,
+  "bootstrap": "pairedBootstrap (src/eval-stats.ts), 10000 resamples, seed 1, 95% percentile interval",
+  "runs": {
+    "B-lifted": {
+      "r5": {
+        "estimate": 0.974,
+        "low": 0.96,
+        "high": 0.986,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.0
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122282.0,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.652,
+      "recall_seconds_p90": 0.738
+    },
+    "B-default": {
+      "r5": {
+        "estimate": 0.876,
+        "low": 0.846,
+        "high": 0.904,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 96.2
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 89.5
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 60.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 87.1
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 82.0
+        }
+      },
+      "returned_median": 2.0,
+      "returned_under_5": 476,
+      "returned_tokens_median": 3922.5,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.62,
+      "recall_seconds_p90": 0.699
+    },
+    "OD-lifted": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122594.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.3535,
+      "recall_seconds_p90": 0.403
+    },
+    "ED-lifted": {
+      "r5": {
+        "estimate": 0.97,
+        "low": 0.954,
+        "high": 0.984,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.7
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 80.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 96.2
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122594.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.794,
+      "recall_seconds_p90": 0.843
+    },
+    "OD-default": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 10.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 29655.5,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.154,
+      "recall_seconds_p90": 0.164
+    },
+    "ED-default": {
+      "r5": {
+        "estimate": 0.97,
+        "low": 0.954,
+        "high": 0.984,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.7
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 80.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 96.2
+        }
+      },
+      "returned_median": 10.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 28129.5,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.573,
+      "recall_seconds_p90": 0.586
+    },
+    "F-lifted": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.368,
+      "recall_seconds_p90": 0.425
+    }
+  },
+  "pairs": {
+    "OD-lifted - B-lifted": {
+      "estimate": 0.01,
+      "low": -0.002,
+      "high": 0.024,
+      "iterations": 10000,
+      "hit_only_first": 8,
+      "hit_only_second": 3
+    },
+    "ED-lifted - B-lifted": {
+      "estimate": -0.004,
+      "low": -0.016,
+      "high": 0.006,
+      "iterations": 10000,
+      "hit_only_first": 3,
+      "hit_only_second": 5
+    },
+    "OD-default - B-default": {
+      "estimate": 0.108,
+      "low": 0.082,
+      "high": 0.136,
+      "iterations": 10000,
+      "hit_only_first": 54,
+      "hit_only_second": 0
+    },
+    "ED-default - B-default": {
+      "estimate": 0.094,
+      "low": 0.07,
+      "high": 0.12,
+      "iterations": 10000,
+      "hit_only_first": 47,
+      "hit_only_second": 0
+    },
+    "OD-lifted - F-lifted": {
+      "estimate": 0,
+      "low": 0,
+      "high": 0,
+      "iterations": 10000,
+      "hit_only_first": 0,
+      "hit_only_second": 0
+    }
+  }
+}

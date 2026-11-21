@@ -1,0 +1,20 @@
+[
+  {
+    "arm": "hippo-slept",
+    "stores": 500,
+    "before": 23867,
+    "after": 23856,
+    "created": 13,
+    "removed": 24,
+    "stores_changed": 21
+  },
+  {
+    "arm": "rai-ollama-fusion-slept",
+    "stores": 500,
+    "before": 23867,
+    "after": 24205,
+    "created": 338,
+    "removed": 0,
+    "stores_changed": 269
+  }
+]

@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 779 571" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>forget sequence: engine.forget() looks the Memory up; an unknown id throws, an already-retracted one returns alreadyRetracted true, otherwise it is rewritten with confidence retracted, retractedAt and retractReason</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">forget never deletes: it rewrites the Memory as retracted, and forgetting it again is a no-op</text>
+
+  <line x1="60" y1="81" x2="60" y2="537" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="30" y="48" width="59" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="60" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Agent</text>
+  <line x1="250" y1="81" x2="250" y2="537" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="206" y="48" width="87" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="250" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">server.ts</text>
+  <line x1="440" y1="81" x2="440" y2="537" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="375" y="48" width="129" height="33" rx="10" fill="var(--highlight-fill)" stroke="var(--highlight-stroke)" stroke-width="1.5"/>
+  <text x="440" y="69" font-size="12.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">engine.forget()</text>
+  <line x1="630" y1="81" x2="630" y2="537" stroke="var(--divider)" stroke-width="1" stroke-dasharray="2 3"/>
+  <rect x="582" y="48" width="94" height="33" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="630" y="69" font-size="12.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">storage.ts</text>
+
+  <rect x="12" y="229" width="682" height="248" rx="8" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="154" y="107" font-size="11" fill="var(--text-secondary)" text-anchor="middle">forget(id, reason?, scope?)</text>
+  <line x1="60" y1="117" x2="246" y2="117" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="344" y="143" font-size="11" fill="var(--text-secondary)" text-anchor="middle">forget({ id, reason, scope, storageRoot })</text>
+  <line x1="250" y1="153" x2="436" y2="153" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="534" y="179" font-size="11" fill="var(--text-secondary)" text-anchor="middle">findMemoryById(effectiveStorageRoot(scope,</text>
+  <text x="534" y="193" font-size="11" fill="var(--text-secondary)" text-anchor="middle">params), id)</text>
+  <line x1="440" y1="203" x2="626" y2="203" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="344" y="263" font-size="11" fill="var(--text-secondary)" text-anchor="middle">throws → isError: true</text>
+  <line x1="440" y1="273" x2="252" y2="273" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="344" y="329" font-size="11" fill="var(--text-secondary)" text-anchor="middle">{ id, alreadyRetracted: true }</text>
+  <line x1="440" y1="339" x2="252" y2="339" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <text x="534" y="395" font-size="11" fill="var(--text-secondary)" text-anchor="middle">writeMemory(...) with confidence: &quot;retracted&quot;,</text>
+  <text x="534" y="409" font-size="11" fill="var(--text-secondary)" text-anchor="middle">retractedAt, retractReason set</text>
+  <line x1="440" y1="419" x2="626" y2="419" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="344" y="445" font-size="11" fill="var(--text-secondary)" text-anchor="middle">{ id, alreadyRetracted: false }</text>
+  <line x1="440" y1="455" x2="252" y2="455" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <rect x="12" y="229" width="34" height="18" rx="4" fill="var(--panel-fill)" stroke="var(--divider)" stroke-width="1"/>
+  <text x="20" y="242" font-size="11" font-weight="700" fill="var(--text-on-fill)">alt</text>
+  <text x="54" y="242" font-size="11" font-style="italic" fill="var(--text-muted)">[not found]</text>
+  <line x1="12" y1="299" x2="694" y2="299" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="313" font-size="11" font-style="italic" fill="var(--text-muted)">[already confidence: &quot;retracted&quot;]</text>
+  <line x1="12" y1="365" x2="694" y2="365" stroke="var(--divider)" stroke-width="1" stroke-dasharray="5 4"/>
+  <text x="20" y="379" font-size="11" font-style="italic" fill="var(--text-muted)">[otherwise]</text>
+  <text x="154" y="495" font-size="11" fill="var(--text-secondary)" text-anchor="middle">tool result</text>
+  <line x1="250" y1="505" x2="62" y2="505" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <text x="20" y="559" font-size="11.5" fill="var(--text-muted)">Sequence: forget</text>
+</svg>

@@ -1,0 +1,122 @@
+{
+  "_comment": "Ground-truth relevance judgments, hand-authored by the benchmark's corpus author against benchmarks/corpus/memories.json. `relevantIds` is the deliberately-decided answer key for Recall@k/Precision@k — a memory id NOT listed is treated as not relevant to that query even if it shares vocabulary with it (this is what makes the near-duplicate/confusable pairs in memories.json actually test retrieval quality rather than trivial keyword overlap). k=5 is used for both metrics in compare.ts.",
+  "k": 5,
+  "queries": [
+    {
+      "id": "q1",
+      "query": "How does JWT validation work in this codebase?",
+      "relevantIds": ["m01", "m02"],
+      "note": "m03 is a confusable distractor: also an 'auth middleware', but it's about session cookies, not JWTs."
+    },
+    {
+      "id": "q2",
+      "query": "Should I use named or default exports?",
+      "relevantIds": ["m04", "m05"],
+      "note": "m06 is a confusable distractor: a real export-style rule, but scoped to one exception (React pages), not the general answer."
+    },
+    {
+      "id": "q3",
+      "query": "What's the CI timeout for the integration test suite?",
+      "relevantIds": ["m07", "m08"],
+      "note": "m09 is a confusable distractor: a different suite (unit tests) with a different, unrelated budget."
+    },
+    {
+      "id": "q4",
+      "query": "Why did we pick Postgres?",
+      "relevantIds": ["m10", "m11"],
+      "note": "m12 is a confusable distractor: mentions Postgres but is about Redis caching, not the choice of Postgres."
+    },
+    {
+      "id": "q5",
+      "query": "What bundler does this project use?",
+      "relevantIds": ["m13", "m14"]
+    },
+    {
+      "id": "q6",
+      "query": "What's the linting and formatting setup?",
+      "relevantIds": ["m15", "m16"]
+    },
+    {
+      "id": "q7",
+      "query": "How is API rate limiting implemented?",
+      "relevantIds": ["m17", "m18"]
+    },
+    {
+      "id": "q8",
+      "query": "What's the deployment process to production?",
+      "relevantIds": ["m19", "m20"],
+      "note": "m27 is a confusable distractor: also mentions staging/production, but describes environment parity, not the deploy process."
+    },
+    {
+      "id": "q9",
+      "query": "What test runner do we use and why?",
+      "relevantIds": ["m24", "m25"]
+    },
+    {
+      "id": "q10",
+      "query": "Where do error logs go?",
+      "relevantIds": ["m23"],
+      "note": "Single-answer query among unrelated noise (m21, m22, m26) — tests precision under low ambiguity."
+    },
+    {
+      "id": "q11",
+      "query": "How are logs correlated across a request?",
+      "relevantIds": ["m28", "m29"],
+      "note": "m30 is a confusable distractor: also about logging, but log-level configuration, not request correlation."
+    },
+    {
+      "id": "q12",
+      "query": "How do we get paged when something breaks in production?",
+      "relevantIds": ["m31", "m32"],
+      "note": "m33 is a confusable distractor: shares Datadog, but is about latency dashboards, not alerting/paging."
+    },
+    {
+      "id": "q13",
+      "query": "What's the retry policy for outbound HTTP calls?",
+      "relevantIds": ["m34", "m35"],
+      "note": "m36 is a confusable distractor: mentions retries, but describes the third party's own retry behavior, not ours."
+    },
+    {
+      "id": "q14",
+      "query": "How are background jobs processed?",
+      "relevantIds": ["m37", "m38"],
+      "note": "m39 is a confusable distractor: shares Redis, but describes session storage, not the job queue."
+    },
+    {
+      "id": "q15",
+      "query": "Where are secrets stored?",
+      "relevantIds": ["m40", "m41"],
+      "note": "m42 is a confusable distractor: mentions .env, but is just local-dev documentation, not where real secrets live."
+    },
+    {
+      "id": "q16",
+      "query": "What does the production Docker build look like?",
+      "relevantIds": ["m43", "m44"],
+      "note": "m45 is a confusable distractor: Docker-related, but describes local dev with docker-compose, not the production image."
+    },
+    {
+      "id": "q17",
+      "query": "How is API versioning handled?",
+      "relevantIds": ["m46", "m47"],
+      "note": "m48 is a confusable distractor: another URL prefix, but internal tooling, unrelated to the public API's version scheme."
+    },
+    {
+      "id": "q18",
+      "query": "What's required to merge a pull request?",
+      "relevantIds": ["m49", "m50"],
+      "note": "m51 is a confusable distractor: part of the review process, but about auto-assigning a reviewer, not the approval requirement."
+    },
+    {
+      "id": "q19",
+      "query": "How do we roll out a new feature flag safely?",
+      "relevantIds": ["m52", "m53"],
+      "note": "m54 is a confusable distractor: describes cleaning up an old flag, not the rollout ramp process."
+    },
+    {
+      "id": "q20",
+      "query": "What's our policy for upgrading dependencies?",
+      "relevantIds": ["m55", "m56"],
+      "note": "m57 is a confusable distractor: a one-off manual major upgrade, not the standard monthly batching policy."
+    }
+  ]
+}

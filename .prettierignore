@@ -1,0 +1,23 @@
+dist/
+node_modules/
+.raiminiscence/
+pnpm-lock.yaml
+.scratch/
+docs/
+CODING_RULES/
+*.md
+
+# Generated (build-dashboard.ts) or hand-crafted artifact output/data, not source — never hand-format.
+benchmarks/dashboard.html
+benchmarks/dashboard-template.html
+benchmarks/results/
+benchmarks/longmemeval/2026-10-31-results/
+benchmarks/longmemeval/2026-11-02-hippo-3.1.1/
+benchmarks/locomo/
+benchmarks/coaccess/
+benchmarks/corpus-attribution/
+benchmarks/corpus/
+
+# Hand-crafted template interpolated verbatim by build-codemap.ts — reformatting would
+# change docs/codemap.html's emitted bytes, not just style.
+scripts/codemap-template.html

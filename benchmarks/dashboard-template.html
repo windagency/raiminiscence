@@ -1,0 +1,823 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Memory Bench Readout</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #F3F5FA;
+    --surface: #FFFFFF;
+    --surface-2: #EAEEF4;
+    --surface-3: #E0E5EE;
+    --border: #D8DFE9;
+    --text-primary: #161B24;
+    --text-secondary: #4E5A6E;
+    --text-muted: #8291A8;
+    --series-raim: #B1552E;
+    --series-hippo: #4C5FD6;
+    --good: #1B8A5A;
+    --critical: #D6482B;
+    --shadow: 0 1px 2px rgba(22,27,36,0.06), 0 6px 16px rgba(22,27,36,0.06);
+    --grid: #DCE2EC;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #12141A;
+      --surface: #191D25;
+      --surface-2: #20242E;
+      --surface-3: #262B37;
+      --border: #2C323F;
+      --text-primary: #EDF0F5;
+      --text-secondary: #A6B0C2;
+      --text-muted: #6E7890;
+      --series-raim: #D06E30;
+      --series-hippo: #6E8CF5;
+      --good: #16A672;
+      --critical: #E8583A;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 24px rgba(0,0,0,0.4);
+      --grid: #2A303C;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #12141A;
+    --surface: #191D25;
+    --surface-2: #20242E;
+    --surface-3: #262B37;
+    --border: #2C323F;
+    --text-primary: #EDF0F5;
+    --text-secondary: #A6B0C2;
+    --text-muted: #6E7890;
+    --series-raim: #D06E30;
+    --series-hippo: #6E8CF5;
+    --good: #16A672;
+    --critical: #E8583A;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 10px 24px rgba(0,0,0,0.4);
+    --grid: #2A303C;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text-primary);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    padding-inline: clamp(16px, 4vw, 40px);
+    padding-block: clamp(20px, 4vw, 40px);
+    max-width: 1180px;
+    margin-inline: auto;
+  }
+  h1, h2, h3 { font-family: "Archivo", ui-sans-serif, system-ui, sans-serif; text-wrap: balance; margin: 0; }
+  .mono, .tabular, td, th { font-variant-numeric: tabular-nums; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  a { color: inherit; }
+
+  header.masthead {
+    display: flex; flex-direction: column; gap: 10px;
+    padding-bottom: 20px; margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  h1 { font-size: clamp(24px, 3.4vw, 34px); font-weight: 800; letter-spacing: -0.01em; }
+  .subtitle { color: var(--text-secondary); font-size: 14.5px; max-width: 70ch; line-height: 1.55; }
+  .meta-row {
+    display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 12.5px; color: var(--text-muted);
+    font-family: "IBM Plex Mono", monospace;
+  }
+  .meta-row span b { color: var(--text-secondary); font-weight: 500; }
+
+  .legend-key { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-secondary); }
+  .legend-key .swatch { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-block: 4px 2px; }
+
+  section.panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px clamp(16px, 3vw, 28px) 26px;
+    margin-bottom: 22px;
+    box-shadow: var(--shadow);
+  }
+  section.panel > h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  section.panel > .panel-note { color: var(--text-secondary); font-size: 13.5px; max-width: 78ch; line-height: 1.5; margin-bottom: 16px; }
+
+  .stat-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px; margin-bottom: 6px;
+  }
+  .stat-tile {
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .stat-tile .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 10px; }
+  .stat-tile .stat-line { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; padding-block: 3px; }
+  .stat-tile .stat-line + .stat-line { border-top: 1px dashed var(--border); margin-top: 3px; padding-top: 6px; }
+  .stat-tile .stat-sys { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-secondary); }
+  .stat-tile .stat-sys .swatch { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .stat-tile .stat-val { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 17px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead th {
+    text-align: left; font-weight: 600; font-size: 11.5px; letter-spacing: 0.02em;
+    text-transform: uppercase; color: var(--text-muted);
+    padding: 8px 10px; border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--surface); z-index: 1;
+  }
+  tbody td { padding: 8px 10px; border-bottom: 1px solid var(--surface-2); color: var(--text-secondary); vertical-align: top; }
+  tbody tr:hover td { background: var(--surface-2); }
+  tbody td.strong { color: var(--text-primary); font-weight: 500; }
+  .table-scroll { max-height: 420px; overflow: auto; border: 1px solid var(--border); border-radius: 10px; }
+  .table-scroll table thead th { background: var(--surface-2); }
+  .id-chip {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 1px 6px; border-radius: 5px;
+    background: var(--surface-3); color: var(--text-secondary); display: inline-block; margin: 1px 2px 1px 0;
+  }
+  .id-chip.hit { color: var(--good); background: color-mix(in oklab, var(--good) 16%, var(--surface-3)); font-weight: 600; }
+
+  .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 600; padding: 3px 9px 3px 7px; border-radius: 999px; }
+  .badge.pass { color: var(--good); background: color-mix(in oklab, var(--good) 14%, var(--surface)); }
+  .badge.fail { color: var(--critical); background: color-mix(in oklab, var(--critical) 14%, var(--surface)); }
+  .badge svg { width: 11px; height: 11px; }
+  .explain { font-size: 12px; color: var(--text-muted); display: block; margin-top: 3px; }
+
+  .chart-wrap { position: relative; }
+  .chart-wrap svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .axis-label { fill: var(--text-muted); font-size: 10.5px; font-family: "IBM Plex Mono", monospace; }
+  .gridline { stroke: var(--grid); stroke-width: 1; }
+  .tooltip {
+    position: absolute; pointer-events: none; background: var(--text-primary); color: var(--bg);
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; padding: 8px 10px; border-radius: 8px;
+    box-shadow: var(--shadow); opacity: 0; transition: opacity 0.08s ease; z-index: 5; min-width: 150px;
+    line-height: 1.6;
+  }
+  .tooltip .tt-x { color: color-mix(in oklab, var(--bg) 65%, transparent); margin-bottom: 4px; font-size: 10.5px; }
+  .tooltip .tt-row { display: flex; align-items: center; gap: 6px; justify-content: space-between; }
+  .tooltip .tt-row .k { display: flex; align-items: center; gap: 5px; opacity: 0.85; }
+  .tooltip .tt-row .k span.line { width: 9px; height: 2px; display: inline-block; border-radius: 1px; }
+  .tooltip .tt-row .v { font-weight: 600; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 720px) { .two-col { grid-template-columns: 1fr; } }
+
+  .ramp-legend { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); margin-top: 8px; }
+  .ramp-legend .ramp-swatches { display: flex; gap: 2px; }
+  .ramp-legend .ramp-swatches i { width: 12px; height: 8px; border-radius: 2px; display: block; }
+
+  footer { margin-top: 8px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 12px; line-height: 1.6; }
+  footer code { font-family: "IBM Plex Mono", monospace; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; }
+
+  .loading { color: var(--text-muted); font-size: 13px; padding: 30px 0; text-align: center; }
+
+  .callout {
+    border-radius: 10px; padding: 12px 14px; font-size: 13px; line-height: 1.5;
+    background: color-mix(in oklab, var(--good) 10%, var(--surface)); border: 1px solid color-mix(in oklab, var(--good) 30%, var(--border));
+    margin-bottom: 16px;
+  }
+  .callout.pending {
+    background: var(--surface-2); border: 1px solid var(--border); color: var(--text-secondary);
+  }
+</style>
+
+<header class="masthead">
+  <div class="eyebrow">rAIminiscence &nbsp;vs&nbsp; hippo-memory &middot; empirical benchmark</div>
+  <h1>Memory Bench Readout</h1>
+  <p class="subtitle">Every metric from the checked-in benchmark suite (<span class="mono">benchmarks/</span>), read directly from its own result files — no numbers re-typed or re-estimated. Recall@k / Precision@k and invalidation correctness on one side, per-turn latency, opportunistic-consolidation contention, and outcome-feedback formula stress-tests on the other.</p>
+  <div class="meta-row" id="meta-row">Loading run metadata&hellip;</div>
+  <div class="legend-row">
+    <span class="legend-key"><span class="swatch" style="background:var(--series-raim)"></span>rAIminiscence</span>
+    <span class="legend-key"><span class="swatch" style="background:var(--series-hippo)"></span>hippo-memory</span>
+  </div>
+</header>
+
+<section class="panel">
+  <h2>Headline numbers</h2>
+  <p class="panel-note">The top-line figure from each of the four measurements below. Ratios, not raw counts, so the two invalidation scenario counts (9 now, up from 5) stay comparable.</p>
+  <div class="stat-grid" id="stat-grid"><div class="loading">Loading&hellip;</div></div>
+</section>
+
+<section class="panel">
+  <h2>1. Recall@k / Precision@k</h2>
+  <p class="panel-note" id="recall-note">Hand-labeled corpus, real local embeddings on both sides (Ollama nomic-embed-text for rAIminiscence, Xenova/all-MiniLM-L6-v2 for hippo-memory).</p>
+  <div class="stat-grid" style="margin-bottom:18px" id="recall-stats"></div>
+  <div class="table-scroll">
+    <table id="recall-table">
+      <thead><tr>
+        <th>Query</th><th>Relevant</th>
+        <th>rAIminiscence top-k</th><th>R@k</th><th>P@k</th>
+        <th>hippo-memory top-k</th><th>R@k</th><th>P@k</th>
+      </tr></thead>
+      <tbody><tr><td colspan="8" class="loading">Loading&hellip;</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>2. Invalidation correctness</h2>
+  <p class="panel-note" id="invalidation-note">Pass/fail per scenario — a scenario passes only if every target memory is invalidated <em>and</em> every bystander memory is left untouched.</p>
+  <div class="table-scroll" style="max-height:520px">
+    <table id="invalidation-table">
+      <thead><tr>
+        <th>Scenario</th><th>Mechanism</th><th>rAIminiscence</th><th>hippo-memory</th>
+      </tr></thead>
+      <tbody><tr><td colspan="4" class="loading">Loading&hellip;</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>3. Per-turn recall latency &amp; output size</h2>
+  <p class="panel-note" id="latency-note">Median of 5 reps per store size, real subprocess invocations on both sides (log&ndash;log axes — a straight line would mean latency scales as a power of store size; a bend upward means it gets <em>worse</em> than that).</p>
+  <div class="chart-wrap" id="latency-chart"></div>
+  <div class="table-scroll" style="margin-top:18px">
+    <table id="latency-table">
+      <thead><tr>
+        <th>Store size</th><th>rAIminiscence in-process</th><th>rAIminiscence shim</th><th>rAIminiscence shim, server running</th><th>hippo-memory CLI</th>
+        <th>rAIminiscence output</th><th>hippo-memory output</th>
+      </tr></thead>
+      <tbody><tr><td colspan="7" class="loading">Loading&hellip;</td></tr></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>4. Opportunistic consolidation: raw cost &amp; contention (v14 / ADR-0021)</h2>
+  <p class="panel-note"><code>remember</code>/<code>recall</code> schedule a full Clustering/Promotion/Promotion Audit/Commit Invalidation/Pruning/Invalidation pass via <code>setImmediate</code> on the same event loop as the MCP server — a cost the latency chart above never isolates, since the per-turn hook explicitly opts out of it. <strong>Contention</strong> is the actual user-facing symptom: how much slower the <em>next</em> <code>recall()</code> is right after a <code>remember()</code> that scheduled a pending pass (production's real default), vs. the same next call with nothing pending.</p>
+  <div id="consolidation-callout"></div>
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Duration &amp; contention</h3>
+      <div class="table-scroll">
+        <table id="consolidation-table">
+          <thead><tr><th>Store size</th><th>consolidate() duration</th><th>Next recall(), baseline</th><th>Next recall(), pending consolidation</th><th>Contention overhead</th></tr></thead>
+          <tbody><tr><td colspan="5" class="loading">Loading&hellip;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">Shared Memory git overhead</h3>
+      <div class="table-scroll">
+        <table id="shared-memory-table">
+          <thead><tr><th>Store size</th><th>Without Shared Memory</th><th>With Shared Memory</th><th>Overhead</th></tr></thead>
+          <tbody><tr><td colspan="4" class="loading">Loading&hellip;</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>5. Outcome-feedback formula (Reinforcement Ceiling)</h2>
+  <p class="panel-note">Strength (0&ndash;1) vs. days since anchor, one line per feedback-event count — darker = more events. Positive feedback only; each system's own real, unmodified decay function.</p>
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">rAIminiscence &mdash; positive feedback</h3>
+      <div class="chart-wrap" id="feedback-raim-chart"></div>
+    </div>
+    <div>
+      <h3 style="font-size:13px;color:var(--text-secondary);margin-bottom:8px;">hippo-memory &mdash; positive feedback</h3>
+      <div class="chart-wrap" id="feedback-hippo-chart"></div>
+    </div>
+  </div>
+  <div class="table-scroll" style="margin-top:20px">
+    <table id="feedback-pos-table"><thead></thead><tbody><tr><td class="loading">Loading&hellip;</td></tr></tbody></table>
+  </div>
+  <h3 style="font-size:13px;color:var(--text-secondary);margin:20px 0 8px;">Negative feedback &mdash; decays to the 1-day-floor almost immediately on both sides, shown as a table only</h3>
+  <div class="table-scroll">
+    <table id="feedback-neg-table"><thead></thead><tbody><tr><td class="loading">Loading&hellip;</td></tr></tbody></table>
+  </div>
+</section>
+
+<section class="panel">
+  <h2>6. LongMemEval-S through hippo-memory's own harness (n=500)</h2>
+  <p class="panel-note" id="longmemeval-note">Loading&hellip;</p>
+  <div class="stat-grid" style="margin-bottom:18px" id="longmemeval-stats"></div>
+  <div class="table-scroll">
+    <table id="longmemeval-table">
+      <thead><tr>
+        <th>Question type</th><th>Count</th>
+        <th>rAIminiscence R@1</th><th>rAIminiscence R@5</th>
+        <th>hippo-memory R@1</th><th>hippo-memory R@5</th>
+      </tr></thead>
+      <tbody><tr><td colspan="6" class="loading">Loading&hellip;</td></tr></tbody>
+    </table>
+  </div>
+  <p class="panel-note" style="margin-top:12px">Both systems run through hippo-memory's own <code>recall_cli_haystack.py</code> harness: one CLI-built store per question, every call a fresh process, both ranking the whole haystack. Scored by hippo-memory's own <code>evaluate_retrieval.py</code>. rAIminiscence uses Ollama, with fused ranking (ADR-0032) and the whole Memory body as detail (ADR-0033); hippo-memory uses its MiniLM embeddings (run B). <code>answer_in_content</code> is a lexical-overlap heuristic, not a scored answer. Paired intervals, the Embedded provider, freshness, consolidation, token budgets and costs: <code>benchmarks/README.md</code>.</p>
+</section>
+
+<footer>
+  Source data: <code>benchmarks/results/2026-09-15-results.json</code>, <code>benchmarks/results/2026-09-15-extended-results.json</code>, and <code>benchmarks/longmemeval/2026-10-31-results/scores/{OD,B}-lifted.json</code>, embedded as-is into this file by <code>benchmarks/build-dashboard.ts</code> and rendered client-side — every number on this page is read from those files, nothing is re-typed by hand. This file (<code>benchmarks/dashboard.html</code>) is self-contained and static; open it directly in a browser, no server needed. Full methodology, isolation guarantees, and honest caveats: <code>benchmarks/README.md</code>.
+</footer>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  const NS = "http://www.w3.org/2000/svg";
+  function svgEl(tag, attrs) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function el(tag, attrs, text) {
+    const e = document.createElement(tag);
+    if (attrs) for (const k in attrs) {
+      if (k === "class") e.className = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    }
+    if (text !== undefined) e.textContent = text;
+    return e;
+  }
+  function pct(x) { return (x * 100).toFixed(1) + "%"; }
+  function fmtMs(x) { return x < 10 ? x.toFixed(1) + "ms" : Math.round(x) + "ms"; }
+  const tooltip = document.getElementById("tooltip");
+
+  function checkIcon(pass) {
+    return pass
+      ? '<svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5l3 3 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+      : '<svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+  }
+
+  // Injected at build time by benchmarks/build-dashboard.ts from the real
+  // result files below — no fetch() involved, so this page renders
+  // correctly opened directly as a local file:// URL, not just served over
+  // http(s) (a plain browser blocks fetch() of local JSON under file://).
+  const MAIN_RESULTS = /*__MAIN_RESULTS_JSON__*/null;
+  const EXTENDED_RESULTS = /*__EXTENDED_RESULTS_JSON__*/null;
+  const LONGMEMEVAL_RESULTS = /*__LONGMEMEVAL_RESULTS_JSON__*/null;
+  try {
+    renderMeta(MAIN_RESULTS, EXTENDED_RESULTS);
+    renderStatGrid(MAIN_RESULTS, EXTENDED_RESULTS);
+    renderRecall(MAIN_RESULTS);
+    renderInvalidation(MAIN_RESULTS);
+    renderLatency(EXTENDED_RESULTS);
+    renderConsolidation(EXTENDED_RESULTS);
+    renderFeedback(EXTENDED_RESULTS);
+    renderLongMemEval(LONGMEMEVAL_RESULTS);
+  } catch (err) {
+    document.getElementById("meta-row").textContent = "Could not render result data: " + err.message;
+  }
+
+  function renderMeta(main, ext) {
+    const row = document.getElementById("meta-row");
+    row.innerHTML = "";
+    const items = [
+      ["main pass generated", new Date(main.generatedAt).toISOString().replace("T", " ").slice(0, 16) + " UTC"],
+      ["extended pass generated", new Date(ext.generatedAt).toISOString().replace("T", " ").slice(0, 16) + " UTC"],
+      ["k", main.k],
+      ["corpus", main.recall.raiminiscence.perQuery.length + " queries"],
+      ["invalidation scenarios", main.invalidation.raiminiscence.length],
+      ["max store size", Math.max(...ext.latency.storeSizes)],
+      ["max feedback events", Math.max(...ext.feedbackFormula.feedbackCounts)]
+    ];
+    items.forEach(([k, v]) => {
+      const span = el("span");
+      span.append(k + ": ");
+      const b = el("b", null, String(v));
+      span.append(b);
+      row.append(span);
+    });
+  }
+
+  function statLine(container, sysLabel, color, value) {
+    const line = el("div", { class: "stat-line" });
+    const sys = el("div", { class: "stat-sys" });
+    sys.append(el("span", { class: "swatch", style: "background:" + color }));
+    sys.append(document.createTextNode(sysLabel));
+    line.append(sys);
+    line.append(el("div", { class: "stat-val" }, value));
+    container.append(line);
+  }
+
+  function renderStatGrid(main, ext) {
+    const grid = document.getElementById("stat-grid");
+    grid.innerHTML = "";
+
+    const rRecall = main.recall.raiminiscence.meanRecallAtK, hRecall = main.recall.hippoMemory.meanRecallAtK;
+    const rPrec = main.recall.raiminiscence.meanPrecisionAtK, hPrec = main.recall.hippoMemory.meanPrecisionAtK;
+    const rInv = main.invalidation.raiminiscence, hInv = main.invalidation.hippoMemory;
+    const rInvPass = rInv.filter(s => s.passed).length, hInvPass = hInv.filter(s => s.passed).length;
+
+    // The usual case: the agent's MCP server runs beside the hook. The no-server shim stays in the latency table.
+    const raimShim = ext.latency.raiminiscenceShimSubprocessServerRunning;
+    const hippoLat = ext.latency.hippoMemory;
+    const maxSize = Math.max(...ext.latency.storeSizes);
+    const rLatMax = raimShim.find(x => x.storeSize === maxSize).medianLatencyMs;
+    const hLatMax = hippoLat.find(x => x.storeSize === maxSize).medianLatencyMs;
+
+    const days = ext.feedbackFormula.assessedAtDays;
+    const headlineDay = Math.max(...days);
+    const counts = ext.feedbackFormula.feedbackCounts;
+    const midCount = counts.includes(50) ? 50 : counts[Math.floor(counts.length / 2)];
+    const maxCount = Math.max(...counts);
+    const rPos = ext.feedbackFormula.raiminiscence.filter(p => p.sign === "positive");
+    const hPos = ext.feedbackFormula.hippoMemory.filter(p => p.sign === "positive");
+    const rMid = rPos.find(p => p.feedbackCount === midCount).strengthByAssessedDay[headlineDay];
+    const rMax = rPos.find(p => p.feedbackCount === maxCount).strengthByAssessedDay[headlineDay];
+    const hMid = hPos.find(p => p.feedbackCount === midCount).strengthByAssessedDay[headlineDay];
+    const hMax = hPos.find(p => p.feedbackCount === maxCount).strengthByAssessedDay[headlineDay];
+
+    const tiles = [
+      { label: "Recall@" + main.k, r: pct(rRecall), h: pct(hRecall) },
+      { label: "Precision@" + main.k, r: pct(rPrec), h: pct(hPrec) },
+      { label: "Invalidation scenarios passed", r: rInvPass + " / " + rInv.length, h: hInvPass + " / " + hInv.length },
+      { label: "Hook latency at " + maxSize + " memories, server running", r: fmtMs(rLatMax), h: fmtMs(hLatMax) },
+      { label: "Strength @" + headlineDay + "d, " + midCount + "→" + maxCount + " events (Δ)", r: "+" + (rMax - rMid).toFixed(3), h: "+" + (hMax - hMid).toFixed(3) }
+    ];
+    tiles.forEach(t => {
+      const tile = el("div", { class: "stat-tile" });
+      tile.append(el("div", { class: "stat-label" }, t.label));
+      statLine(tile, "rAIminiscence", "var(--series-raim)", t.r);
+      statLine(tile, "hippo-memory", "var(--series-hippo)", t.h);
+      grid.append(tile);
+    });
+  }
+
+  function renderRecall(main) {
+    const r = main.recall.raiminiscence, h = main.recall.hippoMemory;
+    document.getElementById("recall-note").textContent =
+      "k = " + main.k + ", over " + r.perQuery.length + " hand-labeled queries. Mean Recall@k / Precision@k shown below; full per-query breakdown in the table.";
+
+    const statGrid = document.getElementById("recall-stats");
+    statGrid.innerHTML = "";
+    [["Mean Recall@k", r.meanRecallAtK, h.meanRecallAtK], ["Mean Precision@k", r.meanPrecisionAtK, h.meanPrecisionAtK]].forEach(([label, rv, hv]) => {
+      const tile = el("div", { class: "stat-tile" });
+      tile.append(el("div", { class: "stat-label" }, label));
+      statLine(tile, "rAIminiscence", "var(--series-raim)", pct(rv));
+      statLine(tile, "hippo-memory", "var(--series-hippo)", pct(hv));
+      statGrid.append(tile);
+    });
+
+    const tbody = document.querySelector("#recall-table tbody");
+    tbody.innerHTML = "";
+    r.perQuery.forEach((rq, i) => {
+      const hq = h.perQuery[i];
+      const tr = el("tr");
+      const tdQ = el("td", { class: "strong" }, rq.query);
+      tr.append(tdQ);
+      const tdRel = el("td");
+      rq.relevantIds.forEach(id => tdRel.append(el("span", { class: "id-chip" }, id)));
+      tr.append(tdRel);
+
+      function idsCell(returnedIds, hits) {
+        const td = el("td");
+        returnedIds.forEach(id => td.append(el("span", { class: "id-chip" + (hits.includes(id) ? " hit" : "") }, id)));
+        return td;
+      }
+      tr.append(idsCell(rq.returnedIds, rq.hits));
+      tr.append(el("td", { class: "mono strong" }, pct(rq.recallAtK)));
+      tr.append(el("td", { class: "mono" }, pct(rq.precisionAtK)));
+      tr.append(idsCell(hq.returnedIds, hq.hits));
+      tr.append(el("td", { class: "mono strong" }, pct(hq.recallAtK)));
+      tr.append(el("td", { class: "mono" }, pct(hq.precisionAtK)));
+      tbody.append(tr);
+    });
+  }
+
+  function renderInvalidation(main) {
+    const r = main.invalidation.raiminiscence, h = main.invalidation.hippoMemory;
+    document.getElementById("invalidation-note").textContent =
+      "rAIminiscence: " + r.filter(s => s.passed).length + "/" + r.length + " scenarios passed. hippo-memory: " +
+      h.filter(s => s.passed).length + "/" + h.length + " scenarios passed. Reported per-scenario, never as one aggregate percentage.";
+
+    const tbody = document.querySelector("#invalidation-table tbody");
+    tbody.innerHTML = "";
+    r.forEach((rs, i) => {
+      const hs = h[i];
+      const tr = el("tr");
+      tr.append(el("td", { class: "strong mono" }, rs.scenarioId));
+      tr.append(el("td", null, rs.mechanism));
+      function badgeCell(s) {
+        const td = el("td");
+        const b = el("span", { class: "badge " + (s.passed ? "pass" : "fail") });
+        b.innerHTML = checkIcon(s.passed);
+        b.append(document.createTextNode(s.passed ? "PASS" : "FAIL"));
+        td.append(b);
+        if (!s.passed) td.append(el("span", { class: "explain" }, s.explanation));
+        return td;
+      }
+      tr.append(badgeCell(rs));
+      tr.append(badgeCell(hs));
+      tbody.append(tr);
+    });
+  }
+
+  // ---------- generic line chart ----------
+  function logScale(domain, range) {
+    const [d0, d1] = domain.map(Math.log10), [r0, r1] = range;
+    return v => r0 + (Math.log10(v) - d0) / (d1 - d0) * (r1 - r0);
+  }
+  function linScale(domain, range) {
+    const [d0, d1] = domain, [r0, r1] = range;
+    return v => r0 + (v - d0) / (d1 - d0) * (r1 - r0);
+  }
+
+  function renderLineChart(containerId, opts) {
+    // opts: {series:[{name,color,dashed,points:[{x,y}]}], xTicks, xFmt, xLog, yTicks, yFmt, yLog, yDomain, width, height, xLabel, yLabel}
+    const width = opts.width || 640, height = opts.height || 300;
+    const margin = { top: 14, right: 18, bottom: 34, left: 46 };
+    const plotW = width - margin.left - margin.right;
+    const plotH = height - margin.top - margin.bottom;
+
+    const allX = opts.series.flatMap(s => s.points.map(p => p.x));
+    const xDomain = [Math.min(...allX), Math.max(...allX)];
+    const yDomain = opts.yDomain || [Math.min(...opts.series.flatMap(s => s.points.map(p => p.y))), Math.max(...opts.series.flatMap(s => s.points.map(p => p.y)))];
+
+    const xScale = opts.xLog ? logScale(xDomain, [0, plotW]) : linScale(xDomain, [0, plotW]);
+    const yScale = opts.yLog ? logScale(yDomain, [plotH, 0]) : linScale(yDomain, [plotH, 0]);
+
+    const svg = svgEl("svg", { viewBox: "0 0 " + width + " " + height, role: "img", "aria-label": opts.ariaLabel || "line chart" });
+    const plot = svgEl("g", { transform: "translate(" + margin.left + "," + margin.top + ")" });
+    svg.append(plot);
+
+    // gridlines + y ticks
+    opts.yTicks.forEach(t => {
+      const y = yScale(t);
+      plot.append(svgEl("line", { x1: 0, x2: plotW, y1: y, y2: y, class: "gridline" }));
+      const label = svgEl("text", { x: -8, y: y + 3, "text-anchor": "end", class: "axis-label" });
+      label.textContent = opts.yFmt(t);
+      plot.append(label);
+    });
+    // x ticks
+    opts.xTicks.forEach(t => {
+      const x = xScale(t);
+      const label = svgEl("text", { x: x, y: plotH + 20, "text-anchor": "middle", class: "axis-label" });
+      label.textContent = opts.xFmt(t);
+      plot.append(label);
+    });
+    plot.append(svgEl("line", { x1: 0, x2: plotW, y1: plotH, y2: plotH, class: "gridline" }));
+
+    // series lines
+    const seriesPaths = [];
+    opts.series.forEach(s => {
+      const pts = s.points.map(p => [xScale(p.x), yScale(p.y)]);
+      const d = pts.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(2) + "," + p[1].toFixed(2)).join(" ");
+      const path = svgEl("path", { d: d, fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" });
+      if (s.dashed) path.setAttribute("stroke-dasharray", s.dashed === true ? "4 3" : s.dashed);
+      plot.append(path);
+      seriesPaths.push(s);
+      // end dot + ring
+      const last = pts[pts.length - 1];
+      plot.append(svgEl("circle", { cx: last[0], cy: last[1], r: 5, fill: "var(--surface)" }));
+      plot.append(svgEl("circle", { cx: last[0], cy: last[1], r: 3.5, fill: s.color }));
+    });
+
+    // crosshair + hit layer
+    const crosshair = svgEl("line", { x1: 0, x2: 0, y1: 0, y2: plotH, class: "gridline", style: "opacity:0" });
+    plot.append(crosshair);
+    const hit = svgEl("rect", { x: 0, y: 0, width: plotW, height: plotH, fill: "transparent" });
+    plot.append(hit);
+
+    const container = document.getElementById(containerId);
+    container.innerHTML = "";
+    container.append(svg);
+
+    hit.addEventListener("pointermove", (e) => {
+      const rect = svg.getBoundingClientRect();
+      const scaleX = width / rect.width;
+      const px = (e.clientX - rect.left) * scaleX - margin.left;
+      // nearest x among unique x values
+      const uniqueXs = [...new Set(allX)];
+      let nearest = uniqueXs[0], bestDist = Infinity;
+      uniqueXs.forEach(xv => {
+        const d = Math.abs(xScale(xv) - px);
+        if (d < bestDist) { bestDist = d; nearest = xv; }
+      });
+      crosshair.setAttribute("x1", xScale(nearest));
+      crosshair.setAttribute("x2", xScale(nearest));
+      crosshair.style.opacity = 1;
+
+      tooltip.innerHTML = "";
+      const xLine = el("div", { class: "tt-x" }, opts.xFmt(nearest));
+      tooltip.append(xLine);
+      opts.series.forEach(s => {
+        const p = s.points.find(pt => pt.x === nearest);
+        if (!p) return;
+        const row = el("div", { class: "tt-row" });
+        const k = el("div", { class: "k" });
+        k.append(el("span", { class: "line", style: "background:" + s.color }));
+        k.append(document.createTextNode(s.name));
+        row.append(k);
+        row.append(el("div", { class: "v" }, opts.yFmt(p.y)));
+        tooltip.append(row);
+      });
+      // #tooltip is a single shared node placed at the end of <body>, not
+      // inside this chart's container, so it must be positioned in document
+      // coordinates (pageX/pageY), not relative to the container's rect.
+      tooltip.style.left = (e.pageX + 14) + "px";
+      tooltip.style.top = (e.pageY - 10) + "px";
+      tooltip.style.opacity = 1;
+    });
+    hit.addEventListener("pointerleave", () => { tooltip.style.opacity = 0; crosshair.style.opacity = 0; });
+  }
+
+  function renderLatency(ext) {
+    const sizes = ext.latency.storeSizes;
+    const series = [
+      { name: "rAIminiscence in-process", color: "var(--series-raim)", dashed: true,
+        points: ext.latency.raiminiscenceInProcess.map(d => ({ x: d.storeSize, y: d.medianLatencyMs })) },
+      { name: "rAIminiscence shim (real subprocess)", color: "var(--series-raim)",
+        points: ext.latency.raiminiscenceShimSubprocess.map(d => ({ x: d.storeSize, y: d.medianLatencyMs })) },
+      { name: "hippo-memory CLI", color: "var(--series-hippo)",
+        points: ext.latency.hippoMemory.map(d => ({ x: d.storeSize, y: d.medianLatencyMs })) }
+    ];
+    // ADR-0038: absent from result files generated before the server-running pass existed.
+    const warm = ext.latency.raiminiscenceShimSubprocessServerRunning;
+    if (warm) series.splice(2, 0, { name: "rAIminiscence shim, server running", color: "var(--series-raim)", dashed: "1 3",
+      points: warm.map(d => ({ x: d.storeSize, y: d.medianLatencyMs })) });
+    renderLineChart("latency-chart", {
+      series, xLog: true, yLog: true,
+      xTicks: sizes, xFmt: v => v, yTicks: [10, 30, 100, 300, 1000, 3000], yFmt: v => v >= 1000 ? (v / 1000) + "s" : v + "ms",
+      ariaLabel: "Median recall latency by store size, log-log axes",
+      width: 720, height: 300
+    });
+    // legend for dashed vs solid raim
+    const legend = el("div", { class: "ramp-legend", style: "margin-top:10px;flex-wrap:wrap;gap:14px" });
+    const keys = [["rAIminiscence in-process (dashed)", "var(--series-raim)", "0 3px,transparent 3px 5px"], ["rAIminiscence shim / real subprocess", "var(--series-raim)", null], ["hippo-memory CLI", "var(--series-hippo)", null]];
+    if (warm) keys.splice(2, 0, ["rAIminiscence shim, server running (dotted)", "var(--series-raim)", "0 1px,transparent 1px 4px"]);
+    keys.forEach(([label, color, dash]) => {
+      const key = el("span", { class: "legend-key" });
+      const sw = el("span", { style: "width:14px;height:2px;background:" + color + (dash ? ";background-image:repeating-linear-gradient(90deg," + color + " " + dash + ");background-color:transparent" : "") + ";display:inline-block;border-radius:1px" });
+      key.append(sw);
+      key.append(document.createTextNode(label));
+      legend.append(key);
+    });
+    document.getElementById("latency-chart").after(legend);
+
+    const tbody = document.querySelector("#latency-table tbody");
+    tbody.innerHTML = "";
+    sizes.forEach((size, i) => {
+      const rIn = ext.latency.raiminiscenceInProcess[i], rShim = ext.latency.raiminiscenceShimSubprocess[i], hp = ext.latency.hippoMemory[i];
+      const tr = el("tr");
+      tr.append(el("td", { class: "mono strong" }, String(size)));
+      tr.append(el("td", { class: "mono" }, fmtMs(rIn.medianLatencyMs)));
+      tr.append(el("td", { class: "mono strong" }, fmtMs(rShim.medianLatencyMs)));
+      tr.append(el("td", { class: "mono strong" }, warm ? fmtMs(warm[i].medianLatencyMs) : "n/a"));
+      tr.append(el("td", { class: "mono" }, fmtMs(hp.medianLatencyMs)));
+      tr.append(el("td", { class: "mono" }, rIn.outputChars + " chars (~" + rIn.outputApproxTokens + "tok)"));
+      tr.append(el("td", { class: "mono" }, hp.outputChars + " chars (~" + hp.outputApproxTokens + "tok)"));
+      tbody.append(tr);
+    });
+
+    const first = ext.latency.raiminiscenceShimSubprocess[0], last = ext.latency.raiminiscenceShimSubprocess[ext.latency.raiminiscenceShimSubprocess.length - 1];
+    const growth = (last.medianLatencyMs / first.medianLatencyMs).toFixed(1);
+    document.getElementById("latency-note").insertAdjacentHTML("beforeend",
+      " <strong>v14 (ADR-0021):</strong> a versioned corpus cache plus two O(n²)→O(edges) fixes (Spreading Activation's adjacency build and its direct-boost term) replaced the previous full-corpus-scan-per-call design — shim latency now goes " +
+      fmtMs(first.medianLatencyMs) + " → " + fmtMs(last.medianLatencyMs) + " across a " + Math.round(last.storeSize / first.storeSize) + "× store-size range (×" + growth + "), close to flat, versus ×12.5 before the fix.");
+  }
+
+  function renderConsolidation(ext) {
+    const c = ext.consolidationContention;
+    const callout = document.getElementById("consolidation-callout");
+    if (!c) {
+      callout.innerHTML = "";
+      document.getElementById("consolidation-table").querySelector("tbody").innerHTML = "<tr><td colspan='5' class='loading'>Not present in this result file (pre-v14 run).</td></tr>";
+      document.getElementById("shared-memory-table").querySelector("tbody").innerHTML = "<tr><td colspan='4' class='loading'>Not present in this result file (pre-v14 run).</td></tr>";
+      return;
+    }
+
+    const maxContention = c.contention[c.contention.length - 1];
+    callout.innerHTML = "";
+    callout.className = "callout pending";
+    callout.textContent = "Measured, not yet fixed: at " + maxContention.storeSize + " memories, a pending consolidation adds " + fmtMs(maxContention.contentionOverheadMs) +
+      " to the very next recall() call. Per ADR-0021, whether this needs its own fix (e.g. moving consolidation off the event loop, or debouncing it like the Checkpoint nudge) is deferred to a follow-up pass — this number is that pass's starting evidence.";
+
+    const dTbody = document.querySelector("#consolidation-table tbody");
+    dTbody.innerHTML = "";
+    c.storeSizes.forEach((size, i) => {
+      const dur = c.duration[i], cont = c.contention[i];
+      const tr = el("tr");
+      tr.append(el("td", { class: "mono strong" }, String(size)));
+      tr.append(el("td", { class: "mono" }, fmtMs(dur.durationMs)));
+      tr.append(el("td", { class: "mono" }, fmtMs(cont.baselineNextCallLatencyMs)));
+      tr.append(el("td", { class: "mono" }, fmtMs(cont.withPendingConsolidationNextCallLatencyMs)));
+      tr.append(el("td", { class: "mono strong" }, fmtMs(cont.contentionOverheadMs)));
+      dTbody.append(tr);
+    });
+
+    const smTbody = document.querySelector("#shared-memory-table tbody");
+    smTbody.innerHTML = "";
+    c.sharedMemoryStoreSizes.forEach((size, i) => {
+      const sm = c.sharedMemoryOverhead[i];
+      const tr = el("tr");
+      tr.append(el("td", { class: "mono strong" }, String(size)));
+      tr.append(el("td", { class: "mono" }, fmtMs(sm.durationWithoutSharedMemoryMs)));
+      tr.append(el("td", { class: "mono" }, fmtMs(sm.durationWithSharedMemoryMs)));
+      tr.append(el("td", { class: "mono strong" }, fmtMs(sm.sharedMemoryOverheadMs)));
+      smTbody.append(tr);
+    });
+  }
+
+  function rampColor(varName, idx, n) {
+    // idx 0 = lightest tint, n-1 = full saturation
+    const pct = 25 + (idx / (n - 1)) * 75;
+    return "color-mix(in oklab, var(" + varName + ") " + pct.toFixed(0) + "%, var(--surface))";
+  }
+
+  function renderFeedback(ext) {
+    const counts = ext.feedbackFormula.feedbackCounts;
+    const days = ext.feedbackFormula.assessedAtDays;
+    const rPos = ext.feedbackFormula.raiminiscence.filter(p => p.sign === "positive");
+    const hPos = ext.feedbackFormula.hippoMemory.filter(p => p.sign === "positive");
+    const rNeg = ext.feedbackFormula.raiminiscence.filter(p => p.sign === "negative");
+    const hNeg = ext.feedbackFormula.hippoMemory.filter(p => p.sign === "negative");
+
+    function buildSeries(dataset, varName) {
+      return counts.map((c, i) => ({
+        name: c + " events",
+        color: rampColor(varName, i, counts.length),
+        points: days.map(d => ({ x: d, y: dataset.find(p => p.feedbackCount === c).strengthByAssessedDay[d] }))
+      }));
+    }
+
+    renderLineChart("feedback-raim-chart", {
+      series: buildSeries(rPos, "--series-raim"), xLog: true, yLog: false, yDomain: [0, 1],
+      xTicks: days, xFmt: v => v + "d", yTicks: [0, 0.25, 0.5, 0.75, 1], yFmt: v => v.toFixed(2),
+      ariaLabel: "rAIminiscence positive feedback strength curves", width: 560, height: 260
+    });
+    renderLineChart("feedback-hippo-chart", {
+      series: buildSeries(hPos, "--series-hippo"), xLog: true, yLog: false, yDomain: [0, 1],
+      xTicks: days, xFmt: v => v + "d", yTicks: [0, 0.25, 0.5, 0.75, 1], yFmt: v => v.toFixed(2),
+      ariaLabel: "hippo-memory positive feedback strength curves", width: 560, height: 260
+    });
+
+    [["feedback-raim-chart", "--series-raim"], ["feedback-hippo-chart", "--series-hippo"]].forEach(([id, varName]) => {
+      const legend = el("div", { class: "ramp-legend" });
+      legend.append(document.createTextNode("0 events"));
+      const swatches = el("div", { class: "ramp-swatches" });
+      counts.forEach((c, i) => swatches.append(el("i", { style: "background:" + rampColor(varName, i, counts.length) })));
+      legend.append(swatches);
+      legend.append(document.createTextNode(Math.max(...counts) + " events"));
+      document.getElementById(id).after(legend);
+    });
+
+    function fillFormulaTable(tableId, rDataset, hDataset) {
+      const table = document.getElementById(tableId);
+      const thead = table.querySelector("thead"), tbody = table.querySelector("tbody");
+      thead.innerHTML = ""; tbody.innerHTML = "";
+      const headRow = el("tr");
+      headRow.append(el("th", null, "Feedback count"));
+      days.forEach(d => headRow.append(el("th", null, "rAIm @" + d + "d")));
+      days.forEach(d => headRow.append(el("th", null, "hippo @" + d + "d")));
+      thead.append(headRow);
+      counts.forEach(c => {
+        const tr = el("tr");
+        tr.append(el("td", { class: "mono strong" }, String(c)));
+        const rp = rDataset.find(p => p.feedbackCount === c), hp = hDataset.find(p => p.feedbackCount === c);
+        days.forEach(d => tr.append(el("td", { class: "mono" }, rp.strengthByAssessedDay[d].toFixed(3))));
+        days.forEach(d => tr.append(el("td", { class: "mono" }, hp.strengthByAssessedDay[d].toFixed(3))));
+        tbody.append(tr);
+      });
+    }
+    fillFormulaTable("feedback-pos-table", rPos, hPos);
+    fillFormulaTable("feedback-neg-table", rNeg, hNeg);
+  }
+
+  // evaluate_retrieval.py's own numbers are already 0-100 percentages, not
+  // 0-1 fractions like the rest of this dashboard's `pct()` helper expects.
+  function pctAlready(x) { return x.toFixed(1) + "%"; }
+
+  function renderLongMemEval(lme) {
+    const r = lme.raiminiscence, h = lme.hippoMemory;
+    document.getElementById("longmemeval-note").innerHTML =
+      "Real recall/session-hit run against <a href=\"https://arxiv.org/abs/2407.15811\" target=\"_blank\" rel=\"noopener\">LongMemEval</a> (ICLR 2025), a published academic dataset, not either project's own corpus &mdash; " +
+      r.total_questions + " questions, one fresh isolated store per question on both sides, run through hippo-memory's own harness. The two systems are level: rAIminiscence leads Recall@1 by 2.2 points [+0.2, +4.2]; Recall@5 and answer_in_content@5 differences are within their 95% intervals.";
+
+    const statGrid = document.getElementById("longmemeval-stats");
+    statGrid.innerHTML = "";
+    [
+      ["Recall@1", r.overall["recall@1"], h.overall["recall@1"]],
+      ["Recall@5", r.overall["recall@5"], h.overall["recall@5"]],
+      ["Recall@10", r.overall["recall@10"], h.overall["recall@10"]],
+      ["answer_in_content@5 (informational)", r.overall["answer_in_content@5"], h.overall["answer_in_content@5"]]
+    ].forEach(([label, rv, hv]) => {
+      const tile = el("div", { class: "stat-tile" });
+      tile.append(el("div", { class: "stat-label" }, label));
+      statLine(tile, "rAIminiscence", "var(--series-raim)", pctAlready(rv));
+      statLine(tile, "hippo-memory", "var(--series-hippo)", pctAlready(hv));
+      statGrid.append(tile);
+    });
+
+    const tbody = document.querySelector("#longmemeval-table tbody");
+    tbody.innerHTML = "";
+    Object.keys(r.per_type).sort().forEach(type => {
+      const rt = r.per_type[type], ht = h.per_type[type];
+      const tr = el("tr");
+      tr.append(el("td", { class: "strong" }, type));
+      tr.append(el("td", { class: "mono" }, String(rt.count)));
+      tr.append(el("td", { class: "mono" }, pctAlready(rt["recall@1"])));
+      tr.append(el("td", { class: "mono strong" }, pctAlready(rt["recall@5"])));
+      tr.append(el("td", { class: "mono" }, pctAlready(ht["recall@1"])));
+      tr.append(el("td", { class: "mono strong" }, pctAlready(ht["recall@5"])));
+      tbody.append(tr);
+    });
+  }
+})();
+</script>
+
+</body></html>

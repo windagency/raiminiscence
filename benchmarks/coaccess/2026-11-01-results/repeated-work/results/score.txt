@@ -1,0 +1,15 @@
+flask (366 commits, 353 with a truth pair co-changed in train, 0 unranked truth files)
+  file recall@10  off  46.4  on  46.4  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  file recall@3   off  30.6  on  30.6  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  file recall@5   off  37.7  on  37.7  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  hit@1           off  44.8  on  44.8  on-off +0.0 [+0.0, +0.0]  commits changed 0
+hono (326 commits, 323 with a truth pair co-changed in train, 0 unranked truth files)
+  file recall@10  off  66.4  on  66.2  on-off -0.2 [-0.5, +0.0]  commits changed 1
+  file recall@3   off  43.3  on  43.3  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  file recall@5   off  53.5  on  53.5  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  hit@1           off  45.4  on  45.4  on-off +0.0 [+0.0, +0.0]  commits changed 0
+pooled (692 commits)
+  file recall@10  off  55.8  on  55.7  on-off -0.1 [-0.2, +0.0]  commits changed 1
+  file recall@3   off  36.6  on  36.6  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  file recall@5   off  45.2  on  45.2  on-off +0.0 [+0.0, +0.0]  commits changed 0
+  hit@1           off  45.1  on  45.1  on-off +0.0 [+0.0, +0.0]  commits changed 0

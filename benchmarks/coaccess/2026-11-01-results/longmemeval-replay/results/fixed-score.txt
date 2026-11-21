@@ -1,0 +1,17 @@
+questions scored: 324
+R@1
+  off           90.7
+  fixed-on      90.1   vs off: -0.6 [-1.5, +0.0]
+all-evidence@5
+  off           80.6
+  fixed-on      80.6   vs off: +0.0 [-1.2, +1.2]
+R@5
+  off           99.1
+  fixed-on      99.1   vs off: +0.0 [+0.0, +0.0]
+R@10
+  off           99.4
+  fixed-on      99.4   vs off: +0.0 [+0.0, +0.0]
+per type, R@1 / all-evidence@5
+  knowledge-update (78): off 93.6 / 97.4 | fixed-on 93.6 / 97.4
+  multi-session (133): off 91.7 / 75.9 | fixed-on 90.2 / 75.2
+  temporal-reasoning (113): off 87.6 / 74.3 | fixed-on 87.6 / 75.2

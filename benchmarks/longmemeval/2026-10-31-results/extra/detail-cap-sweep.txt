@@ -1,0 +1,7 @@
+cap   280: answer-in-content@5  14.0   mean tokens/result     70   top-5 tokens    351
+cap   500: answer-in-content@5  17.6   mean tokens/result    125   top-5 tokens    625
+cap  1000: answer-in-content@5  20.4   mean tokens/result    249   top-5 tokens   1246
+cap  2000: answer-in-content@5  27.2   mean tokens/result    496   top-5 tokens   2480
+cap  4000: answer-in-content@5  36.6   mean tokens/result    976   top-5 tokens   4880
+cap  8000: answer-in-content@5  44.4   mean tokens/result   1849   top-5 tokens   9244
+cap  None: answer-in-content@5  50.8   mean tokens/result   3071   top-5 tokens  15354

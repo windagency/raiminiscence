@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Containers: the agent reaches the MCP server over stdio and the hooks shim through command-type hooks; the developer runs the inspect CLI directly; the server, the shim and the CLI all call the core engine, which owns the Memory store and its indices, calls the shared-memory subsystem, and optionally embeds through Ollama; the shim also keeps its own nudge state files, and Shared Memory syncs the store with an optional git remote</title>
+  <style>
+    :root {
+      /* host-independent: safe against a host page whose true background
+         we can't know (e.g. OS dark + an explicitly light-themed editor) */
+      --box-stroke: #848484;
+      --arrow: #848484;
+      --divider: #A0A0A0;
+      --text-primary: #636363;
+      --text-secondary: #787878;
+      --text-muted: #8C8C8C;
+      /* theme-dependent: always paired with their own explicit fill */
+      --highlight-fill: #EAF1FB;
+      --highlight-stroke: #5C8FD6;
+      --panel-fill: #EFEDE8;
+      --text-highlight: #5C6A7D;
+      --text-on-fill: #1F1F1D;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --highlight-fill: #131A25;
+        --highlight-stroke: #4E85DE;
+        --panel-fill: #201F1E;
+        --text-highlight: #AEB9D6;
+        --text-on-fill: #F0EFEC;
+      }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="var(--arrow)"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="28" font-size="14" font-weight="700" fill="var(--text-primary)">Every entry point calls the same core engine; only the MCP server speaks MCP</text>
+
+  <rect x="20" y="330" width="1460" height="800" rx="14" fill="none" stroke="var(--divider)" stroke-width="1" stroke-dasharray="6 4"/>
+  <text x="34" y="350" font-size="12" font-weight="700" fill="var(--text-muted)">rAIminiscence [Software System boundary]</text>
+  <path d="M200,120 L200,388" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M380,120 C380,260 760,250 760,388" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M1290,120 L1290,388" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M200,480 L200,698" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M620,480 L420,698" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M1290,480 L1290,650 L320,650 L320,698" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M760,480 L760,698" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M940,450 L1010,450 L1010,945 L1038,945" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M940,465 L1025,465 L1025,1065 L1038,1065" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M440,745 L578,745" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M240,790 L240,918" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M400,790 C400,860 640,850 640,918" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M40,760 L28,760 L28,1222 L38,1222" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+  <path d="M840,790 L840,918" fill="none" stroke="var(--arrow)" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <path d="M940,760 L995,760 L995,1222 L962,1222" fill="none" stroke="var(--arrow)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow)"/>
+
+  <rect x="120" y="50" width="320" height="70" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="280" y="82" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">AI Coding Agent</text>
+  <text x="280" y="98" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Person]</text>
+  <rect x="1060" y="50" width="320" height="70" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1220" y="82" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Developer</text>
+  <text x="1220" y="98" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Person]</text>
+  <rect x="40" y="390" width="340" height="90" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="210" y="425" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">raiminiscence-mcp server</text>
+  <text x="210" y="441" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: Node.js, MCP over stdio]</text>
+  <text x="210" y="455" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">packages/raiminiscence-mcp/src/server.ts</text>
+  <rect x="580" y="390" width="360" height="90" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="760" y="425" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">raiminiscence-hooks shim</text>
+  <text x="760" y="441" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: Node.js CLI]</text>
+  <text x="760" y="455" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">packages/raiminiscence-hooks/src/shim.ts</text>
+  <rect x="1120" y="390" width="340" height="90" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1290" y="425" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">raiminiscence-inspect CLI, v15</text>
+  <text x="1290" y="441" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: Node.js CLI]</text>
+  <text x="1290" y="455" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">packages/raiminiscence-cli/src/inspect-cli.ts</text>
+  <rect x="40" y="700" width="400" height="90" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="240" y="735" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Core engine</text>
+  <text x="240" y="751" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: TS library, no MCP dependency]</text>
+  <text x="240" y="765" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">packages/raiminiscence-mcp/src/core/</text>
+  <rect x="580" y="700" width="360" height="90" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="760" y="735" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">shared-memory/ subsystem, v11</text>
+  <text x="760" y="751" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: TS library]</text>
+  <text x="760" y="765" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">packages/raiminiscence-mcp/src/core/shared-memory/</text>
+  <rect x="40" y="920" width="440" height="90" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="260" y="955" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Per-record embedding + edge indices, v11</text>
+  <text x="260" y="971" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: filesystem]</text>
+  <text x="260" y="985" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">.raiminiscence/memory/{embeddings,conflict}/*.json</text>
+  <rect x="520" y="920" width="440" height="90" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="740" y="955" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Flat-file Memory store</text>
+  <text x="740" y="971" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: filesystem]</text>
+  <text x="740" y="985" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">.raiminiscence/memory/{episodic,semantic,decisions,checkpoints}/*.md</text>
+  <rect x="1040" y="900" width="420" height="90" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1250" y="935" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Checkpoint-nudge debounce state, v13</text>
+  <text x="1250" y="951" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: filesystem]</text>
+  <text x="1250" y="965" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">.raiminiscence/hooks-state/checkpoint-nudge/*.json</text>
+  <rect x="1040" y="1020" width="420" height="90" rx="10" fill="var(--panel-fill)" stroke="var(--box-stroke)" stroke-width="1.25"/>
+  <text x="1250" y="1055" font-size="13.5" font-weight="700" fill="var(--text-on-fill)" text-anchor="middle">Fix Nudge Open Failure state, v18</text>
+  <text x="1250" y="1071" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[Container: filesystem]</text>
+  <text x="1250" y="1085" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">.raiminiscence/hooks-state/fix-nudge/*.json</text>
+  <rect x="40" y="1180" width="400" height="84" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25" stroke-dasharray="5 4"/>
+  <text x="240" y="1212" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Ollama</text>
+  <text x="240" y="1228" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[External Container, optional]</text>
+  <text x="240" y="1242" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">nomic-embed-text, opt-in alternate, v17</text>
+  <rect x="560" y="1180" width="400" height="84" rx="10" fill="none" stroke="var(--box-stroke)" stroke-width="1.25" stroke-dasharray="5 4"/>
+  <text x="760" y="1212" font-size="13.5" font-weight="700" fill="var(--text-primary)" text-anchor="middle">Git remote</text>
+  <text x="760" y="1228" font-size="11.5" fill="var(--text-secondary)" text-anchor="middle">[External System, optional]</text>
+  <text x="760" y="1242" font-size="10.5" fill="var(--text-muted)" text-anchor="middle">v11 Shared Memory only</text>
+  <text x="190" y="230" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">MCP over stdio</text>
+  <text x="190" y="244" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">(spawned as a local</text>
+  <text x="190" y="257" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">subprocess)</text>
+  <text x="470" y="168" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">command-type hooks:</text>
+  <text x="470" y="182" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">SessionStart (Claude Code / Cursor / Codex CLI)</text>
+  <text x="470" y="195" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">UserPromptSubmit (Claude Code / Codex CLI, v10)</text>
+  <text x="470" y="209" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">SessionEnd (Claude Code, v11)</text>
+  <text x="470" y="223" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">Stop (Claude Code / Cursor, v13)</text>
+  <text x="470" y="236" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">PostToolUse / PostToolUseFailure (Claude Code, v18)</text>
+  <text x="1300" y="230" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">runs raiminiscence-inspect</text>
+  <text x="1300" y="244" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">directly, v15 (bypasses</text>
+  <text x="1300" y="257" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">the agent entirely)</text>
+  <text x="190" y="600" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">calls plain functions</text>
+  <text x="230" y="515" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">direct function calls, bypassing MCP:</text>
+  <text x="230" y="529" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">overview() or recall(), see LLD</text>
+  <text x="230" y="542" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">SessionEnd: consolidate({ awaitPush: true }), v19</text>
+  <text x="230" y="556" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">Stop: ensureGitignoreEntry() only, v13</text>
+  <text x="230" y="570" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">PostToolUse/Failure: resolveWatchedCommands()</text>
+  <text x="230" y="583" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">only, not the recall/decay engine, v18</text>
+  <text x="1300" y="520" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">direct call to inspectMemory()/</text>
+  <text x="1300" y="534" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">inspectQuery()/browseMemories(),</text>
+  <text x="1300" y="547" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">v15, bypassing MCP, same</text>
+  <text x="1300" y="561" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">pattern as the shim</text>
+  <text x="772" y="520" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">SessionStart: ensureSharedMemoryWorktree()/</text>
+  <text x="772" y="534" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">pullSharedMemory(), v11</text>
+  <text x="1040" y="830" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">read/written directly, not via the engine:</text>
+  <text x="1040" y="844" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">Stop: debounce state, v13</text>
+  <text x="1040" y="857" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">PostToolUse/Failure: Open Failure state, v18</text>
+  <text x="509" y="722" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle">flushSharedMemory() at the</text>
+  <text x="509" y="736" font-size="10.5" fill="var(--text-secondary)" text-anchor="middle">end of every consolidate()</text>
+  <text x="40" y="1160" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">embed(text), opt-in</text>
+  <text x="40" y="1174" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">alternate, v17</text>
+  <text x="852" y="850" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">git worktree/commit/</text>
+  <text x="852" y="864" font-size="10.5" fill="var(--text-secondary)" text-anchor="start">push/fetch/merge</text>
+  <text x="985" y="1160" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">fetch/push, v11</text>
+  <text x="985" y="1174" font-size="10.5" fill="var(--text-secondary)" text-anchor="end">opt-in only</text>
+
+  <text x="20" y="1318" font-size="11.5" fill="var(--text-muted)">Containers (C4 level 2)</text>
+</svg>

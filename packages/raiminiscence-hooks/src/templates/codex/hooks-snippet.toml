@@ -1,0 +1,19 @@
+# Inline [hooks] table for ~/.codex/config.toml (user-scoped) or
+# <repo>/.codex/config.toml (project-scoped, requires the .codex/ directory
+# to be trusted). Equivalent to a standalone hooks.json, in TOML form.
+
+[[hooks.SessionStart]]
+matcher = "startup|resume"
+
+  [[hooks.SessionStart.hooks]]
+  type = "command"
+  command = "npx raiminiscence-hooks-shim"
+  statusMessage = "Loading rAIminiscence memory primer"
+
+# UserPromptSubmit fires unconditionally on every prompt, so no matcher is needed.
+[[hooks.UserPromptSubmit]]
+
+  [[hooks.UserPromptSubmit.hooks]]
+  type = "command"
+  command = "npx raiminiscence-hooks-shim"
+  statusMessage = "Recalling relevant memory"

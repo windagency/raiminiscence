@@ -1,0 +1,15 @@
+* text=auto eol=lf
+*.md text diff=markdown
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.gif binary
+*.gz binary
+*.tgz binary
+
+# Excluded from `git archive` tarballs.
+.gitattributes export-ignore
+.gitignore export-ignore
+.scratch/ export-ignore

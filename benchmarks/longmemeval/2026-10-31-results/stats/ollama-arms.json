@@ -1,0 +1,435 @@
+{
+  "n": 500,
+  "chance_r5": 0.189,
+  "bootstrap": "pairedBootstrap (src/eval-stats.ts), 10000 resamples, seed 1, 95% percentile interval",
+  "runs": {
+    "B-lifted": {
+      "r5": {
+        "estimate": 0.974,
+        "low": 0.96,
+        "high": 0.986,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.0
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122282.0,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.652,
+      "recall_seconds_p90": 0.738
+    },
+    "A-lifted": {
+      "r5": {
+        "estimate": 0.968,
+        "low": 0.952,
+        "high": 0.982,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 96.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 95.5
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122282.0,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.183,
+      "recall_seconds_p90": 0.199
+    },
+    "R-lifted": {
+      "r5": {
+        "estimate": 0.936,
+        "low": 0.914,
+        "high": 0.956,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 98.7
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 96.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 84.3
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 90.2
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.35,
+      "recall_seconds_p90": 0.409
+    },
+    "F-lifted": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3349.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.368,
+      "recall_seconds_p90": 0.425
+    },
+    "B-slept-lifted": {
+      "r5": {
+        "estimate": 0.974,
+        "low": 0.96,
+        "high": 0.986,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 97.0
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 86.7
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 47.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 122236.5,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.727,
+      "recall_seconds_p90": 0.892
+    },
+    "F-slept-lifted": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 48.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 3408.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 0,
+      "dropped_pre_rank_total": 2,
+      "recall_seconds_median": 0.3735,
+      "recall_seconds_p90": 0.441
+    },
+    "F-default": {
+      "r5": {
+        "estimate": 0.984,
+        "low": 0.972,
+        "high": 0.994,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 100.0
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 99.2
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 93.3
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 98.6
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 97.0
+        }
+      },
+      "returned_median": 10.0,
+      "returned_under_5": 0,
+      "returned_tokens_median": 710.0,
+      "candidates_median": 48.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.154,
+      "recall_seconds_p90": 0.17
+    },
+    "B-default": {
+      "r5": {
+        "estimate": 0.876,
+        "low": 0.846,
+        "high": 0.904,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 96.2
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 89.5
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 60.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 87.1
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 82.0
+        }
+      },
+      "returned_median": 2.0,
+      "returned_under_5": 476,
+      "returned_tokens_median": 3922.5,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.62,
+      "recall_seconds_p90": 0.699
+    },
+    "A-default": {
+      "r5": {
+        "estimate": 0.856,
+        "low": 0.824,
+        "high": 0.886,
+        "iterations": 10000
+      },
+      "per_type": {
+        "knowledge-update": {
+          "n": 78,
+          "r5": 93.6
+        },
+        "multi-session": {
+          "n": 133,
+          "r5": 85.0
+        },
+        "single-session-assistant": {
+          "n": 56,
+          "r5": 100.0
+        },
+        "single-session-preference": {
+          "n": 30,
+          "r5": 40.0
+        },
+        "single-session-user": {
+          "n": 70,
+          "r5": 90.0
+        },
+        "temporal-reasoning": {
+          "n": 133,
+          "r5": 83.5
+        }
+      },
+      "returned_median": 2.0,
+      "returned_under_5": 486,
+      "returned_tokens_median": 3926.5,
+      "candidates_median": 47.0,
+      "questions_with_budget_drops": 500,
+      "dropped_pre_rank_total": 0,
+      "recall_seconds_median": 0.173,
+      "recall_seconds_p90": 0.188
+    }
+  },
+  "pairs": {
+    "F-lifted - B-lifted": {
+      "estimate": 0.01,
+      "low": -0.002,
+      "high": 0.024,
+      "iterations": 10000,
+      "hit_only_first": 8,
+      "hit_only_second": 3
+    },
+    "F-lifted - R-lifted": {
+      "estimate": 0.048,
+      "low": 0.03,
+      "high": 0.068,
+      "iterations": 10000,
+      "hit_only_first": 25,
+      "hit_only_second": 1
+    },
+    "R-lifted - B-lifted": {
+      "estimate": -0.038,
+      "low": -0.062,
+      "high": -0.014,
+      "iterations": 10000,
+      "hit_only_first": 9,
+      "hit_only_second": 28
+    },
+    "F-default - B-default": {
+      "estimate": 0.108,
+      "low": 0.082,
+      "high": 0.136,
+      "iterations": 10000,
+      "hit_only_first": 54,
+      "hit_only_second": 0
+    },
+    "F-slept-lifted - F-lifted": {
+      "estimate": 0,
+      "low": 0,
+      "high": 0,
+      "iterations": 10000,
+      "hit_only_first": 0,
+      "hit_only_second": 0
+    },
+    "B-slept-lifted - B-lifted": {
+      "estimate": 0,
+      "low": 0,
+      "high": 0,
+      "iterations": 10000,
+      "hit_only_first": 0,
+      "hit_only_second": 0
+    }
+  }
+}

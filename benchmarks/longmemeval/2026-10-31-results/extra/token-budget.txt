@@ -1,0 +1,105 @@
+R@500 tokens
+  B-lifted        87.6
+  A-lifted        85.4   vs B-lifted: -2.2 [-4.4, +0.0]
+  OD-lifted       89.8   vs B-lifted: +2.2 [+0.2, +4.2]
+  ED-lifted       86.4   vs B-lifted: -1.2 [-3.6, +1.2]
+answer in content @500 tokens
+  B-lifted        38.0
+  A-lifted        37.4   vs B-lifted: -0.6 [-2.4, +1.2]
+  OD-lifted       38.0   vs B-lifted: +0.0 [-1.8, +1.8]
+  ED-lifted       36.8   vs B-lifted: -1.2 [-3.4, +1.0]
+capped at 10 rows @500 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+R@1000 tokens
+  B-lifted        87.6
+  A-lifted        85.4   vs B-lifted: -2.2 [-4.4, +0.0]
+  OD-lifted       89.8   vs B-lifted: +2.2 [+0.2, +4.2]
+  ED-lifted       86.4   vs B-lifted: -1.2 [-3.6, +1.2]
+answer in content @1000 tokens
+  B-lifted        38.0
+  A-lifted        37.4   vs B-lifted: -0.6 [-2.4, +1.2]
+  OD-lifted       38.0   vs B-lifted: +0.0 [-1.8, +1.8]
+  ED-lifted       36.8   vs B-lifted: -1.2 [-3.4, +1.0]
+capped at 10 rows @1000 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+R@2000 tokens
+  B-lifted        87.6
+  A-lifted        85.4   vs B-lifted: -2.2 [-4.4, +0.0]
+  OD-lifted       89.8   vs B-lifted: +2.2 [+0.2, +4.2]
+  ED-lifted       86.4   vs B-lifted: -1.2 [-3.6, +1.2]
+answer in content @2000 tokens
+  B-lifted        38.0
+  A-lifted        37.4   vs B-lifted: -0.6 [-2.4, +1.2]
+  OD-lifted       38.0   vs B-lifted: +0.0 [-1.8, +1.8]
+  ED-lifted       36.8   vs B-lifted: -1.2 [-3.4, +1.0]
+capped at 10 rows @2000 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+R@4000 tokens
+  B-lifted        87.6
+  A-lifted        85.6   vs B-lifted: -2.0 [-4.2, +0.2]
+  OD-lifted       89.8   vs B-lifted: +2.2 [+0.2, +4.2]
+  ED-lifted       86.4   vs B-lifted: -1.2 [-3.6, +1.2]
+answer in content @4000 tokens
+  B-lifted        38.2
+  A-lifted        38.0   vs B-lifted: -0.2 [-2.0, +1.6]
+  OD-lifted       38.2   vs B-lifted: +0.0 [-1.8, +1.8]
+  ED-lifted       37.0   vs B-lifted: -1.2 [-3.4, +1.0]
+capped at 10 rows @4000 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+R@8000 tokens
+  B-lifted        93.2
+  A-lifted        91.4   vs B-lifted: -1.8 [-3.6, -0.2]
+  OD-lifted       94.4   vs B-lifted: +1.2 [-0.2, +2.8]
+  ED-lifted       92.6   vs B-lifted: -0.6 [-2.2, +1.0]
+answer in content @8000 tokens
+  B-lifted        44.6
+  A-lifted        44.4   vs B-lifted: -0.2 [-1.6, +1.4]
+  OD-lifted       46.0   vs B-lifted: +1.4 [-0.2, +3.0]
+  ED-lifted       45.2   vs B-lifted: +0.6 [-1.0, +2.4]
+capped at 10 rows @8000 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+R@16000 tokens
+  B-lifted        97.0
+  A-lifted        96.6   vs B-lifted: -0.4 [-1.4, +0.6]
+  OD-lifted       97.4   vs B-lifted: +0.4 [-1.0, +1.8]
+  ED-lifted       96.4   vs B-lifted: -0.6 [-2.0, +0.6]
+answer in content @16000 tokens
+  B-lifted        49.8
+  A-lifted        49.8   vs B-lifted: +0.0 [-1.2, +1.0]
+  OD-lifted       50.4   vs B-lifted: +0.6 [-0.6, +1.8]
+  ED-lifted       50.0   vs B-lifted: +0.2 [-1.0, +1.4]
+capped at 10 rows @16000 tokens
+  B-lifted         0.0
+  A-lifted         0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  OD-lifted        0.0   vs B-lifted: +0.0 [+0.0, +0.0]
+  ED-lifted        0.4   vs B-lifted: +0.4 [+0.0, +1.0]
+R@32000 tokens
+  B-lifted        99.2
+  A-lifted        98.0   vs B-lifted: -1.2 [-2.2, -0.4]
+  OD-lifted       99.2   vs B-lifted: +0.0 [-0.6, +0.6]
+  ED-lifted       98.6   vs B-lifted: -0.6 [-1.6, +0.2]
+answer in content @32000 tokens
+  B-lifted        52.2
+  A-lifted        51.8   vs B-lifted: -0.4 [-1.0, +0.0]
+  OD-lifted       51.8   vs B-lifted: -0.4 [-1.2, +0.4]
+  ED-lifted       52.0   vs B-lifted: -0.2 [-1.0, +0.4]
+capped at 10 rows @32000 tokens
+  B-lifted        71.4
+  A-lifted        56.8   vs B-lifted: -14.6 [-18.6, -10.6]
+  OD-lifted       74.8   vs B-lifted: +3.4 [-0.4, +7.4]
+  ED-lifted       84.2   vs B-lifted: +12.8 [+9.0, +16.8]

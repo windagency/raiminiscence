@@ -1,0 +1,28 @@
+packages:
+  - "packages/*"
+
+# Dependency install scripts run only when listed true here; an unlisted one fails the install
+# (strictDepBuilds). A new dependency that needs one is added here in its own reviewed change.
+allowBuilds:
+  esbuild: true
+  # Loads the native ONNX runtime behind the Embedded Provider.
+  onnxruntime-node: true
+  # Its postinstall only checks for a version mismatch; nothing here needs it.
+  protobufjs: false
+
+# Floors for advisories in transitive dependencies. Drop one once every dependent requires the fix.
+overrides:
+  brace-expansion@5: ^5.0.12
+  fast-uri: ">=3.1.8"
+  hono: ">=4.13.11"
+  ip-address: ">=10.7.4"
+  proxy-addr: ">=2.0.8"
+  source-map-js@1: ^1.2.2
+
+# Keep commitlint's conventional-changelog-conventionalcommits@10 out of the hidden hoist folder.
+# @semantic-release/release-notes-generator@14 loads its preset from its own directory first, which
+# would find that copy; v10 needs conventional-changelog-writer@9, but the generator ships writer@8.
+# With it unhoisted, the generator falls back to the root devDependency, pinned to v9.
+hoistPattern:
+  - "*"
+  - "!conventional-changelog-conventionalcommits"
