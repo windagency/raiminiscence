@@ -54,7 +54,8 @@ describe("MCP server tool layer", () => {
   afterEach(async () => {
     await settlePendingEmbeds(1_000);
     process.chdir(originalCwd);
-    rmSync(storageRoot, { recursive: true, force: true });
+    // Retries: Windows refuses to remove a directory while background work still holds a handle in it.
+    rmSync(storageRoot, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it("remember answers before the vector is written, and the vector follows (ADR-0041)", async () => {

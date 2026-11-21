@@ -37,7 +37,8 @@ describe("the warm process spawn throttle (ADR-0040)", () => {
   it("claims the first spawn and leaves a marker in an owner-only directory", () => {
     expect(claimWarmSpawn(marker)).toBe(true);
     expect(existsSync(marker)).toBe(true);
-    expect(statSync(dirname(marker)).mode & 0o777).toBe(0o700);
+    // Windows has no POSIX modes, and warm embedding is off there (ADR-0038).
+    if (process.platform !== "win32") expect(statSync(dirname(marker)).mode & 0o777).toBe(0o700);
   });
 
   it("refuses a second spawn within the interval", () => {
