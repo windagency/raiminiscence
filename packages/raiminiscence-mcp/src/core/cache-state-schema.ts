@@ -16,10 +16,10 @@ const versionMarkerSchema = z.object({ recordsVersion: z.number(), embeddingsVer
  * marker; re-validating every cached Memory on each read would cost what the
  * cache exists to save.
  */
-const cacheSlotFileSchema = z.object({ version: z.number(), data: z.record(z.unknown()) });
+const cacheSlotFileSchema = z.object({ version: z.number(), data: z.record(z.string(), z.unknown()) });
 
 /** ADR-0036: as with a slot file, only the envelope; `op` is applied by the slot that wrote it. */
-const cacheLogEntrySchema = z.object({ version: z.number(), prev: z.number(), op: z.record(z.unknown()) });
+const cacheLogEntrySchema = z.object({ version: z.number(), prev: z.number(), op: z.record(z.string(), z.unknown()) });
 
 const opportunisticConsolidationStateSchema = z.object({ lastPassAt: z.string(), callsSinceLastPass: z.number() });
 
