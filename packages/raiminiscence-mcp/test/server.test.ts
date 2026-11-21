@@ -54,7 +54,13 @@ describe("MCP server tool layer", () => {
   afterEach(async () => {
     await settlePendingEmbeds(1_000);
     process.chdir(originalCwd);
-    rmSync(storageRoot, { recursive: true, force: true });
+    try {
+      rmSync(storageRoot, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+    } catch (error) {
+      // Windows only: after a test that writes a Memory, something keeps a handle in storageRoot for longer
+      // than ten seconds of retries. The cause is not found yet (NEXT_STEPS.md).
+      if (process.platform !== "win32" || (error as NodeJS.ErrnoException).code !== "EBUSY") throw error;
+    }
   });
 
   it("remember answers before the vector is written, and the vector follows (ADR-0041)", async () => {

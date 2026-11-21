@@ -11,6 +11,7 @@ Source of truth for this project's open, decided-but-not-built work. Other docs 
 - [ ] **Migration tooling for `schemaVersion` changes.** The field is reserved in every Memory's frontmatter, but bumps so far have been additive and migration-free by convention (`CURRENT_SCHEMA_VERSION`, see `docs/developer-guide.md`'s "Releasing / versioning"). The first non-additive schema change needs a real mechanism, and an ADR before it.
 - [ ] **An update/edit tool for existing Memories.** Content is immutable today; a correction is `forget` plus a fresh `remember` (`docs/architecture/hld.md`'s "Deferred / out of scope").
 - [ ] **Hosted/SaaS multi-tenancy** (API-key auth, a running server, many tenants). Sequenced strictly after Shared Memory, not designed alongside it ([ADR-0016](docs/adr/0016-team-shared-memory-becomes-a-future-direction-adr-0003-flagged.md)). Needs its own ADR, which would also supersede [ADR-0003](docs/adr/0003-stdio-only-transport.md)'s stdio-only transport.
+- [ ] **Find what holds a handle in the storage root on Windows.** On `windows-latest`, `server.test.ts` cannot remove its storage root after a test that writes a Memory: `rmSync` still fails with EBUSY after ten seconds of retries. The tests themselves pass, so the clean-up tolerates EBUSY on Windows for now. If the server keeps a file or child process open there, a Windows user cannot move or delete that folder while it runs.
 
 ### At least as good as hippo-memory, in quality and performance
 
