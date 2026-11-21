@@ -54,8 +54,9 @@ describe("MCP server tool layer", () => {
   afterEach(async () => {
     await settlePendingEmbeds(1_000);
     process.chdir(originalCwd);
-    // Retries: Windows refuses to remove a directory while background work still holds a handle in it.
-    rmSync(storageRoot, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+    // Retries: the refreshing writer identity (ADR-0041) leaves a `git config` child running in storageRoot,
+    // and Windows refuses to remove a process's working directory until it exits. Git starts slowly there.
+    rmSync(storageRoot, { recursive: true, force: true, maxRetries: 50, retryDelay: 200 });
   });
 
   it("remember answers before the vector is written, and the vector follows (ADR-0041)", async () => {
