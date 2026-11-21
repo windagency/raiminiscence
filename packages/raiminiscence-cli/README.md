@@ -13,16 +13,15 @@ Full design/rationale:
 
 ## Install
 
-**Not yet published to npm.** The command below is the intended eventual
-usage once it is. Until then, run it from source: `pnpm install && pnpm
--r build` at the repo root, then run
-`node packages/raiminiscence-cli/dist/inspect-cli.js` in place of
-`raiminiscence-inspect` below (see
-[developer guide](../../docs/developer-guide.md)).
-
 ```sh
-npm install -g raiminiscence-cli
+npm install -g raiminiscence-cli   # npm
+pnpm add -g raiminiscence-cli      # pnpm
+yarn global add raiminiscence-cli  # Yarn 1
+bun add -g raiminiscence-cli       # Bun
 ```
+
+Requires Node.js 22 or later. To run it from a clone instead, see the
+[developer guide](../../docs/developer-guide.md).
 
 ## Usage
 
