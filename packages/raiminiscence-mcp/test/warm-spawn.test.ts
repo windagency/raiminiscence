@@ -21,7 +21,8 @@ describe("warmMarkerPath (ADR-0040)", () => {
   });
 });
 
-describe("the warm process spawn throttle (ADR-0040)", () => {
+// Warm embedding is off on Windows (ADR-0038), so recall-client never reaches the throttle there.
+describe.skipIf(process.platform === "win32")("the warm process spawn throttle (ADR-0040)", () => {
   let home: string;
   let marker: string;
 

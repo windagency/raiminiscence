@@ -1,5 +1,5 @@
 import { existsSync, readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 import ts from "typescript";
 
 /** The workspace's packages, read from `packages/` (each directory name matches its npm name). */
@@ -17,10 +17,13 @@ export interface ImportedBinding {
 
 function sourceFiles(pkg: string): string[] {
   const srcDir = join("packages", pkg, "src");
-  return readdirSync(srcDir, { recursive: true })
-    .filter((entry): entry is string => typeof entry === "string" && entry.endsWith(".ts"))
-    .map((entry) => join(srcDir, entry))
-    .sort();
+  return (
+    readdirSync(srcDir, { recursive: true })
+      .filter((entry): entry is string => typeof entry === "string" && entry.endsWith(".ts"))
+      // Forward slashes on Windows too, so paths compare equal on every OS.
+      .map((entry) => join(srcDir, entry).split(sep).join("/"))
+      .sort()
+  );
 }
 
 /**

@@ -32,7 +32,8 @@ describe("git stderr leak: a non-git storageRoot degrades silently", () => {
   });
 
   it("remember (writer-identity.ts's gitConfigValue) and consolidate (git.ts's timestamp/subject lookups) never leak git's fatal: text to stderr", () => {
-    const result = spawnSync("npx", ["tsx", FIXTURE_PATH, storageRoot], { encoding: "utf8" });
+    // node --import tsx, not npx: Windows has no bare npx executable for spawnSync to find.
+    const result = spawnSync(process.execPath, ["--import", "tsx", FIXTURE_PATH, storageRoot], { encoding: "utf8" });
 
     expect(result.status).toBe(0);
     expect(result.stderr).not.toContain("fatal:");

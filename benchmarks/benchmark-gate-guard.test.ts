@@ -44,7 +44,8 @@ describe("runWatched", () => {
     await expect(runWatched("node", ["--input-type=module", "-e", script], { silenceMs: SILENCE_MS, echo: false })).resolves.toBe("0\n1\n2\n");
   });
 
-  it("kills a command that goes silent, with its children, and reports a stall", async () => {
+  // The guard kills a POSIX process group, which Windows does not have.
+  it.skipIf(process.platform === "win32")("kills a command that goes silent, with its children, and reports a stall", async () => {
     // The child starts a grandchild that sleeps, prints its pid, then hangs: both must die.
     const script = [
       "import { spawn } from 'node:child_process';",

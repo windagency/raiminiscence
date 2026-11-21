@@ -1,5 +1,5 @@
 import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, sep } from "node:path";
 import { describe, expect, it } from "vitest";
 import { classesImporting } from "./helpers.js";
 
@@ -45,7 +45,7 @@ describe("raiminiscence-mcp architecture: third-party containment", () => {
   it("@huggingface/transformers is referenced only from core/adapters/feature-extraction.ts", () => {
     const files = readdirSync(MCP_SRC, { recursive: true })
       .filter((entry): entry is string => typeof entry === "string" && entry.endsWith(".ts"))
-      .map((entry) => join(MCP_SRC, entry));
+      .map((entry) => join(MCP_SRC, entry).split(sep).join("/"));
     const referencing = files.filter((path) => readFileSync(path, "utf8").includes("@huggingface/transformers"));
     expect(referencing).toEqual(["packages/raiminiscence-mcp/src/core/adapters/feature-extraction.ts"]);
   });
@@ -63,7 +63,7 @@ describe("raiminiscence-mcp architecture: third-party containment", () => {
   it("node:child_process is importable only from core/adapters/git.ts and core/adapters/detached-process.ts", () => {
     const files = readdirSync(MCP_SRC, { recursive: true })
       .filter((entry): entry is string => typeof entry === "string" && entry.endsWith(".ts"))
-      .map((entry) => join(MCP_SRC, entry));
+      .map((entry) => join(MCP_SRC, entry).split(sep).join("/"));
     const referencing = files.filter((path) => readFileSync(path, "utf8").includes("node:child_process"));
     expect(referencing.sort()).toEqual([
       "packages/raiminiscence-mcp/src/core/adapters/detached-process.ts",
