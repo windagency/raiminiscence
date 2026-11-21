@@ -28,7 +28,7 @@ export interface HookConfig {
  */
 const hookCommandSchema = z.object({}).passthrough();
 const hookEntrySchema = z.object({ hooks: z.array(hookCommandSchema).optional() }).passthrough();
-const hookConfigSchema = z.object({ hooks: z.record(z.array(hookEntrySchema)).optional() }).passthrough();
+const hookConfigSchema = z.object({ hooks: z.record(z.string(), z.array(hookEntrySchema)).optional() }).passthrough();
 
 /**
  * The client config at `path`, or a thrown error naming it when the hook path

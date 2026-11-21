@@ -10,7 +10,7 @@ import type { OpenFailureState } from "./fix-nudge.js";
  */
 const persistedNudgeStateSchema = z.object({ lastNudgeAt: z.string(), turnsSinceNudge: z.number() });
 
-const openFailureStateSchema = z.record(z.object({ command: z.string(), stderrTail: z.string() }));
+const openFailureStateSchema = z.record(z.string(), z.object({ command: z.string(), stderrTail: z.string() }));
 
 /** Checkpoint's debounce bookkeeping, or `undefined` when the JSON isn't that shape. */
 export function parseCheckpointNudgeState(json: unknown): PersistedNudgeState | undefined {
