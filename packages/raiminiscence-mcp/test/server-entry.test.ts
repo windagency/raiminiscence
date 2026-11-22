@@ -15,20 +15,24 @@ const INITIALIZE = {
   params: { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "entry-test", version: "0" } },
 };
 
-/** Sends `initialize` to the server started from `entry` and resolves its reply, or null if it exits first. */
+/**
+ * Sends `initialize` to the server started from `entry` and resolves its reply, or null if it never
+ * answered. Resolves only once the server has exited: Windows keeps its working directory locked until then.
+ */
 function initializeVia(entry: string, cwd: string): Promise<{ serverInfo: { name: string; version: string } } | null> {
   return new Promise((resolve) => {
     const child = spawn(process.execPath, [entry], { cwd, stdio: ["pipe", "pipe", "ignore"] });
     let buffer = "";
+    let reply: { serverInfo: { name: string; version: string } } | null = null;
     child.stdout.on("data", (chunk: Buffer) => {
       buffer += chunk.toString();
       const line = buffer.split("\n").find((candidate) => candidate.includes('"id":1'));
-      if (line) {
-        resolve((JSON.parse(line) as { result: { serverInfo: { name: string; version: string } } }).result);
+      if (line && !reply) {
+        reply = (JSON.parse(line) as { result: { serverInfo: { name: string; version: string } } }).result;
         child.kill();
       }
     });
-    child.on("exit", () => resolve(null));
+    child.on("exit", () => resolve(reply));
     child.stdin.write(`${JSON.stringify(INITIALIZE)}\n`);
   });
 }
