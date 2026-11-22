@@ -15,4 +15,8 @@ notes and Unreleased empties. See `docs/semver.md`.
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- **deps:** upgrade past the production audit advisories (#2) ([41543e1](https://github.com/windagency/raiminiscence/commit/41543e1f38fa441355bd010de6ddd39ed4414a70))
+
 <!-- end of Unreleased: generated from commits, see docs/semver.md -->
