@@ -97,12 +97,20 @@ export function syncChangelog(intChangelog: string, mainChangelog: string, commi
   return assemble(header, render([...kept, ...added]), released);
 }
 
+// The section `releaseChangelog` already wrote for `version`, if any.
+function writtenSection(released: string, version: string): string | undefined {
+  return `\n${released}`.split(/\n(?=## )/).find((section) => section.startsWith(`## ${version} (`) || section.startsWith(`## [${version}](`));
+}
+
 // The Unreleased list when there is one. A hotfix squashed straight into main leaves it empty, so the
 // release's own commits stand in. The first release also lists main's own commits: the sync only reads
-// origin/main..int, so whatever main started from never reached Unreleased.
+// origin/main..int, so whatever main started from never reached Unreleased. semantic-release runs this
+// again after prepare, when the list has already moved into the version's section: that section wins.
 export function releaseNotes(changelog: string, commits: Commit[], release: { version: string; previousTag?: string; date: string }): string {
   const { version, previousTag, date } = release;
-  const { entries } = parse(changelog);
+  const { entries, released } = parse(changelog);
+  const written = writtenSection(released, version);
+  if (written) return written;
   const heading = previousTag ? `## [${version}](${REPO}/compare/${previousTag}...v${version}) (${date})` : `## ${version} (${date})`;
   if (previousTag) return `${heading}\n\n${render(entries.length ? entries : entriesOf(commits))}`;
   const listed = new Set(entries.map((entry) => entry.hash));

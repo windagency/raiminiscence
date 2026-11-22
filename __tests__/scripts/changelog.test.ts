@@ -100,7 +100,7 @@ describe("releaseNotes", () => {
   });
 
   it("adds main's own commits to the first release, since they predate int", () => {
-    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`);
+    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`, "");
     // HEAD's history on main: the promotion squash, then the commit main started from.
     const commits = [commit("p", "chore(release): promote int to main"), commit("b", "fix: two"), commit("a", "feat: one")];
 
@@ -119,7 +119,7 @@ describe("releaseNotes", () => {
   });
 
   it("has no compare link for the first release", () => {
-    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
+    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`, ""), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
       /^## 1\.0\.0 \(2026-02-01\)\n\n/,
     );
   });
