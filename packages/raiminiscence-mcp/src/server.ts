@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { realpathSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import { connectedClientName, createMcpServer, serveOverStdio, type McpServer } from "./adapters/mcp-server.js";
 import { generateId } from "./core/adapters/id.js";
 import { resolveEmbeddingProviderConfig, resolveStorageRoot } from "./core/project-root.js";
@@ -12,6 +14,7 @@ import { createLogger, type ServerLogger } from "./adapters/logger.js";
 import { createTelemetry, type ServerTelemetry } from "./adapters/telemetry.js";
 import type { MemoryKind, Scope } from "./core/types.js";
 import { settlePendingEmbeds } from "./core/pending-embeds.js";
+import { PACKAGE_VERSION } from "./core/package-version.js";
 import { defaultRefreshingWriterIdentity } from "./core/writer-identity.js";
 import {
   conflictInput,
@@ -163,7 +166,7 @@ export interface CreateServerOptions {
 }
 
 export function createServer(options: CreateServerOptions = {}): McpServer {
-  const server = createMcpServer("raiminiscence-mcp", "0.1.0");
+  const server = createMcpServer("raiminiscence-mcp", PACKAGE_VERSION);
 
   const clientOf = () => connectedClientName(server) ?? CLIENT_NAME_FALLBACK;
 
@@ -296,7 +299,8 @@ async function main() {
   await serveOverStdio(createServer({ logger, embeddingProvider }));
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Real paths: npx and MCP client configs start this file through node_modules/.bin, a symlink to it.
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   main().catch((error) => {
     console.error(error);
     process.exit(1);
