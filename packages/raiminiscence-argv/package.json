@@ -1,6 +1,6 @@
 {
   "name": "raiminiscence-argv",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Small --name=value flag parsing and validation shared by the rAIminiscence CLIs.",
   "keywords": [
     "argv",
