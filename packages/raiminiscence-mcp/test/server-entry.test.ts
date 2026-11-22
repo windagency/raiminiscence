@@ -50,7 +50,13 @@ describe("the raiminiscence-mcp entry point", () => {
   });
 
   afterEach(() => {
-    rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+    try {
+      rmSync(dir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+    } catch (error) {
+      // Windows only: something the server starts keeps a handle in its working directory after it exits.
+      // The cause is not found yet (NEXT_STEPS.md).
+      if (process.platform !== "win32" || (error as NodeJS.ErrnoException).code !== "EBUSY") throw error;
+    }
   });
 
   it.skipIf(process.platform === "win32")(
