@@ -14,6 +14,7 @@ import { createLogger, type ServerLogger } from "./adapters/logger.js";
 import { createTelemetry, type ServerTelemetry } from "./adapters/telemetry.js";
 import type { MemoryKind, Scope } from "./core/types.js";
 import { settlePendingEmbeds } from "./core/pending-embeds.js";
+import { PACKAGE_VERSION } from "./core/package-version.js";
 import { defaultRefreshingWriterIdentity } from "./core/writer-identity.js";
 import {
   conflictInput,
@@ -165,7 +166,7 @@ export interface CreateServerOptions {
 }
 
 export function createServer(options: CreateServerOptions = {}): McpServer {
-  const server = createMcpServer("raiminiscence-mcp", "0.1.0");
+  const server = createMcpServer("raiminiscence-mcp", PACKAGE_VERSION);
 
   const clientOf = () => connectedClientName(server) ?? CLIENT_NAME_FALLBACK;
 
