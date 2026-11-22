@@ -1,6 +1,6 @@
 {
   "name": "raiminiscence-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "raiminiscence-inspect: explains why an rAIminiscence memory ranks where it does, from a terminal. Read-only.",
   "keywords": [
     "mcp",
