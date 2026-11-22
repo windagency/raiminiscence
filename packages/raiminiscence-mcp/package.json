@@ -1,6 +1,6 @@
 {
   "name": "raiminiscence-mcp",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Persistent memory for AI coding agents. A local MCP server for Claude Code, Cursor and Codex CLI that stores plain Markdown files and lets stale knowledge fade.",
   "keywords": [
     "mcp",

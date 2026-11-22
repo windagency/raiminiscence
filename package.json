@@ -1,6 +1,6 @@
 {
   "name": "raiminiscence",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "description": "rAIminiscence monorepo: an MCP server, agent hooks and CLIs giving an AI coding agent persistent memory",
