@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+import { realpathSync } from "node:fs";
+import { pathToFileURL } from "node:url";
 import { connectedClientName, createMcpServer, serveOverStdio, type McpServer } from "./adapters/mcp-server.js";
 import { generateId } from "./core/adapters/id.js";
 import { resolveEmbeddingProviderConfig, resolveStorageRoot } from "./core/project-root.js";
@@ -296,7 +298,8 @@ async function main() {
   await serveOverStdio(createServer({ logger, embeddingProvider }));
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Real paths: npx and MCP client configs start this file through node_modules/.bin, a symlink to it.
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   main().catch((error) => {
     console.error(error);
     process.exit(1);
