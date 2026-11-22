@@ -15,8 +15,14 @@ notes and Unreleased empties. See `docs/semver.md`.
 
 ## [Unreleased]
 
+<!-- end of Unreleased: generated from commits, see docs/semver.md -->
+
+## 1.0.0 (2026-11-22)
+
+### Features
+
+- persistent memory for AI coding agents ([90b7fb2](https://github.com/windagency/raiminiscence/commit/90b7fb2f45ac0f55473e2e33690df4b902348116))
+
 ### Bug Fixes
 
 - **deps:** upgrade past the production audit advisories (#2) ([41543e1](https://github.com/windagency/raiminiscence/commit/41543e1f38fa441355bd010de6ddd39ed4414a70))
-
-<!-- end of Unreleased: generated from commits, see docs/semver.md -->
