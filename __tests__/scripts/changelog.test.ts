@@ -100,7 +100,7 @@ describe("releaseNotes", () => {
   });
 
   it("adds main's own commits to the first release, since they predate int", () => {
-    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`);
+    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`, "");
     // HEAD's history on main: the promotion squash, then the commit main started from.
     const commits = [commit("p", "chore(release): promote int to main"), commit("b", "fix: two"), commit("a", "feat: one")];
 
@@ -109,8 +109,17 @@ describe("releaseNotes", () => {
     );
   });
 
+  it("returns the version's section unchanged once the release has written it", () => {
+    // semantic-release runs generateNotes again after prepare, when Unreleased is already empty.
+    const notes = `## [1.1.0](${REPO}/compare/v1.0.0...v1.1.0) (2026-02-01)\n\n### Features\n\n${entry("a", "one")}\n`;
+    const released = releaseChangelog(changelog(`### Features\n\n${entry("a", "one")}\n`), notes);
+    const afterPrepare = [commit("r", "chore(release): 1.1.0 [skip ci]"), commit("p", "chore(release): promote int to main")];
+
+    expect(releaseNotes(released, afterPrepare, { version: "1.1.0", previousTag: "v1.0.0", date: "2026-02-02" })).toBe(notes);
+  });
+
   it("has no compare link for the first release", () => {
-    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
+    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`, ""), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
       /^## 1\.0\.0 \(2026-02-01\)\n\n/,
     );
   });
