@@ -98,12 +98,15 @@ export function syncChangelog(intChangelog: string, mainChangelog: string, commi
 }
 
 // The Unreleased list when there is one. A hotfix squashed straight into main leaves it empty, so the
-// release's own commits stand in.
+// release's own commits stand in. The first release also lists main's own commits: the sync only reads
+// origin/main..int, so whatever main started from never reached Unreleased.
 export function releaseNotes(changelog: string, commits: Commit[], release: { version: string; previousTag?: string; date: string }): string {
   const { version, previousTag, date } = release;
   const { entries } = parse(changelog);
   const heading = previousTag ? `## [${version}](${REPO}/compare/${previousTag}...v${version}) (${date})` : `## ${version} (${date})`;
-  return `${heading}\n\n${render(entries.length ? entries : entriesOf(commits))}`;
+  if (previousTag) return `${heading}\n\n${render(entries.length ? entries : entriesOf(commits))}`;
+  const listed = new Set(entries.map((entry) => entry.hash));
+  return `${heading}\n\n${render([...entriesOf(commits).filter((entry) => !listed.has(entry.hash)), ...entries])}`;
 }
 
 export function releaseChangelog(changelog: string, notes: string): string {

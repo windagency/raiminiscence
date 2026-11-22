@@ -4,10 +4,10 @@
 
 ## Supported versions
 
-This project is pre-1.0 (`0.y.z`): only the latest published version of
-each package (`raiminiscence-mcp`, `raiminiscence-hooks`, `raiminiscence-cli`,
-`raiminiscence-argv`) is supported. There is no backport policy for older
-0.y.z releases — upgrade to the latest version before reporting an issue.
+Only the latest published version of each package (`raiminiscence-mcp`,
+`raiminiscence-hooks`, `raiminiscence-cli`, `raiminiscence-argv`) is
+supported. All four share one version. There is no backport policy for older
+releases: upgrade to the latest version before reporting an issue.
 
 ## Reporting a vulnerability
 

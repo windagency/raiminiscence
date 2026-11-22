@@ -27,7 +27,7 @@ The packages the published packages' own `package.json` files depend on directly
 | gray-matter | 4.0.3 | MIT | Jon Schlinkert |
 | pino | 10.3.1 | MIT | Matteo Collina |
 | ulid | 3.0.2 | MIT | Alizain Feerasta |
-| zod | 3.25.76 | MIT | Colin McDonnell |
+| zod | 4.6.7 | MIT | Colin McDonnell |
 
 ## Platform-specific native binaries
 
@@ -62,10 +62,10 @@ Every platform-independent package resolved into the production tree (direct and
 | @protobufjs/path | 1.1.2 | BSD-3-Clause | Daniel Wirtz |
 | @protobufjs/pool | 1.1.0 | BSD-3-Clause | Daniel Wirtz |
 | @protobufjs/utf8 | 1.1.2 | BSD-3-Clause | Daniel Wirtz |
-| fast-uri | 4.2.1 | BSD-3-Clause | Vincent Le Goff |
+| fast-uri | 4.2.3 | BSD-3-Clause | Vincent Le Goff |
 | global-agent | 4.1.3 | BSD-3-Clause | Gajus Kuizinas |
 | protobufjs | 7.6.6 | BSD-3-Clause | Daniel Wirtz |
-| qs | 6.16.0 | BSD-3-Clause | - |
+| qs | 6.17.1 | BSD-3-Clause | - |
 | smol-toml | 1.9.1 | BSD-3-Clause | Cynthia Rey |
 | sprintf-js | 1.0.3 | BSD-3-Clause | Alexandru Marasteanu |
 | guid-typescript | 1.0.9 | ISC | nicolas |
@@ -78,7 +78,7 @@ Every platform-independent package resolved into the production tree (direct and
 | which | 2.0.2 | ISC | Isaac Z. Schlueter |
 | wrappy | 1.0.2 | ISC | Isaac Z. Schlueter |
 | zod-to-json-schema | 3.25.2 | ISC | Stefan Terdell |
-| @hono/node-server | 2.1.1 | MIT | Yusuke Wada |
+| @hono/node-server | 2.1.11 | MIT | Yusuke Wada |
 | @huggingface/jinja | 0.5.10 | MIT | Hugging Face |
 | @img/colour | 1.1.0 | MIT | - |
 | @modelcontextprotocol/sdk | 1.32.1 | MIT | Anthropic, PBC |
@@ -90,7 +90,7 @@ Every platform-independent package resolved into the production tree (direct and
 | ajv-formats | 3.0.1 | MIT | Evgeny Poberezkin |
 | argparse | 1.0.10 | MIT | - |
 | atomic-sleep | 1.0.0 | MIT | David Mark Clements |
-| body-parser | 2.3.0 | MIT | - |
+| body-parser | 2.4.0 | MIT | - |
 | bytes | 3.1.2 | MIT | TJ Holowaychuk |
 | call-bind-apply-helpers | 1.0.2 | MIT | Jordan Harband |
 | call-bound | 1.0.4 | MIT | Jordan Harband |
@@ -132,7 +132,7 @@ Every platform-independent package resolved into the production tree (direct and
 | has-property-descriptors | 1.0.2 | MIT | Jordan Harband |
 | has-symbols | 1.1.0 | MIT | Jordan Harband |
 | hasown | 2.0.4 | MIT | Jordan Harband |
-| hono | 4.13.13 | MIT | Yusuke Wada |
+| hono | 4.13.19 | MIT | Yusuke Wada |
 | http-errors | 2.0.1 | MIT | Jonathan Ong |
 | iconv-lite | 0.7.3 | MIT | Alexander Shtuchkin |
 | ip-address | 10.7.4 | MIT | Beau Gunderson |
@@ -199,7 +199,7 @@ Every platform-independent package resolved into the production tree (direct and
 | undici-types | 6.21.0 | MIT | - |
 | unpipe | 1.0.0 | MIT | Douglas Christopher Wilson |
 | vary | 1.1.2 | MIT | Douglas Christopher Wilson |
-| zod | 3.25.76 | MIT | Colin McDonnell |
+| zod | 4.6.7 | MIT | Colin McDonnell |
 
 ## License texts
 
