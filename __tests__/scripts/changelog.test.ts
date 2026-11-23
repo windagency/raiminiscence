@@ -1,5 +1,9 @@
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { releaseChangelog, releaseNotes, syncChangelog, type Commit } from "../../scripts/changelog.js";
+import { hotfixCommits, releaseChangelog, releaseNotes, syncChangelog, type Commit } from "../../scripts/changelog.js";
 
 const MARKER = "<!-- end of Unreleased: generated from commits, see docs/semver.md -->";
 const REPO = "https://github.com/windagency/raiminiscence";
@@ -58,6 +62,12 @@ describe("syncChangelog", () => {
     );
   });
 
+  it("drops a listed entry once its commit is no longer unreleased, as a hotfix's commits are", () => {
+    const onInt = changelog(`### Bug Fixes\n\n${entry("e", "hotfixed")}\n${entry("b", "still due")}\n`);
+
+    expect(syncChangelog(onInt, changelog(""), [commit("b", "fix: still due")])).toBe(changelog(`### Bug Fixes\n\n${entry("b", "still due")}\n`));
+  });
+
   it("keeps int's header, so an intro edit merged into int survives", () => {
     const onInt = changelog("").replace("Intro.", "New intro.");
 
@@ -100,7 +110,7 @@ describe("releaseNotes", () => {
   });
 
   it("adds main's own commits to the first release, since they predate int", () => {
-    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`);
+    const onMain = changelog(`### Bug Fixes\n\n${entry("b", "two")}\n`, "");
     // HEAD's history on main: the promotion squash, then the commit main started from.
     const commits = [commit("p", "chore(release): promote int to main"), commit("b", "fix: two"), commit("a", "feat: one")];
 
@@ -109,8 +119,17 @@ describe("releaseNotes", () => {
     );
   });
 
+  it("returns the version's section unchanged once the release has written it", () => {
+    // semantic-release runs generateNotes again after prepare, when Unreleased is already empty.
+    const notes = `## [1.1.0](${REPO}/compare/v1.0.0...v1.1.0) (2026-02-01)\n\n### Features\n\n${entry("a", "one")}\n`;
+    const released = releaseChangelog(changelog(`### Features\n\n${entry("a", "one")}\n`), notes);
+    const afterPrepare = [commit("r", "chore(release): 1.1.0 [skip ci]"), commit("p", "chore(release): promote int to main")];
+
+    expect(releaseNotes(released, afterPrepare, { version: "1.1.0", previousTag: "v1.0.0", date: "2026-02-02" })).toBe(notes);
+  });
+
   it("has no compare link for the first release", () => {
-    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
+    expect(releaseNotes(changelog(`### Features\n\n${entry("a", "one")}\n`, ""), [], { version: "1.0.0", date: "2026-02-01" })).toMatch(
       /^## 1\.0\.0 \(2026-02-01\)\n\n/,
     );
   });
@@ -123,5 +142,42 @@ describe("releaseChangelog", () => {
     expect(releaseChangelog(changelog(`### Features\n\n${entry("a", "one")}\n`), notes)).toBe(
       changelog("", `${notes}\n## [1.0.0](link) (2026-01-01)\n\n### Features\n\n- old\n`),
     );
+  });
+});
+
+describe("hotfixCommits", () => {
+  it("returns the commits a hotfix branch's merge brought into int, which already shipped from main", () => {
+    const repo = mkdtempSync(join(tmpdir(), "raiminiscence-changelog-"));
+    const git = (...args: string[]) =>
+      execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false", ...args], {
+        cwd: repo,
+        encoding: "utf8",
+      }).trim();
+    const commitFile = (name: string, subject: string) => {
+      writeFileSync(join(repo, name), name);
+      git("add", name);
+      git("commit", "-q", "-m", subject);
+      return git("rev-parse", "HEAD");
+    };
+    try {
+      git("init", "-q", "-b", "main");
+      commitFile("base", "feat: base");
+      git("switch", "-q", "-c", "int");
+      const feature = commitFile("feature", "feat: on int");
+      git("switch", "-q", "-c", "hotfix-x", "main");
+      const fixes = [commitFile("fix1", "fix: one"), commitFile("fix2", "fix: two")];
+      git("switch", "-q", "main");
+      git("merge", "-q", "--squash", "hotfix-x");
+      git("commit", "-q", "-m", "fix: one (#8)");
+      git("switch", "-q", "int");
+      git("merge", "-q", "--no-ff", "-m", "Merge pull request #9 from owner/hotfix-x", "hotfix-x");
+
+      const shipped = hotfixCommits("main..int", repo);
+
+      expect([...shipped].sort()).toEqual([...fixes].sort());
+      expect(shipped.has(feature)).toBe(false);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
   });
 });

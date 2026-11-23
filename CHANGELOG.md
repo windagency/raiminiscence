@@ -15,6 +15,10 @@ notes and Unreleased empties. See `docs/semver.md`.
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- **hooks:** print help on --help instead of installing (#10) ([62c2dbf](https://github.com/windagency/raiminiscence/commit/62c2dbf7bcf092c9bb72f7e294540dacc4a847ce))
+
 <!-- end of Unreleased: generated from commits, see docs/semver.md -->
 
 ## [1.0.1](https://github.com/windagency/raiminiscence/compare/v1.0.0...v1.0.1) (2026-11-22)

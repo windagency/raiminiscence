@@ -88,21 +88,31 @@ function assemble(header: string, body: string, released: string): string {
   return `${header}${body ? `\n${body}` : ""}\n${MARKER}\n${released ? `\n${released}` : ""}`;
 }
 
+// `commits` are the unreleased ones: an entry whose commit left that set, as a hotfix's do, is dropped.
 export function syncChangelog(intChangelog: string, mainChangelog: string, commits: Commit[]): string {
   const { header, entries } = parse(intChangelog);
   const { released } = parse(mainChangelog);
-  const kept = entries.filter((entry) => !entry.hash || !released.includes(entry.hash));
+  const unreleased = new Set(commits.map((commit) => commit.hash));
+  const kept = entries.filter((entry) => !entry.hash || (unreleased.has(entry.hash) && !released.includes(entry.hash)));
   const listed = new Set(kept.map((entry) => entry.hash));
   const added = entriesOf(commits).filter((entry) => !listed.has(entry.hash) && !released.includes(entry.hash ?? ""));
   return assemble(header, render([...kept, ...added]), released);
 }
 
+// The section `releaseChangelog` already wrote for `version`, if any.
+function writtenSection(released: string, version: string): string | undefined {
+  return `\n${released}`.split(/\n(?=## )/).find((section) => section.startsWith(`## ${version} (`) || section.startsWith(`## [${version}](`));
+}
+
 // The Unreleased list when there is one. A hotfix squashed straight into main leaves it empty, so the
 // release's own commits stand in. The first release also lists main's own commits: the sync only reads
-// origin/main..int, so whatever main started from never reached Unreleased.
+// origin/main..int, so whatever main started from never reached Unreleased. semantic-release runs this
+// again after prepare, when the list has already moved into the version's section: that section wins.
 export function releaseNotes(changelog: string, commits: Commit[], release: { version: string; previousTag?: string; date: string }): string {
   const { version, previousTag, date } = release;
-  const { entries } = parse(changelog);
+  const { entries, released } = parse(changelog);
+  const written = writtenSection(released, version);
+  if (written) return written;
   const heading = previousTag ? `## [${version}](${REPO}/compare/${previousTag}...v${version}) (${date})` : `## ${version} (${date})`;
   if (previousTag) return `${heading}\n\n${render(entries.length ? entries : entriesOf(commits))}`;
   const listed = new Set(entries.map((entry) => entry.hash));
@@ -115,6 +125,22 @@ export function releaseChangelog(changelog: string, notes: string): string {
 }
 
 const git = (...args: string[]) => execFileSync("git", args, { cwd: REPO_ROOT, encoding: "utf8" });
+
+const HOTFIX_MERGE = /^Merge (?:pull request #\d+ from [^/\s]+\/|branch ')hotfix-/;
+
+// A hotfix-<name> branch ships from main first, then merges into int (docs/gitflow.md). Its commits reach
+// int under hashes no released section lists, so the merge that brought them in is what marks them shipped.
+export function hotfixCommits(range: string, cwd: string = REPO_ROOT): Set<string> {
+  const run = (...args: string[]) => execFileSync("git", args, { cwd, encoding: "utf8" });
+  const shipped = new Set<string>();
+  for (const record of run("log", "--merges", "--format=%P%x1f%s", range).split("\n").filter(Boolean)) {
+    const [parents = "", subject = ""] = record.split("\x1f");
+    const [mainline, branch] = parents.split(" ");
+    if (!HOTFIX_MERGE.test(subject) || !mainline || !branch) continue;
+    for (const hash of run("rev-list", `${mainline}..${branch}`).split("\n").filter(Boolean)) shipped.add(hash);
+  }
+  return shipped;
+}
 
 function commitsIn(range: string): Commit[] {
   return git("log", "--no-merges", "--format=%H%x1f%s%x1f%b%x1e", range)
@@ -133,7 +159,9 @@ function main(): void {
   const current = readFileSync(path, "utf8");
 
   if (command === "sync") {
-    const synced = syncChangelog(current, git("show", `origin/main:${CHANGELOG}`), commitsIn("origin/main..HEAD"));
+    const shipped = hotfixCommits("origin/main..HEAD");
+    const unreleased = commitsIn("origin/main..HEAD").filter((commit) => !shipped.has(commit.hash));
+    const synced = syncChangelog(current, git("show", `origin/main:${CHANGELOG}`), unreleased);
     if (!process.argv.includes("--check")) writeFileSync(path, synced);
     else if (synced !== current) {
       console.error(`${CHANGELOG}'s Unreleased section is behind int's commits. Wait for the changelog workflow, or run \`pnpm changelog:sync\`.`);
