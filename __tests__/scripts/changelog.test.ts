@@ -1,5 +1,9 @@
+import { execFileSync } from "node:child_process";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import { releaseChangelog, releaseNotes, syncChangelog, type Commit } from "../../scripts/changelog.js";
+import { hotfixCommits, releaseChangelog, releaseNotes, syncChangelog, type Commit } from "../../scripts/changelog.js";
 
 const MARKER = "<!-- end of Unreleased: generated from commits, see docs/semver.md -->";
 const REPO = "https://github.com/windagency/raiminiscence";
@@ -132,5 +136,42 @@ describe("releaseChangelog", () => {
     expect(releaseChangelog(changelog(`### Features\n\n${entry("a", "one")}\n`), notes)).toBe(
       changelog("", `${notes}\n## [1.0.0](link) (2026-01-01)\n\n### Features\n\n- old\n`),
     );
+  });
+});
+
+describe("hotfixCommits", () => {
+  it("returns the commits a hotfix branch's merge brought into int, which already shipped from main", () => {
+    const repo = mkdtempSync(join(tmpdir(), "raiminiscence-changelog-"));
+    const git = (...args: string[]) =>
+      execFileSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", "-c", "commit.gpgsign=false", ...args], {
+        cwd: repo,
+        encoding: "utf8",
+      }).trim();
+    const commitFile = (name: string, subject: string) => {
+      writeFileSync(join(repo, name), name);
+      git("add", name);
+      git("commit", "-q", "-m", subject);
+      return git("rev-parse", "HEAD");
+    };
+    try {
+      git("init", "-q", "-b", "main");
+      commitFile("base", "feat: base");
+      git("switch", "-q", "-c", "int");
+      const feature = commitFile("feature", "feat: on int");
+      git("switch", "-q", "-c", "hotfix-x", "main");
+      const fixes = [commitFile("fix1", "fix: one"), commitFile("fix2", "fix: two")];
+      git("switch", "-q", "main");
+      git("merge", "-q", "--squash", "hotfix-x");
+      git("commit", "-q", "-m", "fix: one (#8)");
+      git("switch", "-q", "int");
+      git("merge", "-q", "--no-ff", "-m", "Merge pull request #9 from owner/hotfix-x", "hotfix-x");
+
+      const shipped = hotfixCommits("main..int", repo);
+
+      expect([...shipped].sort()).toEqual([...fixes].sort());
+      expect(shipped.has(feature)).toBe(false);
+    } finally {
+      rmSync(repo, { recursive: true, force: true });
+    }
   });
 });

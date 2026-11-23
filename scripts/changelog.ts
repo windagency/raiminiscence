@@ -124,6 +124,10 @@ export function releaseChangelog(changelog: string, notes: string): string {
 
 const git = (...args: string[]) => execFileSync("git", args, { cwd: REPO_ROOT, encoding: "utf8" });
 
+export function hotfixCommits(range: string, cwd: string = REPO_ROOT): Set<string> {
+  throw new Error(`hotfixCommits(${range}, ${cwd}) is not implemented yet`);
+}
+
 function commitsIn(range: string): Commit[] {
   return git("log", "--no-merges", "--format=%H%x1f%s%x1f%b%x1e", range)
     .split("\x1e")
