@@ -54,6 +54,8 @@ describe.skipIf(isWindows)("serveRecall (ADR-0039)", () => {
       packageVersion: PACKAGE_VERSION,
       query: "kafka lag",
       k: 10,
+      // Not the hook's 250 ms budget: the server's first recall builds its cache cold, which a busy runner can make slower.
+      timeoutMs: 2000,
     });
 
     expect(served).not.toBeNull();
