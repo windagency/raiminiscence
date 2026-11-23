@@ -44,6 +44,15 @@ claude mcp add raiminiscence -- npx raiminiscence-mcp
 
 `npx` ships with Node.js, so this works with any package manager. If npm did not install the server, `npx` fetches its own copy on first start.
 
+In Claude Code, the plugin marketplace in this repository does the same in place of that command:
+
+```
+/plugin marketplace add windagency/raiminiscence
+/plugin install raiminiscence@raiminiscence
+```
+
+The plugin registers the server only. The hooks in step 3 are a separate install.
+
 <details>
 <summary>Cursor and Codex CLI</summary>
 
