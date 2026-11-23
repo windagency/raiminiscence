@@ -28,5 +28,5 @@ Measured in a scratch repository with that branch flow, 2026-11-21: an Unrelease
 
 - One more App, environment and required check to set up: `docs/deployment.md`, "Required one-time setup".
 - `int` gets a bot commit, `docs(changelog): update Unreleased`, after each push that adds an entry. `docs` neither triggers a release nor gets listed.
-- A hotfix is listed twice: under its own version, then again in the next one, because its branch's commits reach `int` under new hashes.
+- A hotfix's branch commits reach `int` under new hashes, so the sync excludes the commits a `hotfix-*` merge brought in. That needs the hotfix merged into `int` with a merge commit; a squash would list it again in the next version.
 - A promotion PR opened before the sync finished fails `changelog-current` until the bot's commit lands.
