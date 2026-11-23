@@ -85,4 +85,18 @@ describe("runInstallCli", () => {
     expect(existsSync(join(projectRoot, ".claude", "settings.json"))).toBe(false);
     expect(existsSync(join(projectRoot, ".codex", "config.toml"))).toBe(false);
   });
+
+  it.each([["--help"], ["-h"]])("%s prints usage and writes nothing", (arg) => {
+    const lines = runInstallCli([arg], projectRoot);
+
+    expect(lines.join("\n")).toMatch(/^Usage: raiminiscence-hooks-install/);
+    expect(lines.join("\n")).toContain("--client=");
+    expect(lines.join("\n")).toContain("--scope=");
+    expect(existsSync(join(projectRoot, ".claude"))).toBe(false);
+  });
+
+  it("rejects an argument it doesn't know, such as a misspelt flag, before writing anything", () => {
+    expect(() => runInstallCli(["--scop=user"], projectRoot)).toThrow(/Unknown argument "--scop=user"/);
+    expect(existsSync(join(projectRoot, ".claude"))).toBe(false);
+  });
 });

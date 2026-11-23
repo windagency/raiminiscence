@@ -27,7 +27,22 @@ function parseEnumFlag<T extends string>(argv: string[], name: string, allowed: 
   return value;
 }
 
+const USAGE = [
+  "Usage: raiminiscence-hooks-install [--client=<client>] [--scope=<scope>]",
+  "",
+  "Registers every raiminiscence-hooks hook the client supports in its config file.",
+  "",
+  `  --client=<client>  ${HOOK_CLIENTS.join(", ")} (default: claude-code)`,
+  `  --scope=<scope>    ${INSTALL_SCOPES.join(", ")} (default: project)`,
+  "  -h, --help         print this help and change nothing",
+];
+
+const isHelp = (arg: string) => arg === "--help" || arg === "-h";
+
 function parseArgs(argv: string[]): { client: HookClient; scope: InstallScope } {
+  // A misspelt flag would otherwise fall back to a default and write the wrong config.
+  const unknown = argv.find((arg) => !/^--(client|scope)=/.test(arg));
+  if (unknown !== undefined) throw new Error(`Unknown argument "${unknown}". Run raiminiscence-hooks-install --help for usage.`);
   return {
     client: parseEnumFlag(argv, "client", HOOK_CLIENTS, "claude-code"),
     scope: parseEnumFlag(argv, "scope", INSTALL_SCOPES, "project"),
@@ -88,6 +103,7 @@ const HOOK_INSTALLERS: HookInstaller[] = [
  * never an error.
  */
 export function runInstallCli(argv: string[], projectRoot: string = process.cwd()): string[] {
+  if (argv.some(isHelp)) return USAGE;
   const { client, scope } = parseArgs(argv);
   return HOOK_INSTALLERS.map((hook) => hook.attempt(client, scope, projectRoot));
 }
