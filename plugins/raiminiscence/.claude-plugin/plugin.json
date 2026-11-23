@@ -1,0 +1,10 @@
+{
+  "name": "raiminiscence",
+  "description": "Persistent memory for AI coding agents. Registers the local raiminiscence-mcp server, which stores plain Markdown files and lets stale knowledge fade.",
+  "author": {
+    "name": "windagency"
+  },
+  "homepage": "https://github.com/windagency/raiminiscence",
+  "repository": "https://github.com/windagency/raiminiscence",
+  "license": "MIT"
+}
