@@ -37,7 +37,7 @@ semantic-release's plugin pipeline, configured in [`release.config.js`](../relea
 
 `CHANGELOG.md`'s Unreleased section is generated, never hand-written ([ADR-0043](adr/0043-the-unreleased-changelog-is-generated-on-int.md)). `changelog.yml` runs `pnpm changelog:sync` on every push to `int` or `main` and commits the result to `int`. That adds each `feat`, `fix` or breaking commit in `origin/main..int` that no section lists yet, and copies `main`'s released sections onto `int`. Because `main` takes the promotion as one squash commit, its notes would otherwise be one PR title; the Unreleased list keeps every change. The copy makes the back-merge of `main` into `int` merge cleanly. A PR from `int` into `main` must pass `changelog-current`, which fails while the list is behind `int`'s commits.
 
-Known gap: a hotfix is listed twice. It ships under its own version, with its squash commit as the notes, then its branch's commits reach `int` under hashes no released section lists. So it also appears in `int`'s Unreleased list and in the next version's notes. Removing the line by hand doesn't help: the next sync adds it back.
+A hotfix is listed once, under its own version. Its branch's commits reach `int` under hashes no released section lists, so the sync recognises them by the merge that brought them in: a `Merge pull request #N from <owner>/hotfix-<name>` commit. Merge a hotfix branch into `int` with "Create a merge commit"; a squash leaves nothing to recognise, and the fix is listed again in the next version.
 
 ## Staged publishing
 
