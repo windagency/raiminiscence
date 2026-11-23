@@ -1,6 +1,6 @@
 {
   "name": "raiminiscence-hooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Hooks that bring rAIminiscence memories to your agent on their own: a primer at session start, and relevant memories on every turn in Claude Code and Codex CLI.",
   "keywords": [
     "mcp",
