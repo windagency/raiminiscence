@@ -222,6 +222,8 @@ describe("Shared Memory: git worktree setup, sync automation, merge driver", () 
     expect(settled.push).toBe(false);
     await new Promise((resolve) => setTimeout(resolve, 200));
     expect(settled.push).toBe(true);
+    // The real git push starts after the flag flips; Windows can't remove workDir while it still runs there.
+    await settlePendingSharedMemoryPush();
   });
 
   it("awaitPush: true blocks until that push actually settles", async () => {

@@ -89,16 +89,19 @@ describe.skipIf(isWindows)("the warm process (ADR-0040)", () => {
   });
 
   it("stays up while requests keep coming", async () => {
-    const started = Date.now();
     const running = run();
     await vi.waitFor(() => expect(existsSync(recallSocket)).toBe(true));
+    // Four requests 150 ms apart span 600 ms, twice the 300 ms idle time: each is answered only if the
+    // earlier ones kept it up. Not a wall-clock bound: timers fire off the loop's cached clock, so a busy
+    // runner measures them a few ms short.
+    const answers = [];
     for (let i = 0; i < 4; i++) {
       await settle(150);
-      await ask();
+      answers.push(await ask());
     }
 
+    expect(answers.every((answer) => answer !== null)).toBe(true);
     expect(await running).toBe("idle");
-    expect(Date.now() - started).toBeGreaterThanOrEqual(900);
   });
 
   it("exits at once when another server already serves the recall", async () => {
