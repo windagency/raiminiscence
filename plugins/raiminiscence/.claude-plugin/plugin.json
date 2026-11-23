@@ -6,5 +6,6 @@
   },
   "homepage": "https://github.com/windagency/raiminiscence",
   "repository": "https://github.com/windagency/raiminiscence",
-  "license": "MIT"
+  "license": "MIT",
+  "icon": "./.claude-plugin/icon.png"
 }
