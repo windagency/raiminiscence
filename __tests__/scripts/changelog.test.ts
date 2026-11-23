@@ -62,6 +62,12 @@ describe("syncChangelog", () => {
     );
   });
 
+  it("drops a listed entry once its commit is no longer unreleased, as a hotfix's commits are", () => {
+    const onInt = changelog(`### Bug Fixes\n\n${entry("e", "hotfixed")}\n${entry("b", "still due")}\n`);
+
+    expect(syncChangelog(onInt, changelog(""), [commit("b", "fix: still due")])).toBe(changelog(`### Bug Fixes\n\n${entry("b", "still due")}\n`));
+  });
+
   it("keeps int's header, so an intro edit merged into int survives", () => {
     const onInt = changelog("").replace("Intro.", "New intro.");
 
