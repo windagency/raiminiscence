@@ -15,7 +15,18 @@ notes and Unreleased empties. See `docs/semver.md`.
 
 ## [Unreleased]
 
+### Bug Fixes
+
+- **mcp:** start the server when run through npx or node_modules/.bin ([e3e3086](https://github.com/windagency/raiminiscence/commit/e3e3086d323d0c8eea650dfc40557c11f7a646e0))
+- **mcp:** report the package version in serverInfo ([a038bcf](https://github.com/windagency/raiminiscence/commit/a038bcf1ad3183cda34b94eb808c3094877a3f4b))
+
 <!-- end of Unreleased: generated from commits, see docs/semver.md -->
+
+## [1.0.1](https://github.com/windagency/raiminiscence/compare/v1.0.0...v1.0.1) (2026-11-22)
+
+### Bug Fixes
+
+- **mcp:** start the server when run through npx or node_modules/.bin (#8) ([06fb57d](https://github.com/windagency/raiminiscence/commit/06fb57dfbb44cba4198d8fb25ece378e07d65651))
 
 ## 1.0.0 (2026-11-22)
 
